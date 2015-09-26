@@ -193,7 +193,7 @@ public class DarkLilith : MonoBehaviour {
 
         //弾を飛ばす処理
         bullet.transform.position = transform.position + transform.TransformDirection(Vector3.forward) * 5;
-        bullet.GetComponent<Rigidbody>().velocity = ((Player.transform.position - transform.position).normalized * bullet.GetComponent<Attack_Parameter>().speed * Time.deltaTime);
+        bullet.GetComponent<Rigidbody>().velocity = ((Player.transform.position - transform.position).normalized * bullet.GetComponent<Attack_Parameter>().speed);
         /*if(!audioSource.isPlaying){
 			
             audioSource.Play();

@@ -38,8 +38,8 @@ public class Reflect : MonoBehaviour {
 
             if (col.GetComponent<Attack_Parameter>().GetParent().tag == "Enemy")
             {
-                col.transform.rotation = Quaternion.LookRotation(-(DarkLilith.transform.position - col.transform.position).normalized);//回転させて弾頭を進行方向に向ける
-                col.GetComponent<Rigidbody>().velocity = ((DarkLilith.transform.position - transform.position).normalized + Offset) * col.GetComponent<Rigidbody>().velocity.magnitude;
+                col.transform.rotation = Quaternion.LookRotation(-(Player.transform.position - col.transform.position).normalized);//回転させて弾頭を進行方向に向ける
+                col.GetComponent<Rigidbody>().velocity = ((Player.transform.position - transform.position).normalized + Offset) * col.GetComponent<Rigidbody>().velocity.magnitude;
                 //col.GetComponent<Attack_Parameter>().SetParent(this.gameObject);自分の弾に当たっても死なないように消しとく
             }
 

@@ -25,11 +25,12 @@ public class SimpleCol : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
+        Debug.Log(col.gameObject.name);
         if (col.gameObject.name == "Vision" || col.gameObject.name == "Search")
         {
             return;
         }
-        switch(type){
+        switch (type){
             case Type.Destroy:
 
                 Destroy(this.gameObject);

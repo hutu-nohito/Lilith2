@@ -6,12 +6,17 @@ public class Funnel : MonoBehaviour {
 	public float degreeTheta = 0;//アフィン変換用の角度
 
 	public GameObject Target;//ここに注目対象を格納すればいい
+    private GameObject Player;//
 
-	// Use this for initialization
-	void Start () {
+    private Vector3 Offset = new Vector3(0, 0.1f, 0);//反射後の位置調整用
+
+    // Use this for initialization
+    void Start () {
 	
         if(Target == null)
 		Target = GameObject.FindGameObjectWithTag("Player");
+
+        Player = GameObject.FindGameObjectWithTag("Player");
 
 	}
 	
@@ -32,4 +37,18 @@ public class Funnel : MonoBehaviour {
 		transform.position = LocalPos + Target.transform.position;//ワールド座標に直す
 
 	}
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.tag == "Bullet")
+        {
+            if (col.GetComponent<Attack_Parameter>().GetParent().tag == "Player")
+            {
+                col.GetComponent<Rigidbody>().velocity *= -1;//純粋な反射
+                col.transform.rotation = Quaternion.LookRotation(-(Player.transform.position - col.transform.position).normalized);//回転させて弾頭を進行方向に向ける
+                col.GetComponent<Attack_Parameter>().SetParent(this.gameObject);//親を変えてダメージが通るように
+            }
+
+        }
+    }
 }
