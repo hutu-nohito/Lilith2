@@ -16,24 +16,25 @@ public class Snipe : Magic_Parameter {
         MC = GameObject.FindGameObjectWithTag("Player").GetComponent<Magic_Controller>();
         pcZ = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_ControllerZ>();
 
-        CameraStartPos = Camera.main.gameObject.transform.position;
+        CameraStartPos = Camera.main.gameObject.transform.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //スコープ状態解除
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            Camera.main.gameObject.transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
-            Camera.main.gameObject.transform.position = CameraStartPos;
-            //硬直を解除
-            Parent.GetComponent<Character_Manager>().SetActive();
-            isSnipe = false;
-        }
 
         if (isSnipe)
         {
+            //スコープ状態解除
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                Camera.main.gameObject.transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
+                Camera.main.gameObject.transform.localPosition = CameraStartPos;
+                //硬直を解除
+                Parent.GetComponent<Character_Manager>().SetActive();
+                isSnipe = false;
+            }
+
             if (Input.GetAxis("Mouse ScrollWheel") == 0.1f)
             {
                 if(transform.localPosition.z < 40)

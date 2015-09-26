@@ -30,6 +30,10 @@ public class SimpleCol : MonoBehaviour {
         {
             return;
         }
+        if (col.tag == "Reflect")
+        {
+            return;
+        }
         switch (type){
             case Type.Destroy:
 
