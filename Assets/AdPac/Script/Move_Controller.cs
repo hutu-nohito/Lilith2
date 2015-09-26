@@ -25,7 +25,7 @@ public class Move_Controller : MonoBehaviour {
 	
 	void Stop (){
 		
-		End = this.transform.position + Pos[count];
+		End = this.transform.localPosition + Pos[count];
 		
 		if(count == Pos.Length - 1){
 			

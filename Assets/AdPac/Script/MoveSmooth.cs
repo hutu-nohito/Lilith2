@@ -25,7 +25,7 @@ public class MoveSmooth : MonoBehaviour {
     void Update() {
 
         if (isMove) { 
-            transform.position += deltaPos * Time.deltaTime;
+            transform.localPosition += deltaPos * Time.deltaTime;
             elapsedTime += Time.deltaTime;
             if (elapsedTime > time)
             {
