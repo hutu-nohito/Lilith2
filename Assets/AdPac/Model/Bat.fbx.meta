@@ -1,0 +1,221 @@
+fileFormatVersion: 2
+guid: 625c2897fef7be84e9ff97ec474c2eed
+timeCreated: 1443187534
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Bone
+    100004: Bone.001
+    100006: Bone.001_end
+    100008: Bone.002
+    100010: Bone.002_end
+    100012: Bone_end
+    100014: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2"
+    100016: "\u7403"
+    400000: //RootNode
+    400002: Bone
+    400004: Bone.001
+    400006: Bone.001_end
+    400008: Bone.002
+    400010: Bone.002_end
+    400012: Bone_end
+    400014: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2"
+    400016: "\u7403"
+    4300000: "\u7403"
+    7400000: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Wing"
+    7400002: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2Action"
+    7400004: "\u7403|Wing"
+    9500000: //RootNode
+    13700000: "\u7403"
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Wing"
+      takeName: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Wing"
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone/Bone_end"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone.001"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone.001/Bone.001_end"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone.002"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone.002/Bone.002_end"
+        weight: 1
+      - path: "\u7403"
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2Action"
+      takeName: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2Action"
+      firstFrame: 0
+      lastFrame: 7
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone/Bone_end"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone.001"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone.001/Bone.001_end"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone.002"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone.002/Bone.002_end"
+        weight: 1
+      - path: "\u7403"
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: "\u7403|Wing"
+      takeName: "\u7403|Wing"
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone/Bone_end"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone.001"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone.001/Bone.001_end"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone.002"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/Bone.002/Bone.002_end"
+        weight: 1
+      - path: "\u7403"
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
