@@ -33,7 +33,6 @@ public class SimpleCol : MonoBehaviour {
             case Type.Destroy:
 
                 Destroy(this.gameObject);
-                MC.SubExistBullet();
                 break;
             case Type.Through:
 
@@ -43,7 +42,6 @@ public class SimpleCol : MonoBehaviour {
                     else
                     {
                         Destroy(this.gameObject);
-                        MC.SubExistBullet();
                     }
                 }
                 if (col.tag == "Bullet")
@@ -52,7 +50,6 @@ public class SimpleCol : MonoBehaviour {
                     else
                     {
                         Destroy(this.gameObject);
-                        MC.SubExistBullet();
                     }
                 }
                 if (col.tag == "Player")
@@ -61,7 +58,6 @@ public class SimpleCol : MonoBehaviour {
                     else
                     {
                         Destroy(this.gameObject);
-                        MC.SubExistBullet();
                     }
                 }
                 break;

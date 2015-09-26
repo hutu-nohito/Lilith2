@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;//List用
 
 public class Magic_Controller : MonoBehaviour{
 
@@ -14,9 +15,11 @@ public class Magic_Controller : MonoBehaviour{
 
     public int magic_num = 0;//選択している弾の種類
 
-    public int[] existBullet;//現在存在しているバレット数
-    public void AddExistBullet() { existBullet[magic_num]++; }//バレットを増やす
-    public void SubExistBullet() { existBullet[magic_num]--; }//バレットを減らす
+    private List<GameObject> Bullet0 = new List<GameObject>();//0個目に登録されてる弾の現在存在してる数
+    public void AddExistBullet(GameObject bullet)//バレットを増やす
+    {
+        Bullet0.Add(bullet);
+    }
 
 
     //GameObject/////////////////////////////////////////////
@@ -43,7 +46,6 @@ public class Magic_Controller : MonoBehaviour{
         for(int i = 0;i < Magic.Length;i++){
 
             Magic[i].GetComponent<Magic_Parameter>().SetParent(this.gameObject);//親はプレイヤー
-            existBullet[i] = 0;//親はプレイヤー
 
         }
         
@@ -71,13 +73,22 @@ public class Magic_Controller : MonoBehaviour{
         {
             if (Magic[magic_num].GetComponent<Magic_Parameter>().spend_MP <= Pz.M_point)//使うMP < 現MPだったら魔法が打てる
             {
-                if(this.existBullet[magic_num] < Magic[magic_num].GetComponent<Magic_Parameter>().GetExNum())//いまだしてる弾の数 < 出せる弾の数
-                MagicFire();
+                //if(this.existBullet[magic_num] < Magic[magic_num].GetComponent<Magic_Parameter>().GetExNum())//いまだしてる弾の数 < 出せる弾の数
+                if (this.Bullet0.Count < Magic[magic_num].GetComponent<Magic_Parameter>().GetExNum())//いまだしてる弾の数 < 出せる弾の数
+                    MagicFire();
             }
 
         }
 
 		coroutine = StartCoroutine (MPRecover ());
+
+        for (int i = 0;i < Bullet0.Count;i++)
+        {
+            if (Bullet0[i] == null)
+            {
+                Bullet0.RemoveAt(i);
+            }
+        }
 
     }
 

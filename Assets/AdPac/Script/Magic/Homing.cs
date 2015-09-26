@@ -34,7 +34,7 @@ public class Homing : Magic_Parameter {
         GameObject bullet;
 
         bullet = GameObject.Instantiate(Bullet);
-        MC.AddExistBullet();//現在の弾数を増やす
+        MC.AddExistBullet(bullet);//現在の弾数を増やす
         bullet.GetComponent<Homing_Bullet>().Parent = this.Parent;//もらった親を渡しておく必要がある
 
         Parent.GetComponent<Player_ControllerZ>().SetMP(Parent.GetComponent<Player_ControllerZ>().GetMP() - GetSMP());//MPを減らす
@@ -62,18 +62,11 @@ public class Homing : Magic_Parameter {
         }*/
 
         Destroy(bullet, bullet.GetComponent<Attack_Parameter>().GetA_Time());
-        Invoke("subbullet", bullet.GetComponent<Attack_Parameter>().GetA_Time());
 
         yield return new WaitForSeconds(bullet.GetComponent<Attack_Parameter>().GetR_Time());//撃った後の硬直
 
         //硬直を解除
         Parent.GetComponent<Character_Manager>().SetActive();
 
-    }
-
-    void subbullet()
-    {
-        MC.SubExistBullet();
-    }
-    
+    }    
 }

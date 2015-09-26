@@ -32,7 +32,7 @@ public class Bullet : Magic_Parameter {
         GameObject bullet;
 
         bullet = GameObject.Instantiate(bullet_Prefab);//弾生成
-        MC.AddExistBullet();//現在の弾数を増やす
+        MC.AddExistBullet(bullet);//現在の弾数を増やす
         bullet.GetComponent<Attack_Parameter>().Parent = this.Parent;//もらった親を渡しておく必要がある
 
         //MPの処理
@@ -51,18 +51,12 @@ public class Bullet : Magic_Parameter {
         }*/
 
         Destroy(bullet, bullet.GetComponent<Attack_Parameter>().GetA_Time());
-        Invoke("subbullet",bullet.GetComponent<Attack_Parameter>().GetA_Time());
 
         yield return new WaitForSeconds(bullet.GetComponent<Attack_Parameter>().GetR_Time());//撃った後の硬直
 
         //硬直を解除
         Parent.GetComponent<Character_Manager>().SetActive();
 
-    }
-
-    void subbullet()
-    {
-        MC.SubExistBullet();
     }
 
 }

@@ -121,7 +121,7 @@ public class Sippuu : Magic_Parameter {
     {
         Parent.GetComponent<Character_Manager>().SetKeylock();
         
-        MC.AddExistBullet();//現在の弾数を増やす
+        //MC.AddExistBullet(bullet);//現在の弾数を増やす
         bullet.GetComponent<Attack_Parameter>().Parent = this.Parent;//もらった親を渡しておく必要がある
 
         pcZ.SetMP(pcZ.GetMP() - GetSMP());
@@ -160,10 +160,5 @@ public class Sippuu : Magic_Parameter {
         //硬直を解除
         Parent.GetComponent<Character_Manager>().SetActive();
 
-    }
-
-    void subbullet()
-    {
-        MC.SubExistBullet();
     }
 }

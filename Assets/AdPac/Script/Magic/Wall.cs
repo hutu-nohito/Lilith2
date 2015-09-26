@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Bomb : Magic_Parameter {
+public class Wall : Magic_Parameter {
 
     public GameObject bullet_Prefab;//弾のプレハブ
 
