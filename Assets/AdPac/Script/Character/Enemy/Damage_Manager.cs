@@ -86,9 +86,22 @@ public class Damage_Manager : MonoBehaviour {
                     }
 
                 }
-			
-				//弱点部位でダメージ2倍
-				if (weak_point) {
+
+                //無効化属性でダメージ0
+                for (int i = 0; i < ecZ.invalid_element.Length; i++)
+                {
+
+                    if (attack.GetElement() == ecZ.invalid_element[i])
+                    {
+
+                        damage = 0;
+
+                    }
+
+                }
+
+                //弱点部位でダメージ2倍
+                if (weak_point) {
 				
 					damage *= 2;
 				

@@ -46,7 +46,12 @@ public class Character_Parameters : MonoBehaviour {
     public string[] GetProof() { return proof_element; }
     public void SetProof(int num, string element)
     { this.proof_element[num] = element; }//numが置き換える耐性の場所。elementが新しい耐性属性(nullも可)
-    
+
+    public string[] invalid_element;//無効化属性
+    public string[] GetInvalid() { return invalid_element; }
+    public void SetInvalid(int num, string element)
+    { this.invalid_element[num] = element; }//numが置き換える耐性の場所。elementが新しい耐性属性(nullも可)
+
     public Vector3 move_direction = Vector3.zero;//キャラクタの移動方向
     public Vector3 GetMove() { return move_direction; }
     public void SetMove(Vector3 move_direction) { this.move_direction = move_direction; }
