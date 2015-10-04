@@ -36,9 +36,16 @@ public class Rayfall : Magic_Parameter {
 
         for (int i = 0; i < GetExNum(); i++)
         {
+
             bullet[i] = GameObject.Instantiate(bullet_Prefab);//弾生成
-            MC.AddExistBullet(bullet[i]);//現在の弾数を増やす
-            bullet[i].GetComponent<Attack_Parameter>().Parent = this.Parent;//もらった親を渡しておく必要がある
+            if (bullet[i] != null)
+            {
+
+                MC.AddExistBullet(bullet[i]);//現在の弾数を増やす
+                bullet[i].GetComponent<Attack_Parameter>().Parent = this.Parent;//もらった親を渡しておく必要がある
+
+            }
+            
 
         }
 
@@ -50,13 +57,19 @@ public class Rayfall : Magic_Parameter {
 
         for (int i = 0; i < GetExNum(); i++) {
 
-            bullet[i].transform.position = transform.position + Parent.GetComponent<Character_Parameters>().direction;//
-            bullet[i].transform.rotation = Quaternion.LookRotation(Parent.transform.TransformDirection(Vector3.up) + Parent.transform.TransformDirection(Vector3.forward) + Parent.transform.TransformDirection(new Vector3(-1.5f + i, 0, 0)));//回転させて弾頭を進行方向に向ける
-            bullet[i].GetComponent<Rigidbody>().velocity = ((Parent.transform.TransformDirection(Vector3.up) + Parent.transform.TransformDirection(Vector3.forward) + Parent.transform.TransformDirection(new Vector3(-1.5f + i, 0, 0))) * bullet[0].GetComponent<Attack_Parameter>().speed / 3);
+            if (bullet[i] != null)
+            {
+
+                bullet[i].transform.position = transform.position + Parent.GetComponent<Character_Parameters>().direction;//
+                bullet[i].transform.rotation = Quaternion.LookRotation(Parent.transform.TransformDirection(Vector3.up) + Parent.transform.TransformDirection(Vector3.forward) + Parent.transform.TransformDirection(new Vector3(-1.5f + i, 0, 0)));//回転させて弾頭を進行方向に向ける
+                bullet[i].GetComponent<Rigidbody>().velocity = ((Parent.transform.TransformDirection(Vector3.up) + Parent.transform.TransformDirection(Vector3.forward) + Parent.transform.TransformDirection(new Vector3(-1.5f + i, 0, 0))) * bullet[0].GetComponent<Attack_Parameter>().speed / 3);
+
+                
+
+                Destroy(bullet[i], bullet[0].GetComponent<Attack_Parameter>().GetA_Time());
+            }
 
             yield return new WaitForSeconds(0.1f);//弾を生成する間隔
-
-            Destroy(bullet[i], bullet[0].GetComponent<Attack_Parameter>().GetA_Time());
         }
 
         //効果音と演出
@@ -76,8 +89,13 @@ public class Rayfall : Magic_Parameter {
         for (int i = 0; i < GetExNum(); i++)
         {
 
-            bullet[i].transform.rotation = Quaternion.LookRotation(Parent.transform.TransformDirection(Vector3.forward));//回転させて弾頭を進行方向に向ける
-            bullet[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
+            if (bullet[i] != null)
+            {
+                bullet[i].transform.rotation = Quaternion.LookRotation(Parent.transform.TransformDirection(Vector3.forward));//回転させて弾頭を進行方向に向ける
+                bullet[i].GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+            }
+                
 
         }
 
@@ -86,8 +104,13 @@ public class Rayfall : Magic_Parameter {
         for (int i = 0; i < GetExNum(); i++)
         {
 
-            bullet[i].transform.rotation = Quaternion.LookRotation(Parent.transform.TransformDirection(Vector3.forward) - new Vector3(0, 0.5f, 0));//回転させて弾頭を進行方向に向ける
-            bullet[i].GetComponent<Rigidbody>().velocity = ((bullet[i].transform.TransformDirection(Vector3.forward) - new Vector3(0, 0.5f, 0)) * bullet[0].GetComponent<Attack_Parameter>().speed);
+            if (bullet[i] != null)
+            {
+
+                bullet[i].transform.rotation = Quaternion.LookRotation(Parent.transform.TransformDirection(Vector3.forward) - new Vector3(0, 0.5f, 0));//回転させて弾頭を進行方向に向ける
+                bullet[i].GetComponent<Rigidbody>().velocity = ((bullet[i].transform.TransformDirection(Vector3.forward) - new Vector3(0, 0.5f, 0)) * bullet[0].GetComponent<Attack_Parameter>().speed);
+
+            }
 
         }
 
