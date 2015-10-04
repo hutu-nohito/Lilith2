@@ -39,12 +39,14 @@ public class MoveSmooth : MonoBehaviour {
         }
     }
 
-    public void Move (Vector3 End)
+    public void Move (Vector3 End, float speed)
     {
+        speed *= 0.06f;//前のスピードと合わせるための補正
         elapsedTime = 0;
         EndPos = End;
         StartPos = transform.localPosition;
-        deltaPos = (EndPos - StartPos) / time;
+        deltaPos = (EndPos - StartPos) / (1 / speed);
+        time = 1 / speed;
         isMove = true;
     }
 }

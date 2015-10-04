@@ -164,7 +164,7 @@ public class DarkLilith : MonoBehaviour {
 		if (isCoroutine) yield break;
         isCoroutine = true;
 
-        GetComponent<MoveSmooth>().Move(NextPlace.transform.position);
+        GetComponent<MoveSmooth>().Move(NextPlace.transform.position, ecZ.GetSpeed());
 		animator.SetBool ("Walk",true);
 
         yield return new WaitForSeconds(ThinkTime - 1);//思考間隔かもしれない

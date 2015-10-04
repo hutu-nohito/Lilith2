@@ -7,12 +7,15 @@ public class Enemy_Parameter : Character_Parameters {
 
     //敵キャラの状態//////////////////////////////////////////////////////////
     public bool flag_move = true;//移動できるかどうか(WASDが有効かどうか)
+    public bool flag_damage = true;//ダメージを受けるかどうか
     public bool flag_magic = true;//魔法が使えるかどうか(マウスが有効かどうか)
 
     public bool GetF_Move() { return flag_move; }//移動できるか
+    public bool GetF_Damage() { return flag_damage; }//ダメージをうけるかどうか
     public bool GetF_Magic() { return flag_magic; }//魔法が使えるか
 
     public void Reverse_Move() { flag_move = !flag_move; }//移動反転
+    public void Reverse_Damage() { flag_damage = !flag_damage; }//ダメージ反転
     public void Reverse_Magic() { flag_magic = !flag_magic; }//魔法反転
 
     public void SetKeylock()

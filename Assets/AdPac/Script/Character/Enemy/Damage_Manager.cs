@@ -9,16 +9,25 @@ public class Damage_Manager : MonoBehaviour {
 	public bool weak_point = false;
 	private Enemy_ControllerZ ecZ;
 
+    private Renderer[] Renderer;//レンダー1
+    private Renderer[] SkinRenderer;//レンダー2
+    public GameObject Model;//モデル
+
     //コルーチン
     private Coroutine coroutine;
     private int count;//汎用のカウント用の箱(使い終わったら0に戻すこと)
     private bool isCoroutine = false;
 
+    
+
 	void Start () {
 
 		ecZ = Parent.GetComponent<Enemy_ControllerZ>();
 
-	}
+        Renderer = Model.GetComponentsInChildren<MeshRenderer>();
+        SkinRenderer = Model.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+    }
 
 	void Update () {
 
@@ -106,9 +115,16 @@ public class Damage_Manager : MonoBehaviour {
 					damage *= 2;
 				
 				}
-			
-				//実際のダメージ処理
-				ecZ.H_point -= damage;
+
+
+                //実際のダメージ処理
+                if (ecZ.GetF_Damage())
+                {
+                    ecZ.H_point -= damage;
+                    ecZ.Reverse_Damage();//ダメージを連続で受けないようにする
+                    StartCoroutine(Blink());
+                    Invoke("Reverse_Damage", 3);
+                }
 
                 //こっから状態異常///////////////////////////////////////////////////////////
 
@@ -120,6 +136,37 @@ public class Damage_Manager : MonoBehaviour {
                 }			
 
 			}
+
+            //こっからノックバック
+            if(attack.GetKnockBack().magnitude > 0)
+            {
+                Parent.GetComponent<MoveSmooth>().Move(attack.GetKnockBack(),attack.GetKnockBack().magnitude);
+            }
 		}
 	}
+
+    IEnumerator Blink()
+    {
+
+        while (!ecZ.GetF_Damage())
+        {
+            for (int i = 0; i < Renderer.Length; i++)
+            {
+                Renderer[i].enabled = !Renderer[i].enabled;
+            }
+            for (int i = 0; i < SkinRenderer.Length; i++)
+            {
+                SkinRenderer[i].enabled = !SkinRenderer[i].enabled;
+
+            }
+
+            yield return new WaitForSeconds(0.5f);
+        }
+
+    }
+
+    void Reverse_Damage()
+    {
+        ecZ.Reverse_Damage();//無敵時間解除
+    }
 }

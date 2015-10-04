@@ -64,7 +64,7 @@ public class Enemy_ControllerZ : Enemy_Parameter
         if (state == Enemy_State.Search)
         {
 
-            MoveS.Move(move_controller.End);//これで移動
+            MoveS.Move(move_controller.End,speed);//これで移動
             //前を向ける
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(move_controller.End - transform.position), 0.05f);
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
@@ -77,7 +77,7 @@ public class Enemy_ControllerZ : Enemy_Parameter
 
             Vector3 follow = (Player.transform.position - this.transform.position).normalized;
             follow.y = 0.0f;
-            MoveS.Move(-follow * speed);//これで移動
+            MoveS.Move(-follow * speed,speed);//これで移動
             transform.rotation = Quaternion.LookRotation(-follow);
 
         }

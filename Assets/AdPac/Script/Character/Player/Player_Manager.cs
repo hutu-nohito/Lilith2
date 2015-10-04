@@ -8,8 +8,12 @@ public class Player_Manager : MonoBehaviour {
 	public GameObject Parent;//このあたり判定を持つキャラ
 	private Player_ControllerZ pcZ;
 
-	//コルーチン
-	private Coroutine coroutine;
+    private Renderer[] PlayerRenderer;//プレイヤのレンダー1
+    private Renderer[] PlayerSkinRenderer;//プレイヤのレンダー2
+    public GameObject PlayerModel;//プレイヤのモデル
+
+    //コルーチン
+    private Coroutine coroutine;
 	private int count;//汎用のカウント用の箱(使い終わったら0に戻すこと)
 	private bool isCoroutine = false;
 
@@ -17,8 +21,11 @@ public class Player_Manager : MonoBehaviour {
 	void Start () {
 		
 		pcZ = Parent.GetComponent<Player_ControllerZ>();
-		
-	}
+
+        PlayerRenderer = PlayerModel.GetComponentsInChildren<MeshRenderer>();
+        PlayerSkinRenderer = PlayerModel.GetComponentsInChildren<SkinnedMeshRenderer>();
+
+    }
 	
 	void Update () {
 
@@ -82,9 +89,16 @@ public class Player_Manager : MonoBehaviour {
 				}
 
                 //実際のダメージ処理
-                pcZ.H_point -= damage;
-				
-       //こっから状態異常///////////////////////////////////////////////////////////
+                if (pcZ.GetF_Damage())
+                {
+                    pcZ.H_point -= damage;
+                    pcZ.Reverse_Damage();//ダメージを連続で受けないようにする
+                    StartCoroutine(Blink());//点滅
+                    Invoke("Reverse_Damage", 3);
+                }
+                
+
+                //こっから状態異常///////////////////////////////////////////////////////////
 
                 if (attack.GetAilment() == "Poison")
                 {
@@ -95,4 +109,30 @@ public class Player_Manager : MonoBehaviour {
 			}
 		}
 	}
+
+    IEnumerator Blink()
+    {
+
+        while (!pcZ.GetF_Damage())
+        {
+            for (int i = 0; i < PlayerRenderer.Length; i++)
+            {
+                PlayerRenderer[i].enabled = !PlayerRenderer[i].enabled;
+            }
+            for (int i = 0; i < PlayerSkinRenderer.Length; i++)
+            {
+                PlayerSkinRenderer[i].enabled = !PlayerSkinRenderer[i].enabled;
+
+            }
+
+            yield return new WaitForSeconds(0.5f);
+        }
+
+    }
+
+    void Reverse_Damage()
+    {
+        StopCoroutine("Blink");
+        pcZ.Reverse_Damage();//無敵時間解除
+    }
 }

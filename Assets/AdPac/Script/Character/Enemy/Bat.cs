@@ -59,11 +59,11 @@ public class Bat : MonoBehaviour {
         //弾を飛ばす処理
         bullet.transform.position = transform.position;
 
-        MoveS.Move(Player.position - HomePos.position);//これで移動
+        MoveS.Move(Player.position - HomePos.position,ecZ.GetSpeed());//これで移動
 
         yield return new WaitForSeconds(1);
 
-        MoveS.Move(Vector3.zero);//これで移動
+        MoveS.Move(Vector3.zero, ecZ.GetSpeed());//これで移動
 
         /*if(!audioSource.isPlaying){
 			

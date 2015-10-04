@@ -41,6 +41,10 @@ public class Attack_Parameter : MonoBehaviour {
     public string ailment = "";//付加される状態異常
     public string GetAilment() { return ailment; }
 
+    public Vector3 KnockBack = Vector3.zero;//ノックバックで吹っ飛ばす方向　ノックバックさせない場合は0
+    public Vector3 GetKnockBack() { return KnockBack; }
+    public void SetKnockBack(Vector3 KnockBack) { this.KnockBack = KnockBack; }
+
     public GameObject Parent;
     public GameObject GetParent() { return Parent; }
     public void SetParent(GameObject Parent) { this.Parent = Parent; }
