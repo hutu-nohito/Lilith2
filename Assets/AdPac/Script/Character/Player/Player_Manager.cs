@@ -17,8 +17,15 @@ public class Player_Manager : MonoBehaviour {
 	private int count;//汎用のカウント用の箱(使い終わったら0に戻すこと)
 	private bool isCoroutine = false;
 
-	
-	void Start () {
+    //ノックバック用
+    private bool flag_knockback = false;
+    public Vector3 EndPos;
+    private Vector3 deltaPos;
+    private float time = 0.5f;
+    private float elapsedTime;
+
+
+    void Start () {
 		
 		pcZ = Parent.GetComponent<Player_ControllerZ>();
 
@@ -35,7 +42,21 @@ public class Player_Manager : MonoBehaviour {
 
 		}
 
-	}
+        if (flag_knockback)
+        {
+            Parent.transform.position += deltaPos * Time.deltaTime;
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime > time)
+            {
+
+                //Parent.transform.position = EndPos;//正確に動かす必要はない
+                elapsedTime = 0;
+                flag_knockback = false;
+                
+            }
+        }
+
+    }
 
 	IEnumerator Poison (){
 
@@ -105,8 +126,19 @@ public class Player_Manager : MonoBehaviour {
 					
 					pcZ.flag_poison = true;
 					
-				}				
-			}
+				}
+
+                //こっからノックバック
+                if (attack.GetKnockBack().magnitude > 0)
+                {
+                    //time = attack.GetKnockBack().magnitude;
+                    EndPos = Parent.transform.position + col.transform.TransformDirection(attack.GetKnockBack());
+                    deltaPos = (EndPos - Parent.transform.position) / time;
+                    flag_knockback = true;
+                    pcZ.SetKeylock();//行動不能だったと思う
+                    Invoke("SetActive", time);
+                }
+            }
 		}
 	}
 
@@ -125,7 +157,7 @@ public class Player_Manager : MonoBehaviour {
 
             }
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
         }
 
     }
@@ -134,5 +166,10 @@ public class Player_Manager : MonoBehaviour {
     {
         StopCoroutine("Blink");
         pcZ.Reverse_Damage();//無敵時間解除
+    }
+
+    void SetActive()
+    {
+        pcZ.SetActive();//無敵時間解除
     }
 }

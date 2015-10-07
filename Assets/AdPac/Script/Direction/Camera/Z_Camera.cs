@@ -3,6 +3,9 @@ using System.Collections;
 
 public class Z_Camera : MonoBehaviour {
 
+    /*
+    カメラ側の機能
+    */
     public float RotSpeed = 20;//注目時の回転移動速度の調整用
     public float tiltAngle = 2;//カメラティルト調整用の角度
 
@@ -13,9 +16,12 @@ public class Z_Camera : MonoBehaviour {
 	private Player_ControllerZ pcZ;
     private Quaternion StartCamera;//カメラの初期角度
 
-	
-	// Use this for initialization
-	void Start () {
+    public GameObject nearMarker;//今注目できる敵のマーカ
+    public GameObject targetMarker;//今注目してる敵のマーカ
+
+
+    // Use this for initialization
+    void Start () {
 		
 		Player = GameObject.FindGameObjectWithTag("Player");
         pcZ = Player.GetComponent<Player_ControllerZ>();
@@ -76,7 +82,16 @@ public class Z_Camera : MonoBehaviour {
                 //this.transform.localRotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(LookRot) , 1.0f);//Cameraをターゲットのほうにゆっくり向ける
 
             }
-		}
+
+            //注目時のマーカー
+            targetMarker.SetActive(true);
+            targetMarker.transform.position = Target.transform.position + new Vector3(0, Target.transform.localScale.y + 1, 0);
+            nearMarker.SetActive(false);
+        }
+        else
+        {
+            targetMarker.SetActive(false);
+        }
 		
 		if(Input.GetMouseButtonUp(1)){
 
@@ -88,8 +103,11 @@ public class Z_Camera : MonoBehaviour {
             Target = null;//ターゲットを解放
 
 		}
-		
-	}
+
+        //ターゲットがいなければ黄色いマーカを出さない
+        if(Target == null)nearMarker.SetActive(false);
+
+    }
 
     public void SetTarget(GameObject Target,float near)
     {
@@ -101,7 +119,13 @@ public class Z_Camera : MonoBehaviour {
             pcZ.Release_Watch();//注目解除
         
         }//nullのときは注目を外す
-        else if (!pcZ.GetF_Watch()) { this.Target = Target; }//注目中はターゲットは変えない
+        else if (!pcZ.GetF_Watch())
+        {
+            this.Target = Target;
+            nearMarker.SetActive(true);
+            nearMarker.transform.position = Target.transform.position + new Vector3(0, Target.transform.localScale.y + 1, 0);
+
+        }//注目中はターゲットは変えない
 
         length = near;
 

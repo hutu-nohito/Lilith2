@@ -39,6 +39,13 @@ public class SceneManager : MonoBehaviour {
 		
 	}
 
+    public void Magic_Lab()//デバック用ステージ
+    {
+
+        Application.LoadLevel("Magic_Lab");
+
+    }
+
     //アクションステージ//////////////////////////////////
 
     public void Green()

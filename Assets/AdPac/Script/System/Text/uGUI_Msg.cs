@@ -37,6 +37,8 @@ public class uGUI_Msg : MonoBehaviour {
 
     float nextTime = 0;//次の文字の表示間隔
 
+    public GameObject TextFinish;//テキストを表示し終わったときにちかちかするアイコン
+
     //テキスト読み込み。もらってきた今表示したいテキストを分割して配列に格納
     static void readMap(TextAsset readText)
     {
@@ -74,7 +76,9 @@ public class uGUI_Msg : MonoBehaviour {
             }
 
             if (lengthMsg >= dispMsg[lengthSecenario].Length)
-            {		//メッセージを全部表示していたら            
+            {       //メッセージを全部表示していたら 
+
+                TextFinish.SetActive(true);
 
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -82,6 +86,7 @@ public class uGUI_Msg : MonoBehaviour {
                     lengthSecenario++;
                     Debug.Log(lengthSecenario);
                     lengthMsg = 0;		//0文字目にリセット
+                    TextFinish.SetActive(false);
 
                 }
 

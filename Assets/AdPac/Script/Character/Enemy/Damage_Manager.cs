@@ -133,15 +133,22 @@ public class Damage_Manager : MonoBehaviour {
 
                     ecZ.flag_poison = true;
 
-                }			
+                }
 
-			}
+                //こっからノックバック
+                if (Parent.GetComponent<Rigidbody>() != null)
+                {
+                    if (attack.GetKnockBack().magnitude > 0)
+                    {
+                        Parent.GetComponent<Rigidbody>().AddForce(-col.transform.TransformDirection(attack.GetKnockBack()), ForceMode.Impulse);//Yが上下逆
+                        ecZ.SetKeylock();//行動不能だったと思う
+                        Invoke("SetActive", 1);
+                    }
+                }
 
-            //こっからノックバック
-            if(attack.GetKnockBack().magnitude > 0)
-            {
-                Parent.GetComponent<MoveSmooth>().Move(attack.GetKnockBack(),attack.GetKnockBack().magnitude);
             }
+
+                        
 		}
 	}
 
@@ -160,7 +167,7 @@ public class Damage_Manager : MonoBehaviour {
 
             }
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
         }
 
     }
@@ -168,5 +175,10 @@ public class Damage_Manager : MonoBehaviour {
     void Reverse_Damage()
     {
         ecZ.Reverse_Damage();//無敵時間解除
+    }
+
+    void SetActive()
+    {
+        ecZ.SetActive();//無敵時間解除
     }
 }

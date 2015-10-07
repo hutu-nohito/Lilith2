@@ -4,6 +4,9 @@ using System.Collections.Generic;//List用
 
 public class Vision : MonoBehaviour {
 
+    /*
+    注目側の機能
+        */
     //リストのURL　可変長配列でゲームが動いてる間にサイズを変えるならこれ
     //http://ft-lab.ne.jp/cgi-bin-unity/wiki.cgi?page=unity_cs_list
     private List<GameObject> Target = new List<GameObject>();//Vision 内の敵をすべて格納
@@ -12,8 +15,8 @@ public class Vision : MonoBehaviour {
     public GameObject nearTarget = null;//一番近い敵
     public float ReleaseLength = 20;//注目が途切れる距離
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
 
         Player = GameObject.FindGameObjectWithTag("Player");
 
@@ -22,12 +25,16 @@ public class Vision : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Target.Count > 0) 
+        if (Target.Count > 0)
+        {
+
+            MeasureTarget();//近い敵を探す
+
+        }
+        else//ターゲットがいなかったらマーカを出さない
         {
             
-            MeasureTarget();//近い敵を探す
-        
-        }//ターゲットがいなかったら回さない        
+        }  
 
 	}
 
@@ -140,6 +147,12 @@ public class Vision : MonoBehaviour {
     void SetTarget(float near)
     {
         if (Target.Count == 0) { Camera.main.GetComponent<Z_Camera>().SetTarget(null,near); }
-        else { Camera.main.GetComponent<Z_Camera>().SetTarget(nearTarget,near); }
+        else
+        {
+            Camera.main.GetComponent<Z_Camera>().SetTarget(nearTarget,near);
+
+        }
+
+        
     }
 }

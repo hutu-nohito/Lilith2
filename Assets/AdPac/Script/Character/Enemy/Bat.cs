@@ -34,7 +34,7 @@ public class Bat : MonoBehaviour {
         {
 
             //前を向ける
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Player.transform.position - transform.position), 0.05f);
+            transform.rotation = Quaternion.Slerp(transform.localRotation, Quaternion.LookRotation(Player.transform.position - transform.position), 0.5f);
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
             if (ecZ.GetF_Magic())
             {
@@ -58,9 +58,10 @@ public class Bat : MonoBehaviour {
 
         //弾を飛ばす処理
         bullet.transform.position = transform.position;
+        bullet.transform.rotation = transform.rotation;
 
-        MoveS.Move(Player.position - HomePos.position,ecZ.GetSpeed());//これで移動
-
+        MoveS.Move(Player.position - HomePos.position + transform.TransformDirection(new Vector3(0,0,-2)), ecZ.GetSpeed());//これで移動
+        
         yield return new WaitForSeconds(1);
 
         MoveS.Move(Vector3.zero, ecZ.GetSpeed());//これで移動
