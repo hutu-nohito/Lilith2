@@ -16,6 +16,13 @@ public class MouseCamera : MonoBehaviour {
 	float rotationY = 0F;
 	
 	private bool flag_TopView = false;
+
+    //自分で作ったの
+    private Vector3 StartPos;
+    void Start()
+    {
+        StartPos = transform.position;
+    }
 	
 	void Update ()
 	{	
@@ -46,7 +53,7 @@ public class MouseCamera : MonoBehaviour {
 			
 			//this.transform.eulerAngles = new Vector3(10, 0, 0);
 			rotationY = 0;
-			this.transform.localPosition = new Vector3(0,2,-2);
+			this.transform.localPosition = StartPos;
 			
 		}
 		
