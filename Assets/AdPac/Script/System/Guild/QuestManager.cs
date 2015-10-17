@@ -18,6 +18,7 @@ public class QuestManager : Quest_Parameter {
 	//Script//////////////////////////////////////////////////////////
 	private Static _static;
     private SceneManager sM;
+    private uGUI_Msg GUImsg;//メッセージ操作用
 
     //コルーチン用
     private Coroutine coroutine;
@@ -28,16 +29,18 @@ public class QuestManager : Quest_Parameter {
     //Player
     public GameObject Player;
 
-    //クエストスタート時///////////////////////////////////////////////////////////
-	// Use this for initialization
-	void Start () {
-	
-		_static = GetComponent<Static>();
+    // Use this for initialization
+    void Start()
+    {
+
+        _static = GetComponent<Static>();
         sM = GetComponent<SceneManager>();
 
         //F_camera = GameObject.Find("FrontCamera").GetComponent<Camera>();
 
-	}
+    }
+
+    //クエストスタート時///////////////////////////////////////////////////////////
 
     public void QuestStart()
     {

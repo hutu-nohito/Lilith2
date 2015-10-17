@@ -21,7 +21,7 @@ public class MouseCamera : MonoBehaviour {
     private Vector3 StartPos;
     void Start()
     {
-        StartPos = transform.position;
+        StartPos = transform.localPosition;
     }
 	
 	void Update ()

@@ -72,7 +72,7 @@ public class Guild : MonoBehaviour {
 
     }
 
-	public void Quest_Start(){
+	public void Quest_Start(){//クエストのパラメタをManagerに渡してスタート
 
         quest_parameter = Quest_paper[quest_num].GetComponent<Quest_Parameter>();
 
