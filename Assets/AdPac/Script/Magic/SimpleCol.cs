@@ -11,8 +11,9 @@ public class SimpleCol : MonoBehaviour {
     public Type type = Type.Destroy;
 
     public bool ThroughEnemy = true;//敵貫通
-    public bool ThroughBullet = true;//弾を打ち消す
+    public bool ThroughBullet = true;//弾貫通
     public bool ThroughPlayer = true;//自分貫通
+    public bool ThroughTerrain = true;//地形貫通
 
     private Magic_Controller MC;
 
@@ -60,6 +61,14 @@ public class SimpleCol : MonoBehaviour {
                 if (col.tag == "Player")
                 {
                     if (ThroughPlayer) break;
+                    else
+                    {
+                        Destroy(this.gameObject);
+                    }
+                }
+                if (col.gameObject.name == "Terrain")
+                {
+                    if (ThroughTerrain) break;
                     else
                     {
                         Destroy(this.gameObject);

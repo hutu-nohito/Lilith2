@@ -38,11 +38,13 @@ public class Rayfall : Magic_Parameter {
         {
 
             bullet[i] = GameObject.Instantiate(bullet_Prefab);//弾生成
+            bullet[i].transform.position = transform.position + Parent.transform.TransformDirection(new Vector3(-1.5f + i, 0, 0));//
             if (bullet[i] != null)
             {
 
                 MC.AddExistBullet(bullet[i]);//現在の弾数を増やす
                 bullet[i].GetComponent<Attack_Parameter>().Parent = this.Parent;//もらった親を渡しておく必要がある
+
 
             }
             
@@ -59,8 +61,7 @@ public class Rayfall : Magic_Parameter {
 
             if (bullet[i] != null)
             {
-
-                bullet[i].transform.position = transform.position + Parent.GetComponent<Character_Parameters>().direction;//
+                //bullet[i].transform.position = transform.position + Parent.transform.TransformDirection(new Vector3(-1.5f + i, 0, 0));//
                 bullet[i].transform.rotation = Quaternion.LookRotation(Parent.transform.TransformDirection(Vector3.up) + Parent.transform.TransformDirection(Vector3.forward) + Parent.transform.TransformDirection(new Vector3(-1.5f + i, 0, 0)));//回転させて弾頭を進行方向に向ける
                 bullet[i].GetComponent<Rigidbody>().velocity = ((Parent.transform.TransformDirection(Vector3.up) + Parent.transform.TransformDirection(Vector3.forward) + Parent.transform.TransformDirection(new Vector3(-1.5f + i, 0, 0))) * bullet[0].GetComponent<Attack_Parameter>().speed / 3);
 
@@ -79,7 +80,7 @@ public class Rayfall : Magic_Parameter {
 			
         }*/
 
-        yield return new WaitForSeconds(bullet[0].GetComponent<Attack_Parameter>().GetR_Time());//撃った後の硬直
+        yield return new WaitForSeconds(bullet_Prefab.GetComponent<Attack_Parameter>().GetR_Time());//撃った後の硬直
 
         //硬直を解除
         Parent.GetComponent<Character_Manager>().SetActive();

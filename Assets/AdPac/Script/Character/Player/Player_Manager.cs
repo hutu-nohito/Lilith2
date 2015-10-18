@@ -154,10 +154,19 @@ public class Player_Manager : MonoBehaviour {
             for (int i = 0; i < PlayerSkinRenderer.Length; i++)
             {
                 PlayerSkinRenderer[i].enabled = !PlayerSkinRenderer[i].enabled;
-
             }
 
             yield return new WaitForSeconds(0.1f);
+        }
+
+        //消えるの対策
+        for (int i = 0; i < PlayerRenderer.Length; i++)
+        {
+            PlayerRenderer[i].enabled = true;
+        }
+        for (int i = 0; i < PlayerSkinRenderer.Length; i++)
+        {
+            PlayerSkinRenderer[i].enabled = true;
         }
 
     }

@@ -15,7 +15,9 @@ public class Magic_Controller : MonoBehaviour{
 
     public int magic_num = 0;//選択している弾の種類
 
+    private bool isHold;//ホールド中　魔法が切り替わらないようにする
     private List<GameObject> Bullet0 = new List<GameObject>();//0個目に登録されてる弾の現在存在してる数
+    //増やすのは各自でやってもらう
     public void AddExistBullet(GameObject bullet)//バレットを増やす
     {
         Bullet0.Add(bullet);
@@ -82,6 +84,7 @@ public class Magic_Controller : MonoBehaviour{
 
 		coroutine = StartCoroutine (MPRecover ());
 
+        //弾がなくなったかどうかはこっちで判断
         for (int i = 0;i < Bullet0.Count;i++)
         {
             if (Bullet0[i] == null)
@@ -138,36 +141,45 @@ public class Magic_Controller : MonoBehaviour{
         */
 
         //ボタン式
-        if(Input.GetKeyDown(KeyCode.Z)){
-
-            if (magic_num == 0)
-            {
-
-                magic_num = Magic.Length - 1;
-				
-            }else{
-
-                magic_num -= 1;
-				
-            }
-			
-        }
-
-        if (Input.GetKeyDown(KeyCode.X))
+        if (!isHold)
         {
-
-            if (magic_num == Magic.Length - 1)
+            if (Input.GetKeyDown(KeyCode.Z))
             {
 
-                magic_num = 0;
-				
-            }else{
+                if (magic_num == 0)
+                {
 
-                magic_num += 1;
-				
+                    magic_num = Magic.Length - 1;
+
+                }
+                else
+                {
+
+                    magic_num -= 1;
+
+                }
+
             }
-			
+
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+
+                if (magic_num == Magic.Length - 1)
+                {
+
+                    magic_num = 0;
+
+                }
+                else
+                {
+
+                    magic_num += 1;
+
+                }
+
+            }
         }
+        
 
     }
 
@@ -189,12 +201,14 @@ public class Magic_Controller : MonoBehaviour{
                 {
 
                     Magic[magic_num].SendMessage("Hold");//ボタンおしっぱのとき
+                    isHold = true;
 
                 }
                 if (Input.GetButtonUp("Fire1"))
                 {
                     
                     Magic[magic_num].SendMessage("Fire");
+                    isHold = false;
 
                 }
                 break;

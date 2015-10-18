@@ -32,7 +32,7 @@ public class Z_Camera : MonoBehaviour {
 
 	//ちらちらしそうだったらLateUpdateに変更
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
         
         //とりあえず右クリックで注目
 		if(Input.GetMouseButton(1)){
@@ -74,19 +74,19 @@ public class Z_Camera : MonoBehaviour {
                 Player.transform.rotation = Quaternion.Slerp(Player.transform.rotation, Quaternion.LookRotation(Target.transform.position - Player.transform.position), 0.1f);//Playerをターゲットのほうにゆっくり向ける
                 Player.transform.rotation = Quaternion.Euler(0, Player.transform.eulerAngles.y, 0);//Playerのx,zの回転を直す。回転嫌い。全部Eulerにしてしまえばよい
 
-			    //this.transform.LookAt((Player.transform.position + Target.transform.position) / 2);//Playerとターゲットの中心をPlayerの後ろから映して、どっちも画面内に収める
+                //this.transform.LookAt((Player.transform.position + Target.transform.position) / 2);//Playerとターゲットの中心をPlayerの後ろから映して、どっちも画面内に収める
 
                 //ターゲットとの高さによって回転角度を決めてる。tiltAngleで角度の調整
                 //Vector3 LookRot = new Vector3((this.transform.position.y - Target.transform.position.y) * tiltAngle, 0, 0);//カメラの回転角度。X方向だけでいい。(ティルト)
-               // this.transform.localEulerAngles = LookRot;
+                // this.transform.localEulerAngles = LookRot;
                 //this.transform.localRotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(LookRot) , 1.0f);//Cameraをターゲットのほうにゆっくり向ける
 
+                //注目時のマーカー
+                targetMarker.SetActive(true);
+                targetMarker.transform.position = Target.transform.position + new Vector3(0, Target.transform.localScale.y + 1, 0);
+                nearMarker.SetActive(false);
             }
 
-            //注目時のマーカー
-            targetMarker.SetActive(true);
-            targetMarker.transform.position = Target.transform.position + new Vector3(0, Target.transform.localScale.y + 1, 0);
-            nearMarker.SetActive(false);
         }
         else
         {

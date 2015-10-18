@@ -17,7 +17,6 @@ public class Attack_Parameter : MonoBehaviour {
     public float rigid_time = 5.0f; //硬直時間
     public float GetR_Time() { return rigid_time; }
 
-    public string element;//属性
     public enum MagicElement
     {//魔法の属性
         Earth,//地

@@ -170,6 +170,17 @@ public class Damage_Manager : MonoBehaviour {
             yield return new WaitForSeconds(0.1f);
         }
 
+        //なんか消えてることがあったのでとりあえず強制的につける
+        for (int i = 0; i < Renderer.Length; i++)
+        {
+            Renderer[i].enabled = true;
+        }
+        for (int i = 0; i < SkinRenderer.Length; i++)
+        {
+            SkinRenderer[i].enabled = true;
+
+        }
+
     }
 
     void Reverse_Damage()
