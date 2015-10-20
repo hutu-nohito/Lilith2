@@ -43,8 +43,12 @@ public class Iceball : Magic_Parameter {
             oldPos = Player.transform.position;
         }
 
-        //雪玉を大きく
-        if(oldPos != Player.transform.position)
+        if (bullet == null) {
+
+            return;//雪玉が壊れてたら処理しない
+        } 
+                   //雪玉を大きく
+            if (oldPos != Player.transform.position)
         {
             if (bullet.transform.localScale.y < 5)//一応制限しとく
                 bullet.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
@@ -70,6 +74,13 @@ public class Iceball : Magic_Parameter {
 
     IEnumerator Shot()
     {
+        //雪玉が壊れてたら処理を抜ける
+        if (bullet == null) {
+            yield return new WaitForSeconds(0.2f);//ちょっと待つ
+            isIceball = false;
+            yield break;
+        }
+        
         Parent.GetComponent<Character_Manager>().SetKeylock();
         GameObject bullet_Shot;
         bullet.transform.parent = null;

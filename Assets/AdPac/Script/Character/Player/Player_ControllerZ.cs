@@ -21,6 +21,11 @@ public class Player_ControllerZ : Character_Manager{
     [System.NonSerialized]
     public float base_Sp, base_Ju;
 
+    //坂判定用
+    private RaycastHit slideHit;
+    public float slideSpeed = 0.1f;//滑るスピード
+    private bool isSliding = false;//滑ってるかどうか
+
     void Start()
     {
         playerController = GetComponent<CharacterController>();//rigidbodyを使う場合は外す
@@ -86,7 +91,7 @@ public class Player_ControllerZ : Character_Manager{
         //キャラクタの方向回転
         //this.transform.Rotate(0,Input.GetAxis("Mouse X") * character_parameter.now_speed * Time.deltaTime * 90,0);
 
-        if(!GetF_Watch())this.transform.Rotate(0, InputX * speed * Time.deltaTime * 12, 0);//注目してたら回さない
+        if (!GetF_Watch())this.transform.Rotate(0, InputX * speed * Time.deltaTime * 12, 0);//注目してたら回さない
 
         //キャラクタの方向を取得
         direction = transform.TransformDirection(Vector3.forward);
@@ -104,6 +109,15 @@ public class Player_ControllerZ : Character_Manager{
 
             animator.SetFloat("Speed", 0);
 
+        }
+
+        //坂に立ってたら滑らす
+        if (isSliding)
+        {//滑るフラグが立ってたら
+            Vector3 hitNormal = slideHit.normal;
+            move_direction.x = hitNormal.x * slideSpeed;
+            move_direction.z = hitNormal.z * slideSpeed;
+            isSliding = false;//ここでリセットしとく
         }
 
         //キャラにかかる重力決定（少しふわふわさせてる）
@@ -157,4 +171,22 @@ public class Player_ControllerZ : Character_Manager{
         }
     }
 
+    //地面に立ってないとき下が坂じゃないか確認
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (!playerController.isGrounded)
+        {
+            //キャラクターの位置から下方向にRayを飛ばす（指定レイヤー限定※この場合は地面コリジョンのレイヤー）
+            //RayLengthは、Rayを飛ばす距離。私の場合は地面の位置すれすれまで飛ばしてます（地面の高さは固定な前提）
+            //レイヤーマスクは⇒で指定 int layerMask =1 << LayerMask.NameToLayer("レイヤー名");
+            if (Physics.Raycast(transform.position, Vector3.down, out slideHit, 50))
+            {
+                //衝突した際の面の角度とが滑らせたい角度以上かどうかを調べます。
+                if (Vector3.Angle(slideHit.normal, Vector3.up) > playerController.slopeLimit)
+                {
+                    isSliding = true;
+                }
+            }
+        }
+    }
 }
