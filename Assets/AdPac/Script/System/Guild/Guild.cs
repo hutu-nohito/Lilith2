@@ -5,19 +5,46 @@ public class Guild : MonoBehaviour {
 
     //ギルドで行うことは基本的にここで処理する
 
-    private int quest_num = 0;
+    private int quest_num = 0;//どのクエストを選んだか
 
 	public GameObject[] Quest_paper;
 
 	private QuestManager qM;
 	private Quest_Parameter quest_parameter;
     private SceneManager sM;
+    private Static _static;
 
-	// Use this for initialization
-	void Start () {
-
+    void Awake()
+    {
         qM = GameObject.FindGameObjectWithTag("Manager").GetComponent<QuestManager>();
         sM = GameObject.FindGameObjectWithTag("Manager").GetComponent<SceneManager>();
+        _static = GameObject.FindGameObjectWithTag("Manager").GetComponent<Static>();
+
+        //ここでクエストから帰ってきた時の処理
+
+        if (qM.isQuest)
+        {
+            _static.day += qM.quest_time;//失敗・成功にかかわらず終わったクエストのクエストタイムを加算
+
+            //昼になったらクエスト期間を減らす
+            if (_static.day - (int)_static.day == 0)//dayが偶数の時昼
+            {
+                for (int i = 0; i < 6; i++)//全部のクエストぺーパーのクエスト期間を1減少させる
+                {
+                    Quest_paper[i].GetComponent<Quest_Parameter>().SetTerm(Quest_paper[i].GetComponent<Quest_Parameter>().GetTerm() - 1); ;
+                    //張り出し期間が終了したら入れ替える
+                    if (Quest_paper[i].GetComponent<Quest_Parameter>().GetTerm() <= 0)
+                    {
+                        Quest_Refresh(i);//終了したクエスト
+                    }
+                }
+
+            }
+
+        }
+    }
+	// Use this for initialization
+	void Start () {
 
 	}
 	
@@ -72,7 +99,7 @@ public class Guild : MonoBehaviour {
 
     }
 
-	public void Quest_Start(){//クエストのパラメタをManagerに渡してスタート
+	public void Quest_Start(){//クエストのパラメタをManagerに渡してスタート スタートボタン
 
         quest_parameter = Quest_paper[quest_num].GetComponent<Quest_Parameter>();
 
@@ -80,8 +107,10 @@ public class Guild : MonoBehaviour {
         qM.QuestName = quest_parameter.QuestName;
         qM.type = quest_parameter.type;
         qM.stage = quest_parameter.stage;
-        qM.quest_Target = quest_parameter.quest_Target;
+        qM.quest_Target = quest_parameter.quest_Target;//これで配列の中身が全部移る
         qM.rewards = quest_parameter.rewards;
+        qM.quest_level = quest_parameter.quest_level;
+        qM.quest_term = quest_parameter.quest_term;
         qM.quest_time = quest_parameter.quest_time;
 
         switch (qM.stage)
@@ -105,10 +134,12 @@ public class Guild : MonoBehaviour {
                 break;
         }
 
+        qM.isQuest = true;//クエスト中フラグを立てる
         qM.QuestStart();
 
 	}
 
+    //戻るボタン
 	public void Quest_Back()
 	{
 		
@@ -119,5 +150,63 @@ public class Guild : MonoBehaviour {
     //情報掲示板/////////////////////////////////////////////////////////
 
     //BP交換所/////////////////////////////////////////////////////////
+
+    //クエスト番号をもらって入れ替え　ここに全クエスト書いとく
+    private void Quest_Refresh(int num)
+    {
+        //入れ替え用の箱を用意
+        int quest_ID = 0;//クエスト識別番号
+        string QuestName = "Lilith";//クエストの名前
+        Quest_Parameter.Quest_Type type = Quest_Parameter.Quest_Type.Subjugation;
+        Quest_Parameter.Stage stage = Quest_Parameter.Stage.Green;
+        string[] quest_Target = new string[] { "MadMushroom" };//そのクエストの終了条件を満たす対象
+        string[] rewards = new string[] { "魔石" };//クエ報酬（複数可）
+        string quest_level = "E";//クエスト難易度
+        int quest_term = 7;//クエストが張り出される期間
+        float quest_time = 0.5f;//そのクエストで何日進むか
+
+        int nextQuest = Random.Range(1,2);//0~0まででランダムで次のクエストを決定
+
+        switch (nextQuest)
+        {
+            case 0:
+                quest_ID = 0;//クエスト識別番号
+                QuestName = "チュートリアル";//クエストの名前
+                type = Quest_Parameter.Quest_Type.Subjugation;
+                stage = Quest_Parameter.Stage.Green;
+                quest_Target = new string[]{ "MadMushroom"};//そのクエストの終了条件を満たす対象
+                rewards = new string[] { "レシピ" };//クエ報酬（複数可）
+                quest_level = "E";//クエスト難易度
+                quest_term = 5;//クエストが張り出される期間
+                quest_time = 0.5f;//そのクエストで何日進むか
+                break;
+            case 1:
+                quest_ID = 1;//クエスト識別番号
+                QuestName = "精霊採取";//クエストの名前
+                type = Quest_Parameter.Quest_Type.Collect;
+                stage = Quest_Parameter.Stage.Mine;
+                quest_Target = new string[] { "Enemy_Flame" };//そのクエストの終了条件を満たす対象
+                rewards = new string[] { "レシピ" };//クエ報酬（複数可）
+                quest_level = "D";//クエスト難易度
+                quest_term = 3;//クエストが張り出される期間
+                quest_time = 0.5f;//そのクエストで何日進むか
+                break;
+            default:
+                break;
+        }
+
+        //入れ替え
+        quest_parameter = Quest_paper[num].GetComponent<Quest_Parameter>();//入れ替えるクエストペーパー
+        quest_parameter.quest_ID = quest_ID;
+        quest_parameter.QuestName = QuestName;
+        quest_parameter.type = type;
+        quest_parameter.stage = stage;
+        quest_parameter.quest_Target = quest_Target;
+        quest_parameter.rewards = rewards;
+        quest_parameter.quest_level = quest_level;
+        quest_parameter.quest_term = quest_term;
+        quest_parameter.quest_time = quest_time;
+
+    }
 
 }

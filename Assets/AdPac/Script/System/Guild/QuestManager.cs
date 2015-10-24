@@ -10,10 +10,12 @@ public class QuestManager : Quest_Parameter {
 	
 	public int now_count = 0;//使い終わったら戻す！
 
-	//クエストの状態//////////////////////////////////////////////////////////
-/*	private　bool quest_count = false;//クエスト識別用・数
-	private　bool quest_time = false;//クエスト識別用・時間
-	private　bool quest_position = false;//クエスト識別用・位置*/
+    //クエストの状態//////////////////////////////////////////////////////////
+    /*	private　bool quest_count = false;//クエスト識別用・数
+        private　bool quest_time = false;//クエスト識別用・時間
+        private　bool quest_position = false;//クエスト識別用・位置*/
+
+    public bool isQuest = false;//ただいまクエスト中 ギルドで管理
 
 	//Script//////////////////////////////////////////////////////////
 	private Static _static;
@@ -29,6 +31,8 @@ public class QuestManager : Quest_Parameter {
     //Player
     public GameObject Player;
 
+
+    //クエストマネージャはManagerについてるのでStartは基本使わない
     // Use this for initialization
     void Start()
     {
@@ -106,7 +110,6 @@ public class QuestManager : Quest_Parameter {
         yield return new WaitForSeconds(3);//クリアを見せる
 
         sM.Guild();
-        _static.day += quest_time;
 
     }
 
