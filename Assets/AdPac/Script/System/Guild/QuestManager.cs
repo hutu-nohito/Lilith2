@@ -26,11 +26,15 @@ public class QuestManager : Quest_Parameter {
     private Coroutine coroutine;
 
     //カメラ操作用
-    //public Camera F_camera;
+    private Camera F_camera;
+
+    //文字操作用
+    private GameObject Ready;
+    private GameObject Go;
+    private GameObject Clear;
 
     //Player
     public GameObject Player;
-
 
     //クエストマネージャはManagerについてるのでStartは基本使わない
     // Use this for initialization
@@ -39,8 +43,6 @@ public class QuestManager : Quest_Parameter {
 
         _static = GetComponent<Static>();
         sM = GetComponent<SceneManager>();
-
-        //F_camera = GameObject.Find("FrontCamera").GetComponent<Camera>();
 
     }
 
@@ -54,14 +56,50 @@ public class QuestManager : Quest_Parameter {
     }
     IEnumerator C_QuestStart()
     {
-        yield return new WaitForSeconds(0.01f);//シーン切り替わり待ち
+        yield return new WaitForSeconds(0.1f);//シーン切り替わり待ち
 
         Player = GameObject.FindGameObjectWithTag("Player");//切り替わってからでないと読めない
+        F_camera = Player.transform.FindChild("FrontCamera").GetComponent<Camera>();
+
+        //敵やらなんやら配置構成 全部アクティブにしておく///////////////////////////////////////////////////////////////////////////////////////////
+
+        //ecZで判断すれば、敵一体一体を識別できるはず
+        //これで配列に入るらしい。順番はわからん
+        Enemy_ControllerZ[] ecZ = GameObject.FindObjectsOfType<Enemy_ControllerZ>();
+        //敵
+        for (int i = 0;i < ecZ.Length;i++)
+        {
+
+           if(ecZ[i].GetQuestStage() != queststageID)
+            {
+                ecZ[i].gameObject.SetActive(false);
+            }
+        }
+
+
+        //UI関連処理////////////////////////////////////////////////////////////////////////////////////////////////////////
+        Ready = GameObject.Find("Text_Ready");
+        Go = GameObject.Find("Text_Go");
+        Clear = GameObject.Find("Text_Clear");
+
+        //GameObjectはアクティブでないと探せないので探したら消す
+        Ready.SetActive(false);
+        Go.SetActive(false);
+        Clear.SetActive(false);
+
+        Ready.SetActive(true);
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         Player.GetComponent<Player_ControllerZ>().SetKeylock(); Player.GetComponent<Player_ControllerZ>().SetKeylock();
 
         yield return new WaitForSeconds(3);//表示に時間がかかる可能性を考えて少したってから行動できるようにしておく
 
+        Ready.SetActive(false);
+        Go.SetActive(true);
         Player.GetComponent<Player_ControllerZ>().SetActive();
+
+        yield return new WaitForSeconds(2);//ちょっとしたらGoを消す
+        Go.SetActive(false);
 
     }
 
@@ -76,6 +114,12 @@ public class QuestManager : Quest_Parameter {
 
             Clear_Count();
 
+        }
+
+        //F12を押すとクエストクリア
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            coroutine = StartCoroutine(QuestClear());
         }
     }
 
@@ -100,15 +144,26 @@ public class QuestManager : Quest_Parameter {
 
         //クリア後だからたぶんほっといても大丈夫
         Player.GetComponent<Player_ControllerZ>().SetKeylock();
-        /*Camera.main.enabled = false;
-        F_camera.enabled = true;*/
+        Camera.main.enabled = false;
+        F_camera.enabled = true;
 
 		//クリア時のHP、MPを引き継がせる
 		_static.SetHP(Player.GetComponent<Player_ControllerZ> ().GetHP ());
 		_static.SetMP(Player.GetComponent<Player_ControllerZ> ().GetMP ());
 
+        yield return new WaitForSeconds(0.5f);//カメラ切り替えの間
+
+        Clear.SetActive(true);
+
         yield return new WaitForSeconds(3);//クリアを見せる
 
+        Clear.SetActive(false);
+        //一応戻しとく
+        Player.GetComponent<Player_ControllerZ>().SetActive();
+        //Camera.main.enabled = true;//カメラは保持してないのでないと取り込めない
+        F_camera.enabled = false;
+
+        //クエストが終わったら特別なことがない限りギルドへ
         sM.Guild();
 
     }

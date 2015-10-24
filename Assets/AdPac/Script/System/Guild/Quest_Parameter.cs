@@ -3,11 +3,11 @@ using System.Collections;
 
 public class Quest_Parameter : MonoBehaviour {
 
-	//クエストのパラメタ設定
+    //クエストのパラメタ設定
 
     public int quest_ID = 0;//クエスト識別番号
     public int GetID() { return quest_ID; }
-    public void SetTD(int ID) { this.quest_ID = ID; }
+    public void SetID(int ID) { this.quest_ID = ID; }
 
 	public string QuestName = "Lilith";//クエストの名前
     public string GetName() {return QuestName; }
@@ -38,6 +38,10 @@ public class Quest_Parameter : MonoBehaviour {
     public Stage stage = Stage.Green;
     public Stage GetStage() { return stage; }
     public void SetStage(Stage stage) { this.stage = stage; }
+
+    public int queststageID = 0;//ステージの構成を選択　変わる
+    public int GetQestStageID() { return queststageID; }
+    public void SetQuestStageID(int ID) { this.queststageID = ID; }
 
     public string[] quest_Target;//そのクエストの終了条件を満たす対象
     public string GetTarget(int num) { return quest_Target[num]; }

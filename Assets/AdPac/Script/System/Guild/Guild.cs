@@ -107,11 +107,15 @@ public class Guild : MonoBehaviour {
         qM.QuestName = quest_parameter.QuestName;
         qM.type = quest_parameter.type;
         qM.stage = quest_parameter.stage;
+        qM.SetQuestStageID(quest_parameter.GetQestStageID());
         qM.quest_Target = quest_parameter.quest_Target;//これで配列の中身が全部移る
         qM.rewards = quest_parameter.rewards;
         qM.quest_level = quest_parameter.quest_level;
         qM.quest_term = quest_parameter.quest_term;
         qM.quest_time = quest_parameter.quest_time;
+
+        qM.isQuest = true;//クエスト中フラグを立てる
+        qM.QuestStart();
 
         switch (qM.stage)
         {
@@ -133,9 +137,6 @@ public class Guild : MonoBehaviour {
             default:
                 break;
         }
-
-        qM.isQuest = true;//クエスト中フラグを立てる
-        qM.QuestStart();
 
 	}
 
@@ -159,13 +160,14 @@ public class Guild : MonoBehaviour {
         string QuestName = "Lilith";//クエストの名前
         Quest_Parameter.Quest_Type type = Quest_Parameter.Quest_Type.Subjugation;
         Quest_Parameter.Stage stage = Quest_Parameter.Stage.Green;
+        int queststageID = 0;//ステージの構成を選択　変わる
         string[] quest_Target = new string[] { "MadMushroom" };//そのクエストの終了条件を満たす対象
         string[] rewards = new string[] { "魔石" };//クエ報酬（複数可）
         string quest_level = "E";//クエスト難易度
         int quest_term = 7;//クエストが張り出される期間
         float quest_time = 0.5f;//そのクエストで何日進むか
 
-        int nextQuest = Random.Range(1,2);//0~0まででランダムで次のクエストを決定
+        int nextQuest = Random.Range(0,0);//0~0まででランダムで次のクエストを決定
 
         switch (nextQuest)
         {
@@ -174,6 +176,7 @@ public class Guild : MonoBehaviour {
                 QuestName = "チュートリアル";//クエストの名前
                 type = Quest_Parameter.Quest_Type.Subjugation;
                 stage = Quest_Parameter.Stage.Green;
+                queststageID = 1;
                 quest_Target = new string[]{ "MadMushroom"};//そのクエストの終了条件を満たす対象
                 rewards = new string[] { "レシピ" };//クエ報酬（複数可）
                 quest_level = "E";//クエスト難易度
@@ -185,6 +188,7 @@ public class Guild : MonoBehaviour {
                 QuestName = "精霊採取";//クエストの名前
                 type = Quest_Parameter.Quest_Type.Collect;
                 stage = Quest_Parameter.Stage.Mine;
+                queststageID = 0;
                 quest_Target = new string[] { "Enemy_Flame" };//そのクエストの終了条件を満たす対象
                 rewards = new string[] { "レシピ" };//クエ報酬（複数可）
                 quest_level = "D";//クエスト難易度
@@ -201,6 +205,7 @@ public class Guild : MonoBehaviour {
         quest_parameter.QuestName = QuestName;
         quest_parameter.type = type;
         quest_parameter.stage = stage;
+        quest_parameter.SetQuestStageID(queststageID);
         quest_parameter.quest_Target = quest_Target;
         quest_parameter.rewards = rewards;
         quest_parameter.quest_level = quest_level;

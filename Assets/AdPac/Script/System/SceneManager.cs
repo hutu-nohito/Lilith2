@@ -29,7 +29,7 @@ public class SceneManager : MonoBehaviour {
 
 	public void Guild (){
 
-		Application.LoadLevel("Guild");
+		Application.LoadLevel("guild");
 
 	}
 
@@ -51,7 +51,7 @@ public class SceneManager : MonoBehaviour {
     public void Green()
     {
 
-        Application.LoadLevel("Green");
+        Application.LoadLevel("Green1");
 
     }
 

@@ -6,6 +6,9 @@ public class Character_Parameters : MonoBehaviour {
     //プレイヤーと敵の大元の基底クラス
     //キャラのパラメタ設定
 
+    public int QuestStageID = 0;//ステージごとにそのクエストで出すかどうか決めるID ステージごとなので変わることはない
+    public int GetQuestStage() { return QuestStageID; }
+
     //キャラクタのパラメタ設定(初期値)//////////////////////////////////////////////////////////
 
     public string CharaName = "Lilith";//キャラの種族名
@@ -59,4 +62,5 @@ public class Character_Parameters : MonoBehaviour {
     public Vector3 direction = Vector3.zero;//キャラクタが向いている方向
     public Vector3 GetDirection() { return direction; }
     public void SetDirection(Vector3 direction) { this.direction = direction; }
+
 }

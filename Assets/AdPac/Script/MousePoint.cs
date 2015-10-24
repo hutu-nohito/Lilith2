@@ -10,6 +10,9 @@ public class MousePoint : MonoBehaviour {
 		
 		Vector3 screenPoint = Input.mousePosition;
 		screenPoint.z = 50.0f;
+
+        //カメラがなかったら処理しない
+        if(Camera.main != null)
 		worldPoint = Camera.main.ScreenToWorldPoint(screenPoint);
 		
 	}
