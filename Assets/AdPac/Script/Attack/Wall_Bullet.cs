@@ -7,7 +7,7 @@ public class Wall_Bullet : Attack_Parameter {
 
     public Vector3 StartPos;
     public Vector3 EndPos;
-    public float Movetime = 1;
+    public float Movetime = 2;
     private Vector3 deltaPos;
 
     private float elapsedTime;

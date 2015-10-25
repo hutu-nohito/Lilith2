@@ -167,7 +167,7 @@ public class Guild : MonoBehaviour {
         int quest_term = 7;//クエストが張り出される期間
         float quest_time = 0.5f;//そのクエストで何日進むか
 
-        int nextQuest = Random.Range(0,0);//0~0まででランダムで次のクエストを決定
+        int nextQuest = Random.Range(0,1);//0~0まででランダムで次のクエストを決定
 
         switch (nextQuest)
         {
