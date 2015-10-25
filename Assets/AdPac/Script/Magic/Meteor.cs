@@ -9,11 +9,15 @@ public class Meteor : Magic_Parameter {
 
     private int num_meteor;//出せるメテオの数
 
+    //演出用・アニメータ、パーティクル・・・
+    private Animator animator;
+
     // Use this for initialization
     void Start()
     {
         MC = GameObject.FindGameObjectWithTag("Player").GetComponent<Magic_Controller>();
         pcZ = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_ControllerZ>();
+        animator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -30,6 +34,13 @@ public class Meteor : Magic_Parameter {
     IEnumerator Shot()
     {
         Parent.GetComponent<Character_Manager>().SetKeylock();
+
+        animator.SetBool("Shoot", true);
+
+        yield return new WaitForSeconds(1);//発動までにかかる時間
+
+        //animator.SetBool("Shoot", false);
+
         //MPの処理
         pcZ.SetMP(pcZ.GetMP() - GetSMP());
 

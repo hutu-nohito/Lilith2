@@ -46,7 +46,7 @@ public class AirCutter : Magic_Parameter {
 
                 bullet[i].transform.position = transform.position + Parent.GetComponent<Character_Parameters>().direction + Parent.transform.TransformDirection(new Vector3(-0.5f + i, 0, 0));//
 
-                Destroy(bullet[i], bullet[0].GetComponent<Attack_Parameter>().GetA_Time());
+                Destroy(bullet[i], bullet_Prefab.GetComponent<Attack_Parameter>().GetA_Time());
 
             }
 
