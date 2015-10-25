@@ -11,6 +11,9 @@ public class Meteor : Magic_Parameter {
 
     //演出用・アニメータ、パーティクル・・・
     private Animator animator;
+    public GameObject Jin;//魔方陣
+    private bool isFade = false;//魔方陣フェード用
+    private float time = 0;
 
     // Use this for initialization
     void Start()
@@ -23,7 +26,18 @@ public class Meteor : Magic_Parameter {
     // Update is called once per frame
     void Update()
     {
-
+        if (isFade)
+        {
+            if(time < 1)time += Time.deltaTime * 3;
+            Jin.GetComponent<Renderer>().material.color = new Color(1, 1, 1, time);
+            
+        }
+        else
+        {
+            if (time > 0) time -= Time.deltaTime * 3;
+            Jin.GetComponent<Renderer>().material.color = new Color(1, 1, 1, time);
+        }
+        
     }
 
     void Fire()
@@ -35,11 +49,11 @@ public class Meteor : Magic_Parameter {
     {
         Parent.GetComponent<Character_Manager>().SetKeylock();
 
-        animator.SetBool("Shoot", true);
+        animator.SetTrigger("Shoot");//アニメーション
+        //魔方陣つける
+        isFade = true;
 
-        yield return new WaitForSeconds(1);//発動までにかかる時間
-
-        //animator.SetBool("Shoot", false);
+        yield return new WaitForSeconds(1);//撃つまでのため
 
         //MPの処理
         pcZ.SetMP(pcZ.GetMP() - GetSMP());
@@ -65,7 +79,7 @@ public class Meteor : Magic_Parameter {
                 MC.AddExistBullet(bullet[i]);//現在の弾数を増やす
                 bullet[i].GetComponent<Attack_Parameter>().Parent = this.Parent;//もらった親を渡しておく必要がある
 
-                bullet[i].transform.position = transform.position + Parent.transform.TransformDirection(new Vector3(Random.Range(-5, 5), Random.Range(-5, 5), Random.Range(-5, 5)));//ランダム
+                bullet[i].transform.position = transform.position + Parent.transform.TransformDirection(new Vector3(Random.Range(-5, 6), Random.Range(0, 5), Random.Range(-5, 6)));//ランダム
                 bullet[i].transform.rotation = Quaternion.LookRotation(Parent.transform.TransformDirection(Vector3.forward));//回転させて弾頭を進行方向に向ける
                 bullet[i].GetComponent<Rigidbody>().velocity = ((Parent.transform.TransformDirection(new Vector3(0, -4, 2))) * bullet_Prefab.GetComponent<Attack_Parameter>().speed);
 
@@ -83,6 +97,9 @@ public class Meteor : Magic_Parameter {
         }*/
 
         yield return new WaitForSeconds(bullet_Prefab.GetComponent<Attack_Parameter>().GetR_Time());//撃った後の硬直
+
+        //魔方陣を消す
+        isFade = false;
 
         //硬直を解除
         Parent.GetComponent<Character_Manager>().SetActive();
