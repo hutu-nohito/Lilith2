@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player_ControllerZ : Character_Manager{
+public class Debug_pcZ : Character_Manager
+{
 
     /*
     プレイヤーの操作用
@@ -13,9 +14,7 @@ public class Player_ControllerZ : Character_Manager{
     //使うもの
     private CharacterController playerController;//キャラクタコントローラで動かす場合
     private Animator animator;//アニメーション設定用
-	private Static save;
-
-    public GameObject MainCamera;//動かす用のカメラ
+    private Static save;
 
     //初期パラメタ(邪魔なのでインスペクタに表示しない)
     [System.NonSerialized]
@@ -32,14 +31,11 @@ public class Player_ControllerZ : Character_Manager{
     {
         playerController = GetComponent<CharacterController>();//rigidbodyを使う場合は外す
         animator = GetComponentInChildren<Animator>();//アニメータを使うとき
-		save = GameObject.FindGameObjectWithTag ("Manager").GetComponent<Static> ();
+        save = GameObject.FindGameObjectWithTag("Manager").GetComponent<Static>();
 
-        //メインカメラが設定されてなかったらする
-        if (MainCamera == null) MainCamera = Camera.main.gameObject;
-
-		//HPとMPの引継ぎ
-		H_point = save.H_Point;
-		M_point = save.M_Point;
+        //HPとMPの引継ぎ
+        H_point = save.H_Point;
+        M_point = save.M_Point;
 
         //初期パラメタを保存
         max_HP = H_point;
@@ -72,9 +68,10 @@ public class Player_ControllerZ : Character_Manager{
 
         if (flag_move)
         {
-                InputX = Input.GetAxis("Horizontal");
-                InputY = Input.GetAxis("Vertical");
-                inputDirection = new Vector3(InputX, 0, InputY);//入力された方向                
+
+            InputX = Input.GetAxis("Horizontal");
+            InputY = Input.GetAxis("Vertical");
+            inputDirection = new Vector3(InputX, 0, InputY);//入力された方向
 
         }
 
@@ -87,49 +84,18 @@ public class Player_ControllerZ : Character_Manager{
             if (Input.GetButtonDown("Jump"))
             {
                 if (flag_jump) { Jump(); }
-                    
+
             }
 
         }
 
         //キャラクタの方向回転
-        if (!GetF_Watch())//注目してたら回さない
-        {
-            if (flag_move)
-            {
-                if (Input.GetKey(KeyCode.W))
-                {
-                    //Playerの方向 = (最初の方向,向けたい方向,向けたい速度)
-                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 0.1f);//Playerをターゲットのほうにゆっくり向ける
-                    transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);//Playerのx,zの回転を直す。回転嫌い。全部Eulerにしてしまえばよい
+        //this.transform.Rotate(0,Input.GetAxis("Mouse X") * character_parameter.now_speed * Time.deltaTime * 90,0);
 
-                }
-                if (Input.GetKey(KeyCode.S))
-                {
-                    //Playerの方向 = (最初の方向,向けたい方向,向けたい速度)
-                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(MainCamera.transform.TransformDirection(Vector3.back)), 0.1f);//Playerをターゲットのほうにゆっくり向ける
-                    transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);//Playerのx,zの回転を直す。回転嫌い。全部Eulerにしてしまえばよい
-                }
-                if (Input.GetKey(KeyCode.A))
-                {
-                    //Playerの方向 = (最初の方向,向けたい方向,向けたい速度)
-                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(MainCamera.transform.TransformDirection(Vector3.left)), 0.1f);//Playerをターゲットのほうにゆっくり向ける
-                    transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);//Playerのx,zの回転を直す。回転嫌い。全部Eulerにしてしまえばよい
-                }
-                if (Input.GetKey(KeyCode.D))
-                {
-                    //Playerの方向 = (最初の方向,向けたい方向,向けたい速度)
-                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(MainCamera.transform.TransformDirection(Vector3.right)), 0.1f);//Playerをターゲットのほうにゆっくり向ける
-                    transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);//Playerのx,zの回転を直す。回転嫌い。全部Eulerにしてしまえばよい
-                }
-            }
-            
-            
-        }
+        if (!GetF_Watch()) this.transform.Rotate(0, InputX * speed * Time.deltaTime * 12, 0);//注目してたら回さない
 
-        //カメラの方向を取得　それに合わせて動かす
-        //direction = transform.TransformDirection(Vector3.forward);
-        direction = MainCamera.transform.TransformDirection(Vector3.forward);
+        //キャラクタの方向を取得
+        direction = transform.TransformDirection(Vector3.forward);
 
         //キャラクタ移動処理
         if (inputDirection.magnitude > 0.1)
@@ -158,8 +124,11 @@ public class Player_ControllerZ : Character_Manager{
         //キャラにかかる重力決定（少しふわふわさせてる）
         if (move_direction.y > -2)
         {
-                        
-            move_direction.y += Physics.gravity.y * Time.deltaTime;     
+
+
+            move_direction.y += Physics.gravity.y * Time.deltaTime;
+
+
 
         }
 
@@ -185,22 +154,21 @@ public class Player_ControllerZ : Character_Manager{
         {
             move_direction.x += direction.x;
             move_direction.z += direction.z;
-
         }
         if (Input.GetKey(KeyCode.S))
         {
-            move_direction.x -= direction.x;
-            move_direction.z -= direction.z;
+            move_direction.x -= direction.x / 2;
+            move_direction.z -= direction.z / 2;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            move_direction.x -= direction.z;
-            move_direction.z += direction.x;
+            move_direction.x -= direction.z / 10;
+            move_direction.z += direction.x / 10;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            move_direction.x += direction.z;
-            move_direction.z -= direction.x;
+            move_direction.x += direction.z / 10;
+            move_direction.z -= direction.x / 10;
         }
     }
 

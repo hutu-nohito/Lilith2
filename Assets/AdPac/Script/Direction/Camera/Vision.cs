@@ -7,6 +7,10 @@ public class Vision : MonoBehaviour {
     /*
     注目側の機能
         */
+
+    /// <summary>
+    /// 今んとこVisibleは使わないほうがよさげ
+    /// </summary>
     //リストのURL　可変長配列でゲームが動いてる間にサイズを変えるならこれ
     //http://ft-lab.ne.jp/cgi-bin-unity/wiki.cgi?page=unity_cs_list
     private List<GameObject> Target = new List<GameObject>();//Vision 内の敵をすべて格納
@@ -23,7 +27,7 @@ public class Vision : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
         if (Target.Count > 0)
         {
@@ -58,24 +62,6 @@ public class Vision : MonoBehaviour {
 
     }
 
-    /*void OnTriggerExit(Collider col)//Visionから出てッたら配列を詰める ゴミ
-    {
-        if (col.tag == "Enemy")
-        {
-
-            
-                for (int i = 0; i < Target.Count; i++)
-                {
-                    if (col.gameObject == Target[i])
-                    {
-
-                        //Target.RemoveAt(i);
-
-                    }
-                }
-            
-        }
-    }*/
     void ReleaseTarget(int num)//距離が一定以上離れた敵を配列から外す
     {
 
@@ -98,7 +84,7 @@ public class Vision : MonoBehaviour {
                 break;
             }
             length = (Player.transform.position - Target[i].transform.position).magnitude;
-            if ((transform.position - Target[i].transform.position).magnitude > ReleaseLength) { ReleaseTarget(i); }//Visionからの距離のほうがいい
+            if ((Player.transform.position - Target[i].transform.position).magnitude > ReleaseLength) { ReleaseTarget(i); }//Playerからの距離でいい
 
             if (length < near)
             {//近かったら
@@ -108,7 +94,8 @@ public class Vision : MonoBehaviour {
 
             }
         }
-		Visible();//見えてるかどうかチェック
+
+        Visible();//見えてるかどうかチェック
         SetTarget(near);
     }
 

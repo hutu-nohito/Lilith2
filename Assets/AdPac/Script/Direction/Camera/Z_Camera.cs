@@ -6,15 +6,19 @@ public class Z_Camera : MonoBehaviour {
     /*
     カメラ側の機能
     */
+
+        /// <summary>
+        /// 注目が解けたら一定期間は注目できないようにする
+        /// </summary>
     public float RotSpeed = 20;//注目時の回転移動速度の調整用
     public float tiltAngle = 2;//カメラティルト調整用の角度
+    public float coolTime = 1.0f;//注目できないようにする時間
 
     public float length;//注目してる敵との距離
 	public GameObject Target;//ここに注目対象を格納すればいい
 
 	private GameObject Player;
 	private Player_ControllerZ pcZ;
-    private Quaternion StartCamera;//カメラの初期角度
 
     public GameObject nearMarker;//今注目できる敵のマーカ
     public GameObject targetMarker;//今注目してる敵のマーカ
@@ -25,8 +29,6 @@ public class Z_Camera : MonoBehaviour {
 		
 		Player = GameObject.FindGameObjectWithTag("Player");
         pcZ = Player.GetComponent<Player_ControllerZ>();
-
-        StartCamera = transform.localRotation;
 		
 	}
 
@@ -36,39 +38,42 @@ public class Z_Camera : MonoBehaviour {
         
         //とりあえず右クリックで注目
 		if(Input.GetMouseButton(1)){
-		
-			Vector3 LocalPos = Vector3.zero;
-			Vector3 cal = Vector3.zero;//計算用の箱
-			float degreeTheta = 0;//アフィン変換用の角度
-
-			if(pcZ.GetF_Move()){
-				//回転角を指定してやる
-				if(Input.GetKey(KeyCode.A)){
-					
-					//degreeTheta = -0.1f;
-                    degreeTheta = -pcZ.GetSpeed() * RotSpeed / length  * Time.deltaTime;//動かすときはスペックで違いが出ないようにDeltatime
-					
-				}
-				if(Input.GetKey(KeyCode.D)){
-					
-					//degreeTheta = 0.1f;
-                    degreeTheta = pcZ.GetSpeed() * RotSpeed / length * Time.deltaTime;//動かすときはスペックで違いが出ないようにDeltatime
-					
-				}
-			}
 
             if (Target != null) { //ターゲットがいたら
 
                 pcZ.Set_Watch();//注目しているよー
 
-			    //アフィン変換　回転
-			    LocalPos = Player.transform.position - Target.transform.position;//ターゲットに対するローカル座標に変換
+                /*Vector3 LocalPos = Vector3.zero;
+                Vector3 cal = Vector3.zero;//計算用の箱
+                float degreeTheta = 0;//アフィン変換用の角度
+
+                if (pcZ.GetF_Move())
+                {
+                    //回転角を指定してやる
+                    if (Input.GetKey(KeyCode.A))
+                    {
+
+                        //degreeTheta = -0.1f;
+                        degreeTheta = -pcZ.GetSpeed() * RotSpeed / length * Time.deltaTime;//動かすときはスペックで違いが出ないようにDeltatime
+
+                    }
+                    if (Input.GetKey(KeyCode.D))
+                    {
+
+                        //degreeTheta = 0.1f;
+                        degreeTheta = pcZ.GetSpeed() * RotSpeed / length * Time.deltaTime;//動かすときはスペックで違いが出ないようにDeltatime
+
+                    }
+                }
+
+                //アフィン変換　回転
+                LocalPos = Player.transform.position - Target.transform.position;//ターゲットに対するローカル座標に変換
 			    //回転
 			    cal.x = LocalPos.x * Mathf.Cos(degreeTheta * Mathf.Deg2Rad) - LocalPos.z * Mathf.Sin(degreeTheta * Mathf.Deg2Rad);
 			    cal.z = LocalPos.x * Mathf.Sin(degreeTheta * Mathf.Deg2Rad) + LocalPos.z * Mathf.Cos(degreeTheta * Mathf.Deg2Rad);
 			    LocalPos = cal;//座標に代入
 			    LocalPos.y = Player.transform.position.y - Target.transform.position.y;//ジャンプさせるからYの値は変えない
-			    Player.transform.position = LocalPos + Target.transform.position;//ワールド座標に直す
+			    Player.transform.position = LocalPos + Target.transform.position;//ワールド座標に直す*/
 
                 //Playerの方向 = (最初の方向,向けたい方向,向けたい速度)
                 Player.transform.rotation = Quaternion.Slerp(Player.transform.rotation, Quaternion.LookRotation(Target.transform.position - Player.transform.position), 0.1f);//Playerをターゲットのほうにゆっくり向ける
@@ -77,14 +82,19 @@ public class Z_Camera : MonoBehaviour {
                 //this.transform.LookAt((Player.transform.position + Target.transform.position) / 2);//Playerとターゲットの中心をPlayerの後ろから映して、どっちも画面内に収める
 
                 //ターゲットとの高さによって回転角度を決めてる。tiltAngleで角度の調整
-                //Vector3 LookRot = new Vector3((this.transform.position.y - Target.transform.position.y) * tiltAngle, 0, 0);//カメラの回転角度。X方向だけでいい。(ティルト)
-                // this.transform.localEulerAngles = LookRot;
-                //this.transform.localRotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(LookRot) , 1.0f);//Cameraをターゲットのほうにゆっくり向ける
+                /*Vector3 LookRot = new Vector3((this.transform.position.y - Target.transform.position.y) * tiltAngle, 0, 0);//カメラの回転角度。X方向だけでいい。(ティルト)
+                this.transform.localEulerAngles = LookRot;
+                this.transform.localRotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(LookRot) , 1.0f);//Cameraをターゲットのほうにゆっくり向ける
+                */
 
                 //注目時のマーカー
                 targetMarker.SetActive(true);
                 targetMarker.transform.position = Target.transform.position + new Vector3(0, Target.transform.localScale.y + 1, 0);
                 nearMarker.SetActive(false);
+            }
+            else
+            {
+                targetMarker.SetActive(false);
             }
 
         }
@@ -92,20 +102,27 @@ public class Z_Camera : MonoBehaviour {
         {
             targetMarker.SetActive(false);
         }
-		
-		if(Input.GetMouseButtonUp(1)){
 
-            //ゆっくりにしてもあんま意味なかった
-            //this.transform.rotation = Quaternion.Slerp(transform.rotation, StartCamera, 0.1f);//Cameraをターゲットのほうにゆっくり向ける
-            this.transform.localRotation = StartCamera;//カメラを元に戻す
+
+        if (Input.GetMouseButtonUp(1)){
 
             pcZ.Release_Watch();//注目解除
-            Target = null;//ターゲットを解放
 
 		}
 
         //ターゲットがいなければ黄色いマーカを出さない
         if(Target == null)nearMarker.SetActive(false);
+
+        //coolTimeが1以下の時注目できないようにする
+        if (!pcZ.GetF_Watch()) {
+
+            if(coolTime < 2)
+            coolTime += Time.deltaTime;//注目してなかったら足しとく
+        }
+        else
+        {
+            coolTime = 0.0f;
+        }
 
     }
 
@@ -114,20 +131,29 @@ public class Z_Camera : MonoBehaviour {
 
         if (Target == null) { 
             
-            this.Target = Target;
-            this.transform.localRotation = StartCamera;//カメラを元に戻す
-            pcZ.Release_Watch();//注目解除
+            //this.Target = Target;
+            //pcZ.Release_Watch();//注目解除
+            coolTime = 0.0f;
         
         }//nullのときは注目を外す
         else if (!pcZ.GetF_Watch())
         {
-            this.Target = Target;
-            nearMarker.SetActive(true);
-            nearMarker.transform.position = Target.transform.position + new Vector3(0, Target.transform.localScale.y + 1, 0);
+            if(coolTime > 1.0f)
+            {
+                this.Target = Target;
+                nearMarker.SetActive(true);
+                nearMarker.transform.position = Target.transform.position + new Vector3(0, Target.transform.localScale.y + 1, 0);
+            }
+            
 
         }//注目中はターゲットは変えない
 
         length = near;
+        if (length >= 20)
+        {
+            this.Target = null;
+            pcZ.Release_Watch();//注目解除
+        }
 
     }
 }
