@@ -42,6 +42,7 @@ public class Enemy_Parameter : Character_Parameters {
         Search,//索敵
         Attack,//臨戦態勢
         Run,//逃げ
+        Return,//戻り
     }
     public Enemy_State state = Enemy_State.Idle;
     public Enemy_State GetState() { return state; }
