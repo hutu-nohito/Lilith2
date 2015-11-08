@@ -58,8 +58,12 @@ public class FatBat : MonoBehaviour {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Player.transform.position - transform.position), 0.05f);
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
+            //アニメーション
             state = Fatbat_State.Ikaku;
             ecZ.SetState(Enemy_Parameter.Enemy_State.Idle);
+
+            StartCoroutine(Attack());
+            
 
             
 
@@ -160,6 +164,35 @@ public class FatBat : MonoBehaviour {
 
     /////////////////////////////////////
     IEnumerator Attack()
+    {
+
+        yield return new WaitForSeconds(1);//ちょっと間をおいてから攻撃
+
+        GameObject bullet;
+
+        bullet = GameObject.Instantiate(Bullet);
+        bullet.GetComponent<Attack_Parameter>().Parent = this.gameObject;//誰が撃ったかを渡す
+
+
+        //弾を飛ばす処理
+        bullet.transform.position = Muzzle.position + (ecZ.direction);
+        bullet.GetComponent<Rigidbody>().velocity = ((Player.transform.position - this.transform.position).normalized * at_para.speed);
+
+        /*if(!audioSource.isPlaying){
+			
+			audioSource.Play();
+			
+		}*/
+
+        Destroy(bullet, at_para.GetA_Time());
+
+        yield return new WaitForSeconds(at_para.GetR_Time());
+
+        ecZ.Reverse_Magic();
+        //enemy_flag.state = Enemy_Flag.Enemy_State.Attack;
+    }
+
+    IEnumerator IKAKU()
     {
 
         yield return new WaitForSeconds(1);//ちょっと間をおいてから攻撃
