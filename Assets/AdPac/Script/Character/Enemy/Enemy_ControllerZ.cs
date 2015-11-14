@@ -23,8 +23,10 @@ public class Enemy_ControllerZ : Enemy_Parameter
 
     //使うもの
     private Move_Controller move_controller;//周辺探索用
-    private GameObject Player;//操作キャラ7
-    private MoveSmooth MoveS;//動かすよう
+    private GameObject Player;//操作キャラ
+    private NavMeshAgent Nav;//動かすよう地上
+    private MoveSmooth MoveS;//動かすよう空中
+
 
     public Transform Territory;//縄張り
 
@@ -43,7 +45,25 @@ public class Enemy_ControllerZ : Enemy_Parameter
     {
         move_controller = GetComponent<Move_Controller>();
         Player = GameObject.FindGameObjectWithTag("Player");
-        MoveS = GetComponent<MoveSmooth>();
+
+        //移動方法によって動きを変える
+        switch (move)
+        {
+            case Enemy_Move.Ground://ナビで動く
+                Nav = GetComponent<NavMeshAgent>();
+                Nav.speed = speed;
+                break;
+            case Enemy_Move.Float://自力で動かす
+                MoveS = GetComponent<MoveSmooth>();
+                break;
+            case Enemy_Move.Stand://何もしない
+                break;
+            default:
+                break;
+
+        }
+
+        
 
         //初期パラメタを保存
         max_HP = H_point;
@@ -65,12 +85,16 @@ public class Enemy_ControllerZ : Enemy_Parameter
             Destroy(this.gameObject);
             GameObject.FindGameObjectWithTag("Manager").GetComponent<QuestManager>().SetCount(CharaName);
 
-        }
+        }        
 
         if (state == Enemy_State.Search)
         {
+            //どっちかある方移動
+            if (Nav != null)
+            Nav.Move(move_controller.End);
+            if(MoveS != null)
+            MoveS.Move(move_controller.End,speed);
 
-            MoveS.Move(move_controller.End,speed);//これで移動
             //前を向ける
             transform.rotation = Quaternion.Slerp(transform.localRotation, Quaternion.LookRotation(move_controller.End - transform.localPosition), 0.05f);
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
@@ -83,7 +107,13 @@ public class Enemy_ControllerZ : Enemy_Parameter
 
             Vector3 follow = (Player.transform.localPosition - this.transform.localPosition).normalized;
             follow.y = 0.0f;
-            MoveS.Move(-follow * speed,speed);//これで移動
+
+            //どっちかある方移動
+            if (Nav != null)
+                Nav.Move(-follow * speed);
+            if (MoveS != null)
+                MoveS.Move(-follow * speed, speed);
+
             transform.localRotation = Quaternion.LookRotation(-follow);
 
         }
@@ -92,7 +122,12 @@ public class Enemy_ControllerZ : Enemy_Parameter
         {
             time += Time.deltaTime;
 
-            MoveS.Move(Territory.position, speed);//とりあえず中心へ(Territoryはワールド座標にしとく)
+            //とりあえず中心へ(Territoryはワールド座標にしとく)
+            if (Nav != null)
+                Nav.Move(Territory.position);
+            if (MoveS != null)
+                MoveS.Move(Territory.position, speed);
+
             //前を向ける
             transform.rotation = Quaternion.Slerp(transform.localRotation, Quaternion.LookRotation(Territory.position - transform.localPosition), 0.05f);
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);

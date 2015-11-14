@@ -88,6 +88,24 @@ public class Enemy_Parameter : Character_Parameters {
     public Enemy_Habit GetHabit() { return habit; }
     public void SetHabit(Enemy_Habit habit) { this.habit = habit; }
 
+    /*敵の移動方法
+     * 
+     * 
+     * 敵発見時
+     * Ground   : 地上をうろうろ
+     * Float    : 空中をうろうろ
+     * Stand    : 動かない
+    */
+    public enum Enemy_Move
+    {
+        Ground = 0,
+        Float = 1,
+        Stand = 2
+    }
+
+    public Enemy_Move move = Enemy_Move.Ground;
+    public Enemy_Move GetMove() { return move; }
+
     /*索敵方法
      * 
      * Sight 視覚
