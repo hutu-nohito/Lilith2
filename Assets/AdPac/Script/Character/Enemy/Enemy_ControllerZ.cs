@@ -145,11 +145,9 @@ public class Enemy_ControllerZ : Enemy_Parameter
         Vector3 StartPos = transform.position + new Vector3(0,transform.localScale.y,0);//とりあえず頭から出す
 
         //これのとき前に壁がある
-        if (Physics.Raycast(StartPos, Vector3.forward, out hit ,20))
+        if (Physics.Raycast(StartPos, transform.TransformDirection(Vector3.forward), out hit ,20))
         {
-            Debug.DrawLine(transform.position, hit.point, Color.green);
-            //Debug.Log(hitObject);
-            Debug.Log("www");
+            //Debug.DrawLine(StartPos, hit.point, Color.green);
 
         }
 
@@ -187,6 +185,12 @@ public class Enemy_ControllerZ : Enemy_Parameter
 
         //なんか条件付けるけどとりあえずRun状態に
         state = Enemy_State.Run;
+
+    }
+    
+    //こっちはトリガー
+    public void Damage()
+    {
 
     }
 

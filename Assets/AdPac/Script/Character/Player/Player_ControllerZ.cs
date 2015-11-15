@@ -81,13 +81,12 @@ public class Player_ControllerZ : Character_Manager{
         //ジャンプ
         if (playerController.isGrounded)
         {
-            flag_jump = true;
+            if(flag_move)flag_jump = true;//動けるときだけ地上にいたら。
             move_direction = Vector3.zero;
             animator.SetBool("Jump", false);
             if (Input.GetButtonDown("Jump"))
             {
                 if (flag_jump) { Jump(); }
-                    
             }
 
         }
@@ -172,6 +171,7 @@ public class Player_ControllerZ : Character_Manager{
     void Jump()
     {
         flag_jump = false;
+
         move_direction.y = jump;
         animator.SetBool("Jump", true);
 

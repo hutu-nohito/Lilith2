@@ -52,7 +52,7 @@ public class Claw : Magic_Parameter {
 
         yield return new WaitForSeconds(0.2f);//振り向くまで待つ
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 1; i++)
         {
 
             bullet[i] = GameObject.Instantiate(bullet_Prefab);//弾生成
@@ -64,7 +64,7 @@ public class Claw : Magic_Parameter {
                 MC.AddExistBullet(bullet[i]);//現在の弾数を増やす
                 bullet[i].GetComponent<Attack_Parameter>().Parent = this.Parent;//もらった親を渡しておく必要がある
 
-                bullet[i].transform.position = transform.position + Parent.GetComponent<Character_Parameters>().direction + Parent.transform.TransformDirection(new Vector3(-0.5f + i, 0, 0));//
+                bullet[i].transform.position = transform.position + Parent.GetComponent<Character_Parameters>().direction + Parent.transform.TransformDirection(new Vector3(-1.0f + i * 2, 0, 0));//
                 bullet[i].transform.rotation = Quaternion.LookRotation(Parent.GetComponent<Character_Parameters>().direction);//回転させて弾頭を進行方向に向ける
 
                 Destroy(bullet[i], bullet[0].GetComponent<Attack_Parameter>().GetA_Time());
@@ -73,10 +73,13 @@ public class Claw : Magic_Parameter {
             
         }
 
+        bullet[0].transform.Rotate(0, 0, 45);
+        //bullet[1].transform.Rotate(0, 0, -45);
+
         //MPの処理
         pcZ.SetMP(pcZ.GetMP() - GetSMP());
 
-        yield return new WaitForSeconds(0.3f);//飛ばすまでに「溜め」がある
+        //yield return new WaitForSeconds(0.3f);//飛ばすまでに「溜め」がある
 
         //ずっと発動してるのでおろしとく
         if (flag_Homing)
@@ -84,14 +87,14 @@ public class Claw : Magic_Parameter {
             flag_Homing = false;
         }
 
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 1; i++)
         {
 
             if (bullet[i] != null)
             {
 
                 //斜めに振り下ろす
-                bullet[i].GetComponent<Rigidbody>().velocity = (Parent.transform.TransformDirection(new Vector3(0.5f - i, -1, 0.5f)) * bullet[i].GetComponent<Attack_Parameter>().speed);
+                bullet[i].GetComponent<Rigidbody>().velocity = (Parent.transform.TransformDirection(new Vector3(1.0f - i * 2, -1, 0.5f)) * bullet[i].GetComponent<Attack_Parameter>().speed);
 
             }
 

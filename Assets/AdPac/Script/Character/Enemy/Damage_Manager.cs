@@ -16,9 +16,7 @@ public class Damage_Manager : MonoBehaviour {
     //コルーチン
     private Coroutine coroutine;
     private int count;//汎用のカウント用の箱(使い終わったら0に戻すこと)
-    private bool isCoroutine = false;
-
-    
+    private bool isCoroutine = false; 
 
 	void Start () {
 
@@ -121,6 +119,7 @@ public class Damage_Manager : MonoBehaviour {
                 if (ecZ.GetF_Damage())
                 {
                     ecZ.H_point -= damage;
+                    ecZ.Damage();//とりあえずダメージを受けたことを知らせる
                     ecZ.Reverse_Damage();//ダメージを連続で受けないようにする
                     StartCoroutine(Blink());
                     Invoke("Reverse_Damage", 3);
