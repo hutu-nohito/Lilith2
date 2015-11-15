@@ -24,12 +24,12 @@ public class Search_Player : MonoBehaviour {
 		if(col.tag == "Player"){
 			switch(ecZ.GetHabit()){
                 case Enemy_ControllerZ.Enemy_Habit.Positive:
-                    ecZ.SetState(Enemy_ControllerZ.Enemy_State.Attack);
+                    ecZ.Attack();
 				break;
                 case Enemy_ControllerZ.Enemy_Habit.Normal:
 				break;
                 case Enemy_ControllerZ.Enemy_Habit.Negative:
-                ecZ.SetState(Enemy_ControllerZ.Enemy_State.Run);
+                    ecZ.Run();
 				break;
 
 			}
@@ -37,7 +37,7 @@ public class Search_Player : MonoBehaviour {
         if (col.tag == "Bullet")
         {
             if(col.GetComponent<Attack_Parameter>().GetParent() == Player)
-                if(ecZ.GetSearch() == Enemy_ControllerZ.Enemy_Search.Magic) ecZ.SetState(Enemy_ControllerZ.Enemy_State.Attack); ;
+                if(ecZ.GetSearch() == Enemy_ControllerZ.Enemy_Search.Magic) ecZ.Attack();
         }
 	}
 
@@ -48,12 +48,12 @@ public class Search_Player : MonoBehaviour {
             switch (ecZ.GetHabit())
             {
                 case Enemy_ControllerZ.Enemy_Habit.Positive:
-                    ecZ.SetState(Enemy_ControllerZ.Enemy_State.Search);
+                    ecZ.Search();
                     break;
                 case Enemy_ControllerZ.Enemy_Habit.Normal:
                     break;
                 case Enemy_ControllerZ.Enemy_Habit.Negative:
-                    ecZ.SetState(Enemy_ControllerZ.Enemy_State.Search);
+                    ecZ.Search();
                     break;
 
             }

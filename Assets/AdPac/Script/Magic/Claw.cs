@@ -65,6 +65,7 @@ public class Claw : Magic_Parameter {
                 bullet[i].GetComponent<Attack_Parameter>().Parent = this.Parent;//もらった親を渡しておく必要がある
 
                 bullet[i].transform.position = transform.position + Parent.GetComponent<Character_Parameters>().direction + Parent.transform.TransformDirection(new Vector3(-0.5f + i, 0, 0));//
+                bullet[i].transform.rotation = Quaternion.LookRotation(Parent.GetComponent<Character_Parameters>().direction);//回転させて弾頭を進行方向に向ける
 
                 Destroy(bullet[i], bullet[0].GetComponent<Attack_Parameter>().GetA_Time());
 

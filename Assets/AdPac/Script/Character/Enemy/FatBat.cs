@@ -192,7 +192,7 @@ public class FatBat : MonoBehaviour {
         //enemy_flag.state = Enemy_Flag.Enemy_State.Attack;
     }
 
-    IEnumerator IKAKU()
+    IEnumerator Ikaku()
     {
 
         yield return new WaitForSeconds(1);//ちょっと間をおいてから攻撃

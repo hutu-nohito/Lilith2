@@ -8,6 +8,9 @@ public class Enemy_ControllerZ : Enemy_Parameter
 
     敵の基本操作用
 
+        キャラクタの状態管理は全部ここでやる
+        他ではやらない
+
     */
 
     /*敵のタイプ
@@ -27,7 +30,7 @@ public class Enemy_ControllerZ : Enemy_Parameter
     private NavMeshAgent Nav;//動かすよう地上
     private MoveSmooth MoveS;//動かすよう空中
 
-
+    private SphereCollider groundCollider;//足元用のコライダ
     public Transform Territory;//縄張り
 
     //汎用
@@ -49,9 +52,8 @@ public class Enemy_ControllerZ : Enemy_Parameter
         //移動方法によって動きを変える
         switch (move)
         {
-            case Enemy_Move.Ground://ナビで動く
-                Nav = GetComponent<NavMeshAgent>();
-                Nav.speed = speed;
+            case Enemy_Move.Ground://×ナビで動く　○自力で
+                MoveS = GetComponent<MoveSmooth>();
                 break;
             case Enemy_Move.Float://自力で動かす
                 MoveS = GetComponent<MoveSmooth>();
@@ -60,10 +62,10 @@ public class Enemy_ControllerZ : Enemy_Parameter
                 break;
             default:
                 break;
-
         }
 
-        
+        //足元用
+        groundCollider = GetComponent<SphereCollider>();
 
         //初期パラメタを保存
         max_HP = H_point;
@@ -138,7 +140,53 @@ public class Enemy_ControllerZ : Enemy_Parameter
             }
         }
 
+        //レイキャストで何とかして壁に当たらないようにする
+        RaycastHit hit;
+        Vector3 StartPos = transform.position + new Vector3(0,transform.localScale.y,0);//とりあえず頭から出す
+
+        //これのとき前に壁がある
+        if (Physics.Raycast(StartPos, Vector3.forward, out hit ,20))
+        {
+            Debug.DrawLine(transform.position, hit.point, Color.green);
+            //Debug.Log(hitObject);
+            Debug.Log("www");
+
+        }
+
         direction = transform.TransformDirection(Vector3.forward);//移動方向を格納
+
+    }
+
+    //状態管理//////////////////////////////////////////////////////////////////////////////
+
+        public void Idle()
+    {
+        //なんか条件付けるけどとりあえずIdle状態に
+        state = Enemy_State.Idle;
+
+    }
+
+    public void Attack()
+    {
+
+        //なんか条件付けるけどとりあえずAttack状態に
+        state = Enemy_State.Attack;
+
+    }
+
+    public void Search ()
+    {
+
+        //なんか条件付けるけどとりあえずSearch状態に
+        state = Enemy_State.Search;
+
+    }
+
+    public void Run ()
+    {
+
+        //なんか条件付けるけどとりあえずRun状態に
+        state = Enemy_State.Run;
 
     }
 

@@ -25,7 +25,7 @@ public class Territory : MonoBehaviour {
         {
             if(col.gameObject == Enemies[i])
             {
-                Enemies[i].GetComponent<Enemy_ControllerZ>().Return();//縄張りの中央に戻らせる
+                //Enemies[i].GetComponent<Enemy_ControllerZ>().Return();//縄張りの中央に戻らせる
                 
             }
         }
