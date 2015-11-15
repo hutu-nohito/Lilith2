@@ -21,6 +21,19 @@ public class FatBat : MonoBehaviour {
     private Animator animator;
 
     private Transform Player;//操作キャラ
+    public Transform Territory;//縄張り
+
+    private int priority = 0;//状態の優先度
+    /*
+    Attack  1
+    Damage  2
+    Ikaku
+    Dance
+    Syobon
+    Return  3
+    Search  4
+    Run     5
+    */
 
     //キャラクタ固有の状態
     //アニメーションは基本ここで管理するのでこれを使うときは向こうはIdleにでもしとく
@@ -32,6 +45,7 @@ public class FatBat : MonoBehaviour {
         Syobon,//がっかり
     }
     public Fatbat_State state = Fatbat_State.Idle;
+    private Fatbat_State old_state = Fatbat_State.Idle;//ここの前の状態
     public Fatbat_State GetState() { return state; }
     public void SetState(Fatbat_State state) { this.state = state; }
 
@@ -53,82 +67,25 @@ public class FatBat : MonoBehaviour {
     {
         if (ecZ.state == Enemy_Parameter.Enemy_State.Attack)
         {
-
             //前を向ける
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Player.transform.position - transform.position), 0.05f);
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
-            //アニメーション
             state = Fatbat_State.Ikaku;
             ecZ.SetState(Enemy_Parameter.Enemy_State.Idle);
 
-            StartCoroutine(Attack());
-            
-            /*if (ecZ.GetF_Magic())
-            {
-
-                ecZ.Reverse_Magic();
-                StartCoroutine(Attack());
-                //Vector3 moveEnd = new Vector3(Player.transform.position.x - transform.position.x * ecZ.GetSpeed(),0,Player.transform.position.z - transform.position.z * ecZ.GetSpeed());
-                //MS.Move(Vector3.down,ecZ.GetSpeed());//プレイヤーのほうにちょっと進む
-                //animator.SetTrigger("Grun");
-
-            }*/
-        }
-
-        if (ecZ.state == Enemy_Parameter.Enemy_State.Return)
-        {
-
-            //前を向ける
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Player.transform.position - transform.position), 0.05f);
-            transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-
-            //アニメーション
-            state = Fatbat_State.Ikaku;
-            ecZ.SetState(Enemy_Parameter.Enemy_State.Idle);
-
-            StartCoroutine(Attack());
-
-            /*if (ecZ.GetF_Magic())
-            {
-
-                ecZ.Reverse_Magic();
-                StartCoroutine(Attack());
-                //Vector3 moveEnd = new Vector3(Player.transform.position.x - transform.position.x * ecZ.GetSpeed(),0,Player.transform.position.z - transform.position.z * ecZ.GetSpeed());
-                //MS.Move(Vector3.down,ecZ.GetSpeed());//プレイヤーのほうにちょっと進む
-                //animator.SetTrigger("Grun");
-
-            }*/
         }
 
         if (ecZ.state == Enemy_Parameter.Enemy_State.Damage)
         {
-
             //前を向ける
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Player.transform.position - transform.position), 0.05f);
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
-            //アニメーション
-            state = Fatbat_State.Ikaku;
-            ecZ.SetState(Enemy_Parameter.Enemy_State.Idle);
-
-            StartCoroutine(Attack());
-
-            /*if (ecZ.GetF_Magic())
-            {
-
-                ecZ.Reverse_Magic();
-                StartCoroutine(Attack());
-                //Vector3 moveEnd = new Vector3(Player.transform.position.x - transform.position.x * ecZ.GetSpeed(),0,Player.transform.position.z - transform.position.z * ecZ.GetSpeed());
-                //MS.Move(Vector3.down,ecZ.GetSpeed());//プレイヤーのほうにちょっと進む
-                //animator.SetTrigger("Grun");
-
-            }*/
         }
 
         if (state == Fatbat_State.Ikaku)
         {
-
             //前を向ける
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Player.transform.position - transform.position), 0.05f);
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
@@ -149,7 +106,6 @@ public class FatBat : MonoBehaviour {
 
         if (state == Fatbat_State.Dance)
         {
-
             //前を向ける
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Player.transform.position - transform.position), 0.05f);
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
@@ -161,7 +117,7 @@ public class FatBat : MonoBehaviour {
             {
                 state = Fatbat_State.Dance;
             }
-            else if((Player.transform.position - transform.position).magnitude < 10)
+            else if ((Player.transform.position - transform.position).magnitude < 10)
             {
                 state = Fatbat_State.Ikaku;
             }
@@ -170,7 +126,6 @@ public class FatBat : MonoBehaviour {
 
         if (state == Fatbat_State.Syobon)
         {
-
             //前を向ける
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Player.transform.position - transform.position), 0.05f);
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
@@ -179,11 +134,45 @@ public class FatBat : MonoBehaviour {
 
             //プレイヤとの距離で行動変化
             //プレイヤとの距離で行動変化
-            if((Player.transform.position - transform.position).magnitude < 10)
+            if ((Player.transform.position - transform.position).magnitude < 10)
             {
                 state = Fatbat_State.Ikaku;
             }
 
+        }
+
+        if (ecZ.state == Enemy_Parameter.Enemy_State.Return)
+        {
+            //アニメーション
+            if (ecZ.old_state == Enemy_Parameter.Enemy_State.Attack);
+            ecZ.SetState(Enemy_Parameter.Enemy_State.Idle);
+
+            StartCoroutine(Attack());
+
+            //とりあえず中心へ(Territoryはワールド座標にしとく)
+            MS.Move(Territory.position, ecZ.speed);
+
+            //前を向ける
+            transform.rotation = Quaternion.Slerp(transform.localRotation, Quaternion.LookRotation(Territory.position - transform.localPosition), 0.05f);
+            transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+
+            
+            //state = ecZ.old_state;//10秒くらいたったら元の状態に戻す
+        }
+
+        if (ecZ.state == Enemy_Parameter.Enemy_State.Search)
+        {
+            if (old_state != Fatbat_State.Idle)//固有の行動してたらサーチには戻らん
+            {
+                state = old_state;
+            }
+        }
+
+        
+
+        if (ecZ.state == Enemy_Parameter.Enemy_State.Run)
+        {
+            //とりあえずこの状態にはならない
         }
 
         //アニメーションはある程度まとめといたほうがいいかもしれない
@@ -206,6 +195,12 @@ public class FatBat : MonoBehaviour {
                 break;
             default:
                 break;
+        }
+
+        //前の状態をひろっとく
+        if (old_state != state)
+        {
+            old_state = state;
         }
     }
 

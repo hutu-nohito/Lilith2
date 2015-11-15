@@ -27,15 +27,12 @@ public class Enemy_ControllerZ : Enemy_Parameter
     //使うもの
     private Move_Controller move_controller;//周辺探索用
     private GameObject Player;//操作キャラ
-    private NavMeshAgent Nav;//動かすよう地上
     private MoveSmooth MoveS;//動かすよう空中
 
-    public Transform Territory;//縄張り
     public bool frontWall = false;//前に壁がある
 
     //汎用
-    private Enemy_State old_state;//一個前のをとっとくよう
-    private float time = 0;//使ったら戻す
+    public Enemy_State old_state;//一個前のをとっとくよう
 
     //初期パラメタ(邪魔なのでインスペクタに表示しない)
     [System.NonSerialized]
@@ -89,8 +86,6 @@ public class Enemy_ControllerZ : Enemy_Parameter
         if (state == Enemy_State.Search)
         {
             //どっちかある方移動
-            if (Nav != null)
-            Nav.Move(move_controller.End);
             if(MoveS != null)
             MoveS.Move(move_controller.End,speed);
 
@@ -108,8 +103,6 @@ public class Enemy_ControllerZ : Enemy_Parameter
             follow.y = 0.0f;
 
             //どっちかある方移動
-            if (Nav != null)
-                Nav.Move(-follow * speed);
             if (MoveS != null)
                 MoveS.Move(-follow * speed, speed);
 
@@ -162,6 +155,7 @@ public class Enemy_ControllerZ : Enemy_Parameter
     //優先順位も個別でやるべき
     public void Idle()
     {
+        old_state = state;
         //なんか条件付けるけどとりあえずIdle状態に
         state = Enemy_State.Idle;
 
@@ -169,7 +163,7 @@ public class Enemy_ControllerZ : Enemy_Parameter
 
     public void Attack()
     {
-
+        old_state = state;
         //なんか条件付けるけどとりあえずAttack状態に
         state = Enemy_State.Attack;
 
@@ -177,7 +171,7 @@ public class Enemy_ControllerZ : Enemy_Parameter
 
     public void Search ()
     {
-
+        old_state = state;
         //なんか条件付けるけどとりあえずSearch状態に
         state = Enemy_State.Search;
 
@@ -185,7 +179,7 @@ public class Enemy_ControllerZ : Enemy_Parameter
 
     public void Run ()
     {
-
+        old_state = state;
         //なんか条件付けるけどとりあえずRun状態に
         state = Enemy_State.Run;
 
@@ -193,6 +187,7 @@ public class Enemy_ControllerZ : Enemy_Parameter
     
     public void Damage()
     {
+        old_state = state;
         //なんか条件付けるけどとりあえずDamage状態に
         state = Enemy_State.Damage;
     }
