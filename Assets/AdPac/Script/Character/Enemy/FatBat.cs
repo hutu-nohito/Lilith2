@@ -64,8 +64,55 @@ public class FatBat : MonoBehaviour {
 
             StartCoroutine(Attack());
             
+            /*if (ecZ.GetF_Magic())
+            {
 
-            
+                ecZ.Reverse_Magic();
+                StartCoroutine(Attack());
+                //Vector3 moveEnd = new Vector3(Player.transform.position.x - transform.position.x * ecZ.GetSpeed(),0,Player.transform.position.z - transform.position.z * ecZ.GetSpeed());
+                //MS.Move(Vector3.down,ecZ.GetSpeed());//プレイヤーのほうにちょっと進む
+                //animator.SetTrigger("Grun");
+
+            }*/
+        }
+
+        if (ecZ.state == Enemy_Parameter.Enemy_State.Return)
+        {
+
+            //前を向ける
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Player.transform.position - transform.position), 0.05f);
+            transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+
+            //アニメーション
+            state = Fatbat_State.Ikaku;
+            ecZ.SetState(Enemy_Parameter.Enemy_State.Idle);
+
+            StartCoroutine(Attack());
+
+            /*if (ecZ.GetF_Magic())
+            {
+
+                ecZ.Reverse_Magic();
+                StartCoroutine(Attack());
+                //Vector3 moveEnd = new Vector3(Player.transform.position.x - transform.position.x * ecZ.GetSpeed(),0,Player.transform.position.z - transform.position.z * ecZ.GetSpeed());
+                //MS.Move(Vector3.down,ecZ.GetSpeed());//プレイヤーのほうにちょっと進む
+                //animator.SetTrigger("Grun");
+
+            }*/
+        }
+
+        if (ecZ.state == Enemy_Parameter.Enemy_State.Damage)
+        {
+
+            //前を向ける
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Player.transform.position - transform.position), 0.05f);
+            transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+
+            //アニメーション
+            state = Fatbat_State.Ikaku;
+            ecZ.SetState(Enemy_Parameter.Enemy_State.Idle);
+
+            StartCoroutine(Attack());
 
             /*if (ecZ.GetF_Magic())
             {

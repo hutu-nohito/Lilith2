@@ -30,8 +30,8 @@ public class Enemy_ControllerZ : Enemy_Parameter
     private NavMeshAgent Nav;//動かすよう地上
     private MoveSmooth MoveS;//動かすよう空中
 
-    private SphereCollider groundCollider;//足元用のコライダ
     public Transform Territory;//縄張り
+    public bool frontWall = false;//前に壁がある
 
     //汎用
     private Enemy_State old_state;//一個前のをとっとくよう
@@ -63,9 +63,6 @@ public class Enemy_ControllerZ : Enemy_Parameter
             default:
                 break;
         }
-
-        //足元用
-        groundCollider = GetComponent<SphereCollider>();
 
         //初期パラメタを保存
         max_HP = H_point;
@@ -120,7 +117,8 @@ public class Enemy_ControllerZ : Enemy_Parameter
 
         }
 
-        if (state == Enemy_State.Return)
+        //Returnは個別のほうがよさげ
+        /*if (state == Enemy_State.Return)
         {
             time += Time.deltaTime;
 
@@ -138,7 +136,7 @@ public class Enemy_ControllerZ : Enemy_Parameter
             {
                 state = old_state;//10秒くらいたったら元の状態に戻す
             }
-        }
+        }*/
 
         //レイキャストで何とかして壁に当たらないようにする
         RaycastHit hit;
@@ -148,7 +146,12 @@ public class Enemy_ControllerZ : Enemy_Parameter
         if (Physics.Raycast(StartPos, transform.TransformDirection(Vector3.forward), out hit ,20))
         {
             //Debug.DrawLine(StartPos, hit.point, Color.green);
+            frontWall = true;
 
+        }
+        else
+        {
+            frontWall = false;
         }
 
         direction = transform.TransformDirection(Vector3.forward);//移動方向を格納
@@ -156,8 +159,8 @@ public class Enemy_ControllerZ : Enemy_Parameter
     }
 
     //状態管理//////////////////////////////////////////////////////////////////////////////
-
-        public void Idle()
+    //優先順位も個別でやるべき
+    public void Idle()
     {
         //なんか条件付けるけどとりあえずIdle状態に
         state = Enemy_State.Idle;
@@ -188,10 +191,10 @@ public class Enemy_ControllerZ : Enemy_Parameter
 
     }
     
-    //こっちはトリガー
     public void Damage()
     {
-
+        //なんか条件付けるけどとりあえずDamage状態に
+        state = Enemy_State.Damage;
     }
 
     //縄張りから外れた時に戻ってくるよう

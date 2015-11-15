@@ -62,18 +62,18 @@ public class Claw : Magic_Parameter {
             {
 
                 MC.AddExistBullet(bullet[i]);//現在の弾数を増やす
-                bullet[i].GetComponent<Attack_Parameter>().Parent = this.Parent;//もらった親を渡しておく必要がある
+                bullet[i].transform.FindChild("Armature").gameObject.transform.FindChild("Bone").gameObject.GetComponentInChildren<Attack_Parameter>().Parent = this.Parent;//もらった親を渡しておく必要がある
 
-                bullet[i].transform.position = transform.position + Parent.GetComponent<Character_Parameters>().direction + Parent.transform.TransformDirection(new Vector3(-1.0f + i * 2, 0, 0));//
+                bullet[i].transform.position = transform.position + Parent.GetComponent<Character_Parameters>().direction + Parent.transform.TransformDirection(new Vector3(0.5f, -1, 0));//
                 bullet[i].transform.rotation = Quaternion.LookRotation(Parent.GetComponent<Character_Parameters>().direction);//回転させて弾頭を進行方向に向ける
 
-                Destroy(bullet[i], bullet[0].GetComponent<Attack_Parameter>().GetA_Time());
+                Destroy(bullet[i], bullet[0].transform.FindChild("Armature").gameObject.transform.FindChild("Bone").gameObject.GetComponentInChildren<Attack_Parameter>().GetA_Time());
 
             }
             
         }
 
-        bullet[0].transform.Rotate(0, 0, 45);
+        ///bullet[0].transform.Rotate(0, 0, 45);
         //bullet[1].transform.Rotate(0, 0, -45);
 
         //MPの処理
@@ -94,7 +94,7 @@ public class Claw : Magic_Parameter {
             {
 
                 //斜めに振り下ろす
-                bullet[i].GetComponent<Rigidbody>().velocity = (Parent.transform.TransformDirection(new Vector3(1.0f - i * 2, -1, 0.5f)) * bullet[i].GetComponent<Attack_Parameter>().speed);
+                ///bullet[i].GetComponent<Rigidbody>().velocity = (Parent.transform.TransformDirection(new Vector3(1.0f - i * 2, -1, 0.5f)) * bullet[i].GetComponent<Attack_Parameter>().speed);
 
             }
 
@@ -108,7 +108,7 @@ public class Claw : Magic_Parameter {
 			
         }*/
 
-        yield return new WaitForSeconds(bullet_Prefab.GetComponent<Attack_Parameter>().GetR_Time());//撃った後の硬直
+        yield return new WaitForSeconds(bullet[0].transform.FindChild("Armature").gameObject.transform.FindChild("Bone").gameObject.GetComponentInChildren<Attack_Parameter>().GetR_Time());//撃った後の硬直
 
         //硬直を解除
         Parent.GetComponent<Character_Manager>().SetActive();
