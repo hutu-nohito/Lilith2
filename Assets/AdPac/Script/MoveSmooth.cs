@@ -50,4 +50,9 @@ public class MoveSmooth : MonoBehaviour {
         time = 1 / speed;
         isMove = true;
     }
+
+    public void Stop()
+    {
+        isMove = false;//これで止まるはず
+    }
 }

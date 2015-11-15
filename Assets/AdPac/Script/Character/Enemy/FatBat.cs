@@ -71,8 +71,16 @@ public class FatBat : MonoBehaviour {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Player.transform.position - transform.position), 0.05f);
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
-            state = Fatbat_State.Ikaku;
-            ecZ.SetState(Enemy_Parameter.Enemy_State.Idle);
+            //プレイヤとの距離で行動変化
+            if ((Player.transform.position - transform.position).magnitude > 5)//距離が5以上だったら
+            {
+                MS.Move(Player.position,ecZ.speed);//Playerに近づく
+            }
+            else
+            {
+                ecZ.SetState(Enemy_Parameter.Enemy_State.Idle);//止めとく
+                state = Fatbat_State.Ikaku;
+            }
 
         }
 
@@ -81,6 +89,21 @@ public class FatBat : MonoBehaviour {
             //前を向ける
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Player.transform.position - transform.position), 0.05f);
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+
+            //プレイヤとの距離で行動変化
+            if ((Player.transform.position - transform.position).magnitude > 10)//距離が10以上だったら
+            {
+
+            }
+            if ((Player.transform.position - transform.position).magnitude > 5)//距離が5以上だったら
+            {
+
+                MS.Move(Player.position, ecZ.speed);//Playerに近づく
+            }
+            else
+            {
+                StartCoroutine(Attack());
+            }
 
         }
 
@@ -93,11 +116,11 @@ public class FatBat : MonoBehaviour {
             //ecZ.SetState(Enemy_Parameter.Enemy_State.Idle);
 
             //プレイヤとの距離で行動変化
-            if ((Player.transform.position - transform.position).magnitude < 5)//距離が5以下だったら
+            if ((Player.transform.position - transform.position).magnitude < 10)//距離が10以下だったら
             {
                 state = Fatbat_State.Dance;
             }
-            if ((Player.transform.position - transform.position).magnitude > 10)//距離が10以上だったら
+            else
             {
                 state = Fatbat_State.Syobon;
             }
