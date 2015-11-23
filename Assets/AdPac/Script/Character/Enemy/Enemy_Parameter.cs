@@ -85,9 +85,9 @@ public class Enemy_Parameter : Character_Parameters {
         Normal = 1,
         Negative = 2
     }
-    public Enemy_Habit habit = Enemy_Habit.Normal;
+    /*public Enemy_Habit habit = Enemy_Habit.Normal;
     public Enemy_Habit GetHabit() { return habit; }
-    public void SetHabit(Enemy_Habit habit) { this.habit = habit; }
+    public void SetHabit(Enemy_Habit habit) { this.habit = habit; }*/
 
     /*敵の移動方法
      * 

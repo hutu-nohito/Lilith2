@@ -10,7 +10,8 @@ public class Enemy_ControllerZ : Enemy_Parameter
 
         キャラクタの状態管理は全部ここでやる
         他ではやらない
-
+        ここではキャラクタを動かさない
+        ここはトリガを管理
     */
 
     /*敵のタイプ
@@ -83,6 +84,7 @@ public class Enemy_ControllerZ : Enemy_Parameter
 
         }        
 
+        //撤去
         if (state == Enemy_State.Search)
         {
             //どっちかある方移動

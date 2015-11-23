@@ -22,7 +22,8 @@ public class Search_Player : MonoBehaviour {
 	void OnTriggerEnter (Collider col){
 
 		if(col.tag == "Player"){
-			switch(ecZ.GetHabit()){
+            //トリガだけ渡す
+			/*switch(ecZ.GetHabit()){
                 case Enemy_ControllerZ.Enemy_Habit.Positive:
                     ecZ.Attack();
 				break;
@@ -32,7 +33,7 @@ public class Search_Player : MonoBehaviour {
                     ecZ.Run();
 				break;
 
-			}
+			}*/
 		}
         if (col.tag == "Bullet")
         {
@@ -45,7 +46,8 @@ public class Search_Player : MonoBehaviour {
 
         if (col.tag == "Player")
         {
-            switch (ecZ.GetHabit())
+            //トリガだけ渡す
+            /*switch (ecZ.GetHabit())
             {
                 case Enemy_ControllerZ.Enemy_Habit.Positive:
                     ecZ.Search();
@@ -56,7 +58,7 @@ public class Search_Player : MonoBehaviour {
                     ecZ.Search();
                     break;
 
-            }
+            }*/
         }
 	}
 }
