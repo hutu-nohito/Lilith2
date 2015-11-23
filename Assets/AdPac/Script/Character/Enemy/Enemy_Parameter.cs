@@ -68,23 +68,13 @@ public class Enemy_Parameter : Character_Parameters {
 
     //キャラクタの習性(Habit)////////////////////////////////////////////////////////////
 
-    /*敵のタイプ
-     * 
-     * 基本Moveで徘徊してる
-     * その場で立たせておきたかったらMove_controllerのほうを0に
-     * 
-     * 敵発見時
-     * positive : 攻撃
-     * negative : 逃げる
-     * normal   : 何もしない
-    */
-
-    public enum Enemy_Habit
+    //いらない
+    /*public enum Enemy_Habit
     {
         Positive = 0,
         Normal = 1,
         Negative = 2
-    }
+    }*/
     /*public Enemy_Habit habit = Enemy_Habit.Normal;
     public Enemy_Habit GetHabit() { return habit; }
     public void SetHabit(Enemy_Habit habit) { this.habit = habit; }*/
