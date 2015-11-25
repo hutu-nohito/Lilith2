@@ -29,7 +29,7 @@ public class ElementEater : MonoBehaviour {
     void Update()
     {
 
-        if (ecZ.state == Enemy_Parameter.Enemy_State.Attack)
+        /*if (ecZ.state == Enemy_Parameter.Enemy_State.Attack)
         {
 
             //前を向ける
@@ -42,7 +42,7 @@ public class ElementEater : MonoBehaviour {
                 StartCoroutine(Attack());
 
             }
-        }
+        }*/
     }
 
     IEnumerator Attack()
@@ -67,7 +67,7 @@ public class ElementEater : MonoBehaviour {
         yield return new WaitForSeconds(at_para.GetR_Time());
 
         ecZ.Reverse_Magic();
-        ecZ.SetState(Enemy_Parameter.Enemy_State.Search);
+        //ecZ.SetState(Enemy_Parameter.Enemy_State.Search);
 
     }
 }

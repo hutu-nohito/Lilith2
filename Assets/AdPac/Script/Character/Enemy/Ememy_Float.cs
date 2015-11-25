@@ -31,7 +31,7 @@ public class Ememy_Float : MonoBehaviour {
     {
 
 
-        if (ecZ.state == Enemy_Parameter.Enemy_State.Attack)
+        /*if (ecZ.state == Enemy_Parameter.Enemy_State.Attack)
         {
 
             //前を向ける
@@ -56,7 +56,7 @@ public class Ememy_Float : MonoBehaviour {
                 //animator.SetTrigger("Grun");
 
             }
-        }
+        }*/
     }
 
     IEnumerator Attack()

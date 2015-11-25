@@ -31,7 +31,7 @@ public class Elements : MonoBehaviour {
     void Update()
     {
 
-        if (ecZ.state == Enemy_Parameter.Enemy_State.Attack)
+        /*if (ecZ.state == Enemy_Parameter.Enemy_State.Attack)
         {
 
             //前を向ける
@@ -44,7 +44,7 @@ public class Elements : MonoBehaviour {
                 StartCoroutine(Attack());
 
             }
-        }
+        }*/
     }
 
     IEnumerator Attack()
@@ -69,7 +69,7 @@ public class Elements : MonoBehaviour {
         yield return new WaitForSeconds(at_para.GetR_Time());
 
         ecZ.Reverse_Magic();
-        ecZ.SetState(Enemy_Parameter.Enemy_State.Search);
+        //ecZ.SetState(Enemy_Parameter.Enemy_State.Search);
 
     }
 }

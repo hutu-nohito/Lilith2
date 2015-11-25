@@ -36,18 +36,20 @@ public class Enemy_Parameter : Character_Parameters {
     }//移動禁止
 
     //キャラクタの行動状態(State)//////////////////////////////////////////////////////////
-    public enum Enemy_State
+    //状態じゃなくてトリガにする
+    //いらない
+    /*public enum Enemy_State
     {
-        Idle,//通常
-        Search,//索敵
-        Attack,//臨戦態勢
-        Run,//逃げ
-        Return,//戻り
-        Damage,//ダメージ
+        Idle,//通常       //意味なし
+        Search,//索敵     //プレイヤ発見
+        Attack,//臨戦態勢 //意味なし
+        Run,//逃げ        //意味なし
+        Return,//戻り     //テリトリの外に出た
+        Damage,//ダメージ //ダメージを食らった
     }
     public Enemy_State state = Enemy_State.Idle;
     public Enemy_State GetState() { return state; }
-    public void SetState(Enemy_State state) { this.state = state; }
+    public void SetState(Enemy_State state) { this.state = state; }*/
 
     public bool flag_stop = false;//止まるかどうか
     public bool GetStop() { return flag_stop; }

@@ -20,13 +20,24 @@ public class Territory : MonoBehaviour {
 
     void OnTriggerExit(Collider col)
     {
-        Debug.Log("333");
         for (int i = 0;i < Enemies.Count; i++)
         {
             if(col.gameObject == Enemies[i])
             {
                 Enemies[i].GetComponent<Enemy_ControllerZ>().Return();//縄張りの中央に戻らせる
                 
+            }
+        }
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        for (int i = 0; i < Enemies.Count; i++)
+        {
+            if (col.gameObject == Enemies[i])
+            {
+                Enemies[i].GetComponent<Enemy_ControllerZ>().NotReturn();
+
             }
         }
     }

@@ -26,7 +26,7 @@ public class MadMushroom : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-
+/*
         if (ecZ.state == Enemy_Parameter.Enemy_State.Attack) {
 
             //前を向ける
@@ -41,7 +41,7 @@ public class MadMushroom : MonoBehaviour {
                 animator.SetTrigger("Grun");
 
             }
-        }
+        }*/
     }
 
     IEnumerator Attack()

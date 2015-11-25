@@ -29,7 +29,7 @@ public class Bat : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-
+        /*
         if (ecZ.state == Enemy_Parameter.Enemy_State.Attack)
         {
 
@@ -43,7 +43,7 @@ public class Bat : MonoBehaviour {
                 StartCoroutine(Attack());
 
             }
-        }
+        }*/
     }
 
     IEnumerator Attack()
@@ -77,7 +77,7 @@ public class Bat : MonoBehaviour {
         yield return new WaitForSeconds(at_para.GetR_Time());
 
         ecZ.Reverse_Magic();
-        ecZ.SetState(Enemy_Parameter.Enemy_State.Search);
+        //ecZ.SetState(Enemy_Parameter.Enemy_State.Search);
 
     }
 }

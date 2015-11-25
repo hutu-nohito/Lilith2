@@ -122,7 +122,7 @@ public class Damage_Manager : MonoBehaviour {
                     ecZ.Damage();//とりあえずダメージを受けたことを知らせる
                     ecZ.Reverse_Damage();//ダメージを連続で受けないようにする
                     StartCoroutine(Blink());
-                    Invoke("Reverse_Damage", 3);
+                    Invoke("Reverse_Damage", 0.5f);
                 }
 
                 //こっから状態異常///////////////////////////////////////////////////////////
@@ -185,6 +185,7 @@ public class Damage_Manager : MonoBehaviour {
     void Reverse_Damage()
     {
         ecZ.Reverse_Damage();//無敵時間解除
+        ecZ.NotDamage();//ダメージ受けおわり
     }
 
     void SetActive()

@@ -30,7 +30,7 @@ public class Enemy_Flame : MonoBehaviour {
     void Update()
     {
 
-
+        /*
         if (ecZ.state == Enemy_Parameter.Enemy_State.Attack)
         {
 
@@ -48,7 +48,7 @@ public class Enemy_Flame : MonoBehaviour {
                 //animator.SetTrigger("Grun");
 
             }
-        }
+        }*/
     }
 
     IEnumerator Attack()

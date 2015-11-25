@@ -23,22 +23,12 @@ public class Search_Player : MonoBehaviour {
 
 		if(col.tag == "Player"){
             //トリガだけ渡す
-			/*switch(ecZ.GetHabit()){
-                case Enemy_ControllerZ.Enemy_Habit.Positive:
-                    ecZ.Attack();
-				break;
-                case Enemy_ControllerZ.Enemy_Habit.Normal:
-				break;
-                case Enemy_ControllerZ.Enemy_Habit.Negative:
-                    ecZ.Run();
-				break;
-
-			}*/
-		}
+            ecZ.Find();
+        }
         if (col.tag == "Bullet")
         {
             if(col.GetComponent<Attack_Parameter>().GetParent() == Player)
-                if(ecZ.GetSearch() == Enemy_ControllerZ.Enemy_Search.Magic) ecZ.Attack();
+                if(ecZ.GetSearch() == Enemy_ControllerZ.Enemy_Search.Magic) ecZ.Find();
         }
 	}
 
@@ -47,18 +37,7 @@ public class Search_Player : MonoBehaviour {
         if (col.tag == "Player")
         {
             //トリガだけ渡す
-            /*switch (ecZ.GetHabit())
-            {
-                case Enemy_ControllerZ.Enemy_Habit.Positive:
-                    ecZ.Search();
-                    break;
-                case Enemy_ControllerZ.Enemy_Habit.Normal:
-                    break;
-                case Enemy_ControllerZ.Enemy_Habit.Negative:
-                    ecZ.Search();
-                    break;
-
-            }*/
+            ecZ.NotFind();
         }
 	}
 }

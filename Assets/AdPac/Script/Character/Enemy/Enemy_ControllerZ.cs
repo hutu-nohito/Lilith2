@@ -14,26 +14,20 @@ public class Enemy_ControllerZ : Enemy_Parameter
         ここはトリガを管理
     */
 
-    /*敵のタイプ
-     * 
-     * 基本Moveで徘徊してる
-     * その場で立たせておきたかったらMove_controllerのほうを0に
-     * 
-     * 敵発見時
-     * positive : 攻撃
-     * negative : 逃げる
-     * normal   : 何もしない
-    */
-
     //使うもの
-    private Move_Controller move_controller;//周辺探索用
-    private GameObject Player;//操作キャラ
+    [System.NonSerialized]
+    public Move_Controller move_controller;//周辺探索用
     private MoveSmooth MoveS;//動かすよう空中
+
+    [System.NonSerialized]
+    public GameObject Player;//操作キャラ
+
+    public Transform Territory;//縄張り
 
     public bool frontWall = false;//前に壁がある
 
     //汎用
-    public Enemy_State old_state;//一個前のをとっとくよう
+    
 
     //初期パラメタ(邪魔なのでインスペクタに表示しない)
     [System.NonSerialized]
@@ -46,6 +40,7 @@ public class Enemy_ControllerZ : Enemy_Parameter
     {
         move_controller = GetComponent<Move_Controller>();
         Player = GameObject.FindGameObjectWithTag("Player");
+        if (Territory == null) Territory = this.gameObject.transform;//テリトリーがない場合は自分の位置を入れといて変な挙動をしないようにする
 
         //移動方法によって動きを変える
         switch (move)
@@ -82,9 +77,10 @@ public class Enemy_ControllerZ : Enemy_Parameter
             Destroy(this.gameObject);
             GameObject.FindGameObjectWithTag("Manager").GetComponent<QuestManager>().SetCount(CharaName);
 
-        }        
+        }
 
-        //撤去
+        //索敵    撤去
+        /*
         if (state == Enemy_State.Search)
         {
             //どっちかある方移動
@@ -95,9 +91,10 @@ public class Enemy_ControllerZ : Enemy_Parameter
             transform.rotation = Quaternion.Slerp(transform.localRotation, Quaternion.LookRotation(move_controller.End - transform.localPosition), 0.05f);
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
-        }
+        }*/
 
-        //逃げ
+        //逃げ    撤去
+        /*
         if (state == Enemy_State.Run)
         {
 
@@ -110,7 +107,7 @@ public class Enemy_ControllerZ : Enemy_Parameter
 
             transform.localRotation = Quaternion.LookRotation(-follow);
 
-        }
+        }*/
 
         //Returnは個別のほうがよさげ
         /*if (state == Enemy_State.Return)
@@ -149,56 +146,86 @@ public class Enemy_ControllerZ : Enemy_Parameter
             frontWall = false;
         }
 
-        direction = transform.TransformDirection(Vector3.forward);//移動方向を格納
+        direction = transform.TransformDirection(Vector3.forward);//向き
 
+        //移動用
+        if (isMove)
+        {
+            transform.position += deltaPos * Time.deltaTime;
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime > time)
+            {
+
+                elapsedTime = 0;
+                isMove = false;
+
+            }
+        }
+
+    }
+
+    //ワールド座標で移動//////////////////////////////////////////////////////////////////////////////////
+
+    private Vector3 StartPos;
+    private Vector3 EndPos;
+    private float time = 5;
+    private Vector3 deltaPos;
+
+    private float elapsedTime;
+
+    private bool isMove = false;
+
+    public void Move(Vector3 End, float speed)
+    {
+        elapsedTime = 0;
+        EndPos = End;
+        StartPos = transform.position;
+        time = (EndPos - StartPos).magnitude / speed;//道のり÷速さ
+        deltaPos = (EndPos - StartPos) / time;
+        
+        isMove = true;
+    }
+
+    public void Stop()
+    {
+        isMove = false;//これで止まる
     }
 
     //状態管理//////////////////////////////////////////////////////////////////////////////
     //優先順位も個別でやるべき
-    public void Idle()
-    {
-        old_state = state;
-        //なんか条件付けるけどとりあえずIdle状態に
-        state = Enemy_State.Idle;
+    //トリガ
+    public bool isFind = false;
+    public bool isDamage = false;
+    public bool isReturn = false;
 
+    public void Find()
+    {
+        isFind = true;
     }
 
-    public void Attack()
+    public void NotFind()
     {
-        old_state = state;
-        //なんか条件付けるけどとりあえずAttack状態に
-        state = Enemy_State.Attack;
-
+        isFind = false;
     }
 
-    public void Search ()
-    {
-        old_state = state;
-        //なんか条件付けるけどとりあえずSearch状態に
-        state = Enemy_State.Search;
-
-    }
-
-    public void Run ()
-    {
-        old_state = state;
-        //なんか条件付けるけどとりあえずRun状態に
-        state = Enemy_State.Run;
-
-    }
-    
     public void Damage()
     {
-        old_state = state;
-        //なんか条件付けるけどとりあえずDamage状態に
-        state = Enemy_State.Damage;
+        isDamage = true;
+    }
+
+    public void NotDamage()
+    {
+        isDamage = false;
     }
 
     //縄張りから外れた時に戻ってくるよう
     public void Return()
     {
-        old_state = state;
-        state = Enemy_State.Return;
+        isReturn = true;
+    }
+    public void NotReturn()
+    {
+        isReturn = false;
     }
 
 }
