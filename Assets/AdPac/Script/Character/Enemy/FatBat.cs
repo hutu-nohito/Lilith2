@@ -18,6 +18,7 @@ public class FatBat : MonoBehaviour {
 
     private MoveSmooth MS;//移動は全部これ
     private Animator animator;
+    private int animState = 0;//アニメータのパラメタが取得できないのでとりあえずこれで代用
     private Enemy_ControllerZ ecZ;
 
     //汎用
@@ -56,6 +57,18 @@ public class FatBat : MonoBehaviour {
 
     private Fatbat_State oldstate = Fatbat_State.Search;
 
+    /*
+    アニメーションの番号割り振り
+
+        1   Walk
+        2   Ikaku
+        3   Dance
+        4   Syobon
+        5   Attack
+        6   Kyorokyoro
+
+    */
+
     // Use this for initialization
     void Start()
     {
@@ -74,6 +87,8 @@ public class FatBat : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        //アニメーションを取得してみる
+        AnimatorStateInfo anim = animator.GetCurrentAnimatorStateInfo(0);
 
         if (state == Fatbat_State.Attack)
         {
@@ -98,11 +113,19 @@ public class FatBat : MonoBehaviour {
         }
         if (state == Fatbat_State.Damage)
         {
-
+            
             if (priority >= 6)
             {
 
                 priority = 2;
+
+                //アニメーションセット
+                if(animState != 6)
+                {
+                    animator.SetTrigger("Kyorokyoro");//ここできょろきょろ
+                    animState = 6;
+                }
+                   
 
                 //前を向ける
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.Player.transform.position - transform.position), 0.05f);
@@ -113,6 +136,12 @@ public class FatBat : MonoBehaviour {
             {
 
                 priority = 2;
+                //アニメーションセット
+                if (animState != 1)
+                {
+                    animator.SetTrigger("Walk");//歩き
+                    animState = 1;
+                }
 
                 //前を向ける
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.Player.transform.position - transform.position), 0.05f);
@@ -156,6 +185,12 @@ public class FatBat : MonoBehaviour {
             if (priority >= 3)
             {
                 priority = 3;
+                //アニメーションセット
+                if (animState != 1)
+                {
+                    animator.SetTrigger("Walk");//歩き
+                    animState = 1;
+                }
 
                 //とりあえず中心へ(Territoryはワールド座標にしとく)
                 ecZ.Move(ecZ.Territory.position, ecZ.speed);
@@ -167,7 +202,6 @@ public class FatBat : MonoBehaviour {
                 //テリトリとの距離で行動変化
                 if ((ecZ.Territory.localPosition - transform.localPosition).magnitude < 5)//真ん中ら辺まで戻ったら
                 {
-                    Debug.Log("www");
                     state = Fatbat_State.Search;
                     priority = 6;
                 }
@@ -181,6 +215,12 @@ public class FatBat : MonoBehaviour {
             if (priority >= 4)
             {
                 priority = 4;
+                //アニメーションセット
+                if (animState != 2)
+                {
+                    animator.SetTrigger("Ikaku");//威嚇
+                    animState = 2;
+                }
 
                 //前を向ける
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.Player.transform.position - transform.position), 0.05f);
@@ -211,6 +251,12 @@ public class FatBat : MonoBehaviour {
             if (priority >= 4)
             {
                 priority = 4;
+                //アニメーションセット
+                if (animState != 3)
+                {
+                    animator.SetTrigger("Dance");//ダンス
+                    animState = 3;
+                }
 
                 //前を向ける
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.Player.transform.position - transform.position), 0.05f);
@@ -229,6 +275,12 @@ public class FatBat : MonoBehaviour {
             if (priority >= 4)
             {
                 priority = 4;
+                //アニメーションセット
+                if (animState != 6)
+                {
+                    animator.SetTrigger("Kyorokyoro");//きょろきょろ
+                    animState = 6;
+                }
 
                 //とりあえず中心へ(Territoryはワールド座標にしとく)
                 ecZ.Move(ecZ.Territory.position, ecZ.speed);
@@ -238,6 +290,12 @@ public class FatBat : MonoBehaviour {
                 transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
                 time += Time.deltaTime;
+
+                //テリトリとの距離で行動変化
+                if ((ecZ.Territory.localPosition - transform.localPosition).magnitude < 5)//真ん中ら辺まで戻ったら
+                {
+                    ecZ.Stop();//止める
+                }
 
                 //5秒くらい落ち込んでてもらう
                 if (time > 5)
@@ -269,6 +327,12 @@ public class FatBat : MonoBehaviour {
             if (priority >= 6)
             {
                 priority = 6;
+                //アニメーションセット
+                if (animState != 1)
+                {
+                    animator.SetTrigger("Walk");//歩き
+                    animState = 1;
+                }
 
                 //前を向ける
                 transform.rotation = Quaternion.Slerp(transform.localRotation, Quaternion.LookRotation(ecZ.move_controller.End - transform.localPosition), 0.05f);
@@ -280,26 +344,6 @@ public class FatBat : MonoBehaviour {
                 
         }
 
-        //アニメーションはある程度まとめといたほうがいいかもしれない
-        /*switch (state)
-        {
-            case Fatbat_State.Ikaku:
-                animator.SetBool("Ikaku",true);
-                animator.SetBool("Dance", false);
-                animator.SetBool("Syobon", false);
-                break;
-            case Fatbat_State.Dance:
-                animator.SetBool("Dance", true);
-                animator.SetBool("Ikaku", false);
-                break;
-            case Fatbat_State.Syobon:
-                animator.SetBool("Syobon", true);
-                animator.SetBool("Ikaku", false);
-                break;
-            default:
-                break;
-        }*/
-
         //状態が変化したら前の状態のいどうは中断
         if (oldstate != state)
         {
@@ -307,7 +351,6 @@ public class FatBat : MonoBehaviour {
             ecZ.Stop();
         }
         oldstate = state;
-        Debug.Log((ecZ.Player.transform.position - transform.position).magnitude);
 
     }
 
@@ -322,6 +365,13 @@ public class FatBat : MonoBehaviour {
         yield return new WaitForSeconds(1);//ちょっと間をおいてから攻撃
 
         GameObject bullet;
+
+        //アニメーションセット
+        if (animState != 5)
+        {
+            animator.SetTrigger("Attack");//攻撃
+            animState = 5;
+        }
 
         ecZ.Move(ecZ.Player.transform.position - (ecZ.Player.transform.position - transform.position).normalized * 3, ecZ.speed * 5);//Playerの手前で止まる
 
@@ -345,6 +395,14 @@ public class FatBat : MonoBehaviour {
 
         yield return new WaitForSeconds(1);
 
+        //アニメーションセット
+        if (animState != 4)
+        {
+            animator.SetTrigger("Syobon");//ここで落ち込ませる
+            animState = 4;
+        }
+
+        yield return new WaitForSeconds(4);//落ち込み待ち
         ecZ.Reverse_Magic();
         state = Fatbat_State.Syobon;
         priority = 4;
