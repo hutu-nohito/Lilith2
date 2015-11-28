@@ -39,9 +39,23 @@ public class Bullet : Magic_Parameter {
         pcZ.SetMP(pcZ.GetMP() - GetSMP());
 
         //弾を飛ばす処理
-        bullet.transform.position = transform.position + Parent.GetComponent<Character_Parameters>().direction;//前方に飛ばす
-        bullet.transform.rotation = Quaternion.LookRotation(-(Parent.GetComponent<MousePoint>().worldPoint - Parent.transform.position).normalized);//回転させて弾頭を進行方向に向ける
-        bullet.GetComponent<Rigidbody>().velocity = ((Parent.GetComponent<MousePoint>().worldPoint - Parent.transform.position).normalized * bullet.GetComponent<Attack_Parameter>().speed);
+        bullet.transform.position = transform.position;//前方に飛ばす
+        bullet.transform.rotation = Quaternion.LookRotation(Parent.transform.TransformDirection(Vector3.forward).normalized);//回転させて弾頭を進行方向に向ける
+        
+        //カメラとキャラの向きが90°以上ずれてたら
+        if (Vector3.Dot(pcZ.direction.normalized, Parent.transform.TransformDirection(Vector3.forward).normalized) < 0)//二つのベクトル間の角度が90°以上(たぶん)
+        {
+            bullet.GetComponent<Rigidbody>().velocity = Parent.transform.TransformDirection(Vector3.forward).normalized * bullet.GetComponent<Attack_Parameter>().speed;//キャラの向いてる方向
+        }
+        else
+        {
+            bullet.GetComponent<Rigidbody>().velocity = (Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, 50)) - transform.position).normalized * bullet.GetComponent<Attack_Parameter>().speed;//画面の真ん中
+        }
+        //注目中だったら
+        if (pcZ.GetF_Watch())
+        {
+            bullet.GetComponent<Rigidbody>().velocity = (Camera.main.GetComponent<Z_Camera>().Target.transform.position - transform.position).normalized * bullet.GetComponent<Attack_Parameter>().speed;//敵の方向
+        }
 
         //効果音と演出
         /*if(!audioSource.isPlaying){

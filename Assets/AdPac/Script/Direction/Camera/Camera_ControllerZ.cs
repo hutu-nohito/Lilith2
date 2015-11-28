@@ -81,6 +81,7 @@ public class Camera_ControllerZ : MonoBehaviour {
                     StartPos = horizontalAngle;
                     time = 0.3f;
                     deltaPos = (EndPos - StartPos) / time;
+                    deltaPos = Mathf.Repeat(deltaPos, 360.0f);//360進数に直す
 
                     is_Q_Move = true;
 
@@ -124,6 +125,7 @@ public class Camera_ControllerZ : MonoBehaviour {
             StartPos = horizontalAngle;
             time = 0.5f;
             deltaPos = (EndPos - StartPos) / time;
+            deltaPos = Mathf.Repeat(deltaPos, 360.0f / time);//360進数に直す
 
             is_Q_Move = true;
 
@@ -131,7 +133,16 @@ public class Camera_ControllerZ : MonoBehaviour {
 
         if (is_Q_Move)
         {
-            horizontalAngle += deltaPos * Time.deltaTime;
+            Debug.Log(deltaPos);
+            if(deltaPos < 90)//近いほうに回す
+            {
+                horizontalAngle += deltaPos * Time.deltaTime;
+            }
+            else
+            {
+                horizontalAngle -= ((360 - deltaPos)) * Time.deltaTime;
+            }
+            //horizontalAngle += deltaPos * Time.deltaTime;
             elapsedTime += Time.deltaTime;
             if (elapsedTime > time)
             {

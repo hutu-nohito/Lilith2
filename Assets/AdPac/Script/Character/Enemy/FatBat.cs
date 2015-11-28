@@ -16,10 +16,22 @@ public class FatBat : MonoBehaviour {
     public GameObject Bullet;//攻撃
     public Transform Muzzle;//攻撃が出てくる場所
 
+    private Enemy_ControllerZ ecZ;
     private MoveSmooth MS;//移動は全部これ
+
     private Animator animator;
     private int animState = 0;//アニメータのパラメタが取得できないのでとりあえずこれで代用
-    private Enemy_ControllerZ ecZ;
+    /*
+    アニメーションの番号割り振り
+
+        1   Walk
+        2   Ikaku
+        3   Dance
+        4   Syobon
+        5   Attack
+        6   Kyorokyoro
+
+    */   
 
     //汎用
     private float time = 0;//使ったら戻す
@@ -56,18 +68,6 @@ public class FatBat : MonoBehaviour {
     public void SetState(Fatbat_State state) { this.state = state; }
 
     private Fatbat_State oldstate = Fatbat_State.Search;
-
-    /*
-    アニメーションの番号割り振り
-
-        1   Walk
-        2   Ikaku
-        3   Dance
-        4   Syobon
-        5   Attack
-        6   Kyorokyoro
-
-    */
 
     // Use this for initialization
     void Start()
@@ -262,10 +262,16 @@ public class FatBat : MonoBehaviour {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.Player.transform.position - transform.position), 0.05f);
                 transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
+                //MPを奪う
+                coroutine = StartCoroutine(Dance());
+                
+
                 if ((ecZ.Player.transform.position - transform.position).magnitude > 20)
                 {
                     state = Fatbat_State.Syobon;
                     priority = 4;
+                    StopCoroutine(Dance());//一応止めとく
+                    isCoroutine = false;
                 }
             }
         }
@@ -406,6 +412,21 @@ public class FatBat : MonoBehaviour {
         ecZ.Reverse_Magic();
         state = Fatbat_State.Syobon;
         priority = 4;
+        isCoroutine = false;
+
+    }
+
+    IEnumerator Dance()
+    {//MPを削る
+
+        if (isCoroutine) { yield break; }
+        isCoroutine = true;
+
+        yield return new WaitForSeconds(1);//奪うスピード
+
+        if (ecZ.Player.GetComponent<Player_ControllerZ>().GetMP() > 0)//マイナスにならないようにしとく
+        ecZ.Player.GetComponent<Player_ControllerZ>().SetMP(ecZ.Player.GetComponent<Player_ControllerZ>().GetMP() - 1);
+
         isCoroutine = false;
 
     }
