@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 3cd62e2310b9800488b443cfe75d9b7b
-timeCreated: 1448777825
+guid: 2a930754bfd395f41b52ebb691fa2218
+timeCreated: 1448788087
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -8,19 +8,14 @@ ModelImporter:
     100000: Area
     100002: Camera
     100004: Cube
-    100006: Cube.001
-    100008: //RootNode
+    100006: //RootNode
     400000: Area
     400002: Camera
     400004: Cube
-    400006: Cube.001
-    400008: //RootNode
+    400006: //RootNode
     2300000: Cube
-    2300002: Cube.001
     3300000: Cube
-    3300002: Cube.001
-    4300000: Cube.001
-    4300002: Cube
+    4300000: Cube
   materials:
     importMaterials: 1
     materialName: 2
