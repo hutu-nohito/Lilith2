@@ -6,7 +6,7 @@ public class Camera_ControllerZ : MonoBehaviour {
     //カメラの操作全般　ボタン操作含む
 
         /// <summary>
-        /// 障害物を避けるとカメラがあらぶる
+        /// 障害物を避けるとカメラがあらぶる(テラインに限定)
         /// </summary>
     public float distance = 5.0f;//変えるとプレイヤとの距離が変わる
     public float horizontalAngle = 0.0f;
@@ -14,7 +14,7 @@ public class Camera_ControllerZ : MonoBehaviour {
 
     public float verticalAngle = 10.0f;
     public GameObject lookTarget;
-    public Vector3 Offset = Vector3.zero;
+    public Vector3 Offset = Vector3.zero;//これで位置調整
 
     private Player_ControllerZ pcZ;
     private Z_Camera Zcamara;
@@ -81,7 +81,7 @@ public class Camera_ControllerZ : MonoBehaviour {
                     StartPos = horizontalAngle;
                     time = 0.3f;
                     deltaPos = (EndPos - StartPos) / time;
-                    deltaPos = Mathf.Repeat(deltaPos, 360.0f);//360進数に直す
+                    deltaPos = Mathf.Repeat(deltaPos, 360.0f / time);//360進数に直す
 
                     is_Q_Move = true;
 
@@ -133,14 +133,13 @@ public class Camera_ControllerZ : MonoBehaviour {
 
         if (is_Q_Move)
         {
-            Debug.Log(deltaPos);
-            if(deltaPos < 90)//近いほうに回す
+            if(deltaPos < 180 / time)//近いほうに回す
             {
                 horizontalAngle += deltaPos * Time.deltaTime;
             }
             else
             {
-                horizontalAngle -= ((360 - deltaPos)) * Time.deltaTime;
+                horizontalAngle -= ((360 / time - deltaPos)) * Time.deltaTime;
             }
             //horizontalAngle += deltaPos * Time.deltaTime;
             elapsedTime += Time.deltaTime;

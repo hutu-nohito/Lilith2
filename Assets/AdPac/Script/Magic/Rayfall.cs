@@ -73,13 +73,6 @@ public class Rayfall : Magic_Parameter {
             yield return new WaitForSeconds(0.1f);//弾を生成する間隔
         }
 
-        //効果音と演出
-        /*if(!audioSource.isPlaying){
-			
-            audioSource.Play();//SE
-			
-        }*/
-
         yield return new WaitForSeconds(bullet_Prefab.GetComponent<Attack_Parameter>().GetR_Time());//撃った後の硬直
 
         //硬直を解除
@@ -101,6 +94,13 @@ public class Rayfall : Magic_Parameter {
         }
 
         yield return new WaitForSeconds(1);//発射
+
+        //効果音と演出
+        /*if(!audioSource.isPlaying){
+			
+            audioSource.Play();//SE
+			
+        }*/
 
         for (int i = 0; i < GetExNum(); i++)
         {

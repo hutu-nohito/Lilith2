@@ -21,7 +21,10 @@ public class Bomb_Bullet : Attack_Parameter {
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.name == "Search" || col.gameObject.name == "Vision") return;
+        if (col.gameObject.name == "Vision" || col.gameObject.name == "Search" || col.gameObject.name == "Territory")
+        {
+            return;
+        }
 
         Bomb_Blast();
 

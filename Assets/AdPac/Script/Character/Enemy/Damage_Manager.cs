@@ -16,9 +16,12 @@ public class Damage_Manager : MonoBehaviour {
     //コルーチン
     private Coroutine coroutine;
     private int count;//汎用のカウント用の箱(使い終わったら0に戻すこと)
-    private bool isCoroutine = false; 
+    private bool isCoroutine = false;
 
-	void Start () {
+    //演出
+    public GameObject[] Effects;//出すエフェクト
+
+    void Start () {
 
 		ecZ = Parent.GetComponent<Enemy_ControllerZ>();
 
@@ -121,7 +124,7 @@ public class Damage_Manager : MonoBehaviour {
                     ecZ.H_point -= damage;
                     ecZ.Damage();//とりあえずダメージを受けたことを知らせる
                     ecZ.Reverse_Damage();//ダメージを連続で受けないようにする
-                    StartCoroutine(Blink());
+                    //StartCoroutine(Blink());
                     Invoke("Reverse_Damage", 0.5f);
                 }
 
@@ -143,6 +146,14 @@ public class Damage_Manager : MonoBehaviour {
                         ecZ.SetKeylock();//行動不能だったと思う
                         Invoke("SetActive", 1);
                     }
+                }
+
+                //こっから演出
+                for (int i = 0; i < Effects.Length; i++)
+                {
+                    //Effects[i].transform.parent = null;//子供にしとくとたいてい消える
+                    Effects[i].SetActive(true);
+                    StartCoroutine(ErasseEffect(Effects[i]));
                 }
 
             }
@@ -191,5 +202,12 @@ public class Damage_Manager : MonoBehaviour {
     void SetActive()
     {
         ecZ.SetActive();//無敵時間解除
+    }
+
+    IEnumerator ErasseEffect(GameObject Effect)
+    {
+        yield return new WaitForSeconds(0.5f);//エフェクトが出てる時間
+
+        Effect.SetActive(false);
     }
 }

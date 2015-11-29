@@ -14,6 +14,7 @@ public class Meteor : Magic_Parameter {
     public GameObject Jin;//魔方陣
     private bool isFade = false;//魔方陣フェード用
     private float time = 0;
+    private AudioSource SE;//音
 
     // Use this for initialization
     void Start()
@@ -21,6 +22,7 @@ public class Meteor : Magic_Parameter {
         MC = GameObject.FindGameObjectWithTag("Player").GetComponent<Magic_Controller>();
         pcZ = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_ControllerZ>();
         animator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>();
+        SE = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -53,6 +55,14 @@ public class Meteor : Magic_Parameter {
         //魔方陣つける
         isFade = true;
 
+        //効果音と演出
+        if (!SE.isPlaying)
+        {
+
+            SE.PlayOneShot(SE.clip);//SE
+
+        }
+
         yield return new WaitForSeconds(1);//撃つまでのため
 
         //MPの処理
@@ -63,7 +73,7 @@ public class Meteor : Magic_Parameter {
         //体力に応じて出せるメテオ数を変える
         if (pcZ.GetHP() > pcZ.max_HP / 2)//体力が半分以上
             num_meteor = 10;
-        if (pcZ.GetHP() > pcZ.max_HP / 4)//4分の1以上
+        else if (pcZ.GetHP() > pcZ.max_HP / 4)//4分の1以上
             num_meteor = 7;
         else//瀕死
             num_meteor = 3;
@@ -89,12 +99,7 @@ public class Meteor : Magic_Parameter {
 
 
         }
-        //効果音と演出
-        /*if(!audioSource.isPlaying){
-			
-            audioSource.Play();//SE
-			
-        }*/
+        
 
         yield return new WaitForSeconds(bullet_Prefab.GetComponent<Attack_Parameter>().GetR_Time());//撃った後の硬直
 
