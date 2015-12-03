@@ -24,6 +24,13 @@ public class Camera_ControllerZ : MonoBehaviour {
 
     private bool is_Q_Move = false;//回転用
 
+    //演出
+    //揺らすよう
+    public bool flag_quake;
+    public Vector3 QuakeMagnitude = new Vector3(0,0.2f,0);
+    private float quaketime = 0;
+    private float elapsedquakeTime = 0.05f;
+
     void Start()
     {
         //Playerをセットし忘れてたら探す
@@ -55,8 +62,17 @@ public class Camera_ControllerZ : MonoBehaviour {
             //注視対象からの相対位置を求める
             Vector3 relativePos = Quaternion.Euler(verticalAngle, horizontalAngle, 0) * new Vector3(0, 0, -distance);
 
-            //注視対象の位置にオフセット加算した位置に移動させる
-            transform.position = lookPosition + relativePos;
+            if (flag_quake)
+            {
+                //注視対象の位置にオフセット加算した位置に移動させる
+                transform.position = lookPosition + relativePos + QuakeMagnitude;
+            }
+            else
+            {
+                //注視対象の位置にオフセット加算した位置に移動させる
+                transform.position = lookPosition + relativePos;
+            }
+            
 
             //注視対象を注視させる
             if(!pcZ.GetF_Watch())//注目してなければ
@@ -67,7 +83,6 @@ public class Camera_ControllerZ : MonoBehaviour {
             {
                 Vector2 length = new Vector2(Zcamara.Target.transform.position.x - lookPosition.x, Zcamara.Target.transform.position.z - lookPosition.z);
 
-                Debug.Log(length.magnitude);
                 if(length.magnitude > 5)
                 {
                     /*if (Mathf.DeltaAngle(horizontalAngle, lookTarget.transform.eulerAngles.y) < -0.1f)
@@ -97,6 +112,16 @@ public class Camera_ControllerZ : MonoBehaviour {
 
             }
 
+            //揺らすよう
+            if (flag_quake)
+            {
+                quaketime += Time.deltaTime;
+                if (quaketime > elapsedquakeTime)
+                {
+                    QuakeMagnitude = -QuakeMagnitude;
+                    quaketime = 0;
+                }
+            }
 
             //障害物を避ける
             RaycastHit hitInfo;

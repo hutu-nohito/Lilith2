@@ -6,10 +6,14 @@ public class ColEffect : MonoBehaviour {
     //ぶつかったときに出るエフェクト　ダメージエフェクトとかに
 
     public GameObject[] Effects;//出すエフェクト
+    public bool setaudio = false;//おとならすならこれ
+    private AudioSource audiosource;
 
 	// Use this for initialization
 	void Start () {
-	
+
+        //SEを鳴らす場合
+        if (setaudio) audiosource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -19,6 +23,7 @@ public class ColEffect : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
+        //エフェクト系
         //当たっても消したくないもの
         if (col.gameObject.name == "Vision" || col.gameObject.name == "Search" || col.gameObject.name == "Territory")
         {
@@ -35,6 +40,17 @@ public class ColEffect : MonoBehaviour {
             Effects[i].transform.parent = null;//子供にしとくとたいてい消える
             Effects[i].SetActive(true);
             Destroy(Effects[i],2);//2秒ぐらいで消しとく
+        }
+
+        //SE系
+        if(audiosource != null)
+        {
+            if (!audiosource.isPlaying)
+            {
+
+                audiosource.PlayOneShot(audiosource.clip);//SE
+
+            }
         }
     }
 }

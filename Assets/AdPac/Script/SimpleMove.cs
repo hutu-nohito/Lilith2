@@ -19,11 +19,23 @@ public class SimpleMove : MonoBehaviour {
 	public GameObject Player;
 
 	private float time = 0;
+
+    //Sin用
+    private MoveSmooth MS;
+    private Move_Controller MC;
+    public float moveSpeed = 0;
 	
 	// Use this for initialization
 	void Start () {
 
 		Player = GameObject.FindGameObjectWithTag("Player");
+
+        //Sinで動かすときはこの二つが必要
+        if(element == Move_Type.Sin)
+        {
+            MS = GetComponent<MoveSmooth>();
+            MC = GetComponent<Move_Controller>();
+        }
 
 	}
 	
@@ -73,7 +85,7 @@ public class SimpleMove : MonoBehaviour {
 
 	void Sin (){
 
-		this.transform.position = GetComponent<Move_Controller> ().End;
+        MS.Move(MC.End,moveSpeed);
 
 	}
 

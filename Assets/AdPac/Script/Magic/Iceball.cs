@@ -6,6 +6,9 @@ public class Iceball : Magic_Parameter {
     private Magic_Controller MC;
     private Player_ControllerZ pcZ;
 
+    private Animator animator;//アニメ
+    private AudioSource SE;//音
+
     public GameObject Bullet;//雪玉のObject
 
     private GameObject bullet;
@@ -19,6 +22,9 @@ public class Iceball : Magic_Parameter {
         Player = GameObject.FindGameObjectWithTag("Player");
         MC = Player.GetComponent<Magic_Controller>();
         pcZ = Player.GetComponent<Player_ControllerZ>();
+
+        animator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>();
+        SE = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -90,13 +96,18 @@ public class Iceball : Magic_Parameter {
 
         MC.AddExistBullet(bullet_Shot);//現在の弾数を増やす
 
+        animator.SetTrigger("Shoot");
+
         //弾を飛ばす処理
         bullet_Shot.GetComponent<Rigidbody>().velocity = (Parent.transform.TransformDirection(Vector3.forward) * Bullet.GetComponent<Attack_Parameter>().speed);
-        /*if(!audioSource.isPlaying){
-			
-            audioSource.Play();
-			
-        }*/
+
+        //効果音と演出
+        if (!SE.isPlaying)
+        {
+
+            SE.PlayOneShot(SE.clip);//SE
+
+        }
 
         Destroy(bullet_Shot, bullet_Shot.GetComponent<Attack_Parameter>().GetA_Time());
 

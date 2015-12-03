@@ -7,6 +7,9 @@ public class Kanketusen : Magic_Parameter {
 
     private Magic_Controller MC;
     private Player_ControllerZ pcZ;
+    private Animator animator;//アニメ
+    private AudioSource SE;//音
+
     private Z_Camera zcamera;//足元用 注目対象はここで取得
 
     // Use this for initialization
@@ -14,7 +17,11 @@ public class Kanketusen : Magic_Parameter {
     {
         MC = GameObject.FindGameObjectWithTag("Player").GetComponent<Magic_Controller>();
         pcZ = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_ControllerZ>();
-        zcamera = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Z_Camera>();
+        animator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>();
+        SE = GetComponent<AudioSource>();
+
+        zcamera = Camera.main.gameObject.GetComponentInChildren<Z_Camera>();
+        
     }
 
     // Update is called once per frame
@@ -33,7 +40,8 @@ public class Kanketusen : Magic_Parameter {
         Parent.GetComponent<Character_Manager>().SetKeylock();
         GameObject bullet;
 
-        //たぶんここに撃つアニメーション
+        animator.SetTrigger("Shoot");
+
         yield return new WaitForSeconds(bullet_Prefab.GetComponent<Attack_Parameter>().GetR_Time());//撃つ前の硬直
 
         bullet = GameObject.Instantiate(bullet_Prefab);//弾生成
@@ -52,7 +60,7 @@ public class Kanketusen : Magic_Parameter {
             RaycastHit hit;
             GameObject hitObject;
 
-            Vector3 LineStart = new Vector3(zcamera.Target.transform.position.x, zcamera.Target.transform.position.y - zcamera.Target.transform.localScale.y / 2, zcamera.Target.transform.position.z);
+            Vector3 LineStart = new Vector3(zcamera.Target.transform.position.x, zcamera.Target.transform.position.y /*- zcamera.Target.transform.localScale.y / 2*/, zcamera.Target.transform.position.z);
             Vector3 LineDirection = Vector3.down;//下でおｋ
 
             if (Physics.Raycast(LineStart, LineDirection, out hit, 50))
@@ -67,8 +75,13 @@ public class Kanketusen : Magic_Parameter {
                 {
 
                     bullet.transform.position = hit.point;
+                    Debug.Log("w");
 
                 }
+            }
+            else
+            {
+                bullet.transform.position = new Vector3(zcamera.Target.transform.position.x, zcamera.Target.transform.position.y - zcamera.Target.transform.localScale.y / 2, zcamera.Target.transform.position.z);//下に地面がなかったら
             }
         }
         else
@@ -77,14 +90,14 @@ public class Kanketusen : Magic_Parameter {
         }
         
         bullet.transform.rotation = Quaternion.LookRotation(Parent.transform.TransformDirection(Vector3.forward));//回転させて弾頭を進行方向に向ける
-        //bullet.GetComponent<Rigidbody>().velocity = ((Parent.GetComponent<MousePoint>().worldPoint - Parent.transform.position).normalized * bullet.GetComponent<Attack_Parameter>().speed);
 
         //効果音と演出
-        /*if(!audioSource.isPlaying){
-			
-            audioSource.Play();//SE
-			
-        }*/
+        if (!SE.isPlaying)
+        {
+
+            SE.PlayOneShot(SE.clip);//SE
+
+        }
 
         Destroy(bullet, bullet.GetComponent<Attack_Parameter>().GetA_Time());
 

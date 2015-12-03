@@ -7,7 +7,7 @@ public class Bomb : Magic_Parameter {
 
     private Magic_Controller MC;
     private Player_ControllerZ pcZ;
-
+    private Animator animator;//アニメ
     private AudioSource SE;//音
 
     // Use this for initialization
@@ -15,6 +15,7 @@ public class Bomb : Magic_Parameter {
     {
         MC = GameObject.FindGameObjectWithTag("Player").GetComponent<Magic_Controller>();
         pcZ = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_ControllerZ>();
+        animator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>();
         SE = GetComponent<AudioSource>();
     }
 
@@ -33,6 +34,8 @@ public class Bomb : Magic_Parameter {
     {
         Parent.GetComponent<Character_Manager>().SetKeylock();
         GameObject bullet;
+
+        animator.SetTrigger("Shoot");
 
         bullet = GameObject.Instantiate(bullet_Prefab);//弾生成
         MC.AddExistBullet(bullet);//現在の弾数を増やす

@@ -5,6 +5,8 @@ public class Arrow : Magic_Parameter {
 
     private Magic_Controller MC;
     private Player_ControllerZ pcZ;
+    private Animator animator;//アニメ
+    private AudioSource SE;//音
 
     public GameObject Bullet;//矢のObject
 
@@ -14,6 +16,9 @@ public class Arrow : Magic_Parameter {
 	void Start () {
         MC = GameObject.FindGameObjectWithTag("Player").GetComponent<Magic_Controller>();
         pcZ = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_ControllerZ>();
+
+        animator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>();
+        SE = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
@@ -24,6 +29,8 @@ public class Arrow : Magic_Parameter {
     void Hold()
     {
         time += Time.deltaTime;
+
+        animator.SetTrigger("Shoot");
     }
 
     void Fire()

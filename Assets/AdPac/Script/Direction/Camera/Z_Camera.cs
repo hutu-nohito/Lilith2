@@ -12,7 +12,7 @@ public class Z_Camera : MonoBehaviour {
         /// </summary>
     public float RotSpeed = 20;//注目時の回転移動速度の調整用
     public float tiltAngle = 2;//カメラティルト調整用の角度
-    public float coolTime = 1.0f;//注目できないようにする時間
+    public float coolTime = 0.0f;//注目できないようにする時間
 
     public float length;//注目してる敵との距離
 	public GameObject Target;//ここに注目対象を格納すればいい
@@ -23,12 +23,21 @@ public class Z_Camera : MonoBehaviour {
     public GameObject nearMarker;//今注目できる敵のマーカ
     public GameObject targetMarker;//今注目してる敵のマーカ
 
+    //演出
+    //マーカを上下に動かす
+    public Vector3 QuakeMagnitude = new Vector3(0, 1, 0);
+    private Vector3 Offset = Vector3.zero;
+    private float quaketime = 0;
+    private float elapsedquakeTime = 1.0f;
+
 
     // Use this for initialization
     void Start () {
 		
 		Player = GameObject.FindGameObjectWithTag("Player");
         pcZ = Player.GetComponent<Player_ControllerZ>();
+
+        QuakeMagnitude /= 1000;//これでわかりやすく
 		
 	}
 
@@ -89,7 +98,7 @@ public class Z_Camera : MonoBehaviour {
 
                 //注目時のマーカー
                 targetMarker.SetActive(true);
-                targetMarker.transform.position = Target.transform.position + new Vector3(0, Target.transform.localScale.y + 1, 0);
+                targetMarker.transform.position = Target.transform.position + new Vector3(0, Target.transform.localScale.y + 1, 0) + Offset;
                 nearMarker.SetActive(false);
             }
             else
@@ -113,16 +122,27 @@ public class Z_Camera : MonoBehaviour {
         //ターゲットがいなければ黄色いマーカを出さない
         if(Target == null)nearMarker.SetActive(false);
 
-        //coolTimeが1以下の時注目できないようにする
+        //coolTimeが0.2以下の時注目できないようにする
         if (!pcZ.GetF_Watch()) {
 
-            if(coolTime < 2)
+            if(coolTime < 0.2f)
             coolTime += Time.deltaTime;//注目してなかったら足しとく
         }
         else
         {
             coolTime = 0.0f;
         }
+
+        //揺らすよう
+        Offset += QuakeMagnitude;
+        quaketime += Time.deltaTime;
+        if (quaketime > elapsedquakeTime)
+        {
+            QuakeMagnitude = -QuakeMagnitude;
+            quaketime = 0;
+        }
+
+
 
     }
 
@@ -138,11 +158,11 @@ public class Z_Camera : MonoBehaviour {
         }//nullのときは注目を外す
         else if (!pcZ.GetF_Watch())
         {
-            if(coolTime > 1.0f)
+            if(coolTime > 0.2f)
             {
                 this.Target = Target;
                 nearMarker.SetActive(true);
-                nearMarker.transform.position = Target.transform.position + new Vector3(0, Target.transform.localScale.y + 1, 0);
+                nearMarker.transform.position = Target.transform.position + new Vector3(0, Target.transform.localScale.y + 1, 0) + Offset;
             }
             
 

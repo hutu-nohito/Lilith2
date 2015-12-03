@@ -11,8 +11,6 @@ public class Move_Controller : MonoBehaviour {
 	public Vector3[] Pos;//設定する止まる場所(自身からの相対位置)
 	public Vector3 End;//送る値
 
-    public bool flag_Smooth = false;
-	
 	//GameObject////////////////////////
 	
 	//flag///////////////////////////////
@@ -27,12 +25,7 @@ public class Move_Controller : MonoBehaviour {
 	void Stop (){
 		
 		End = this.transform.localPosition + Pos[count];
-
-        if (flag_Smooth)
-        {
-            this.gameObject.GetComponent<MoveSmooth>().Move(End,10);
-        }
-		
+        
 		if(count == Pos.Length - 1){
 			
 			count = -1;
