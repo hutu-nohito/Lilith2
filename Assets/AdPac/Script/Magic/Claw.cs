@@ -2,6 +2,13 @@
 using System.Collections;
 
 public class Claw : Magic_Parameter {
+
+    /*
+
+        入力タイミング
+        一回目の入力から0.3~0.9
+    */
+
     public GameObject bullet_Prefab;//弾のプレハブ
 
     private GameObject Player;
@@ -151,8 +158,6 @@ public class Claw : Magic_Parameter {
         //MPの処理
         pcZ.SetMP(pcZ.GetMP() - GetSMP());
 
-        //yield return new WaitForSeconds(0.3f);//飛ばすまでに「溜め」がある
-
         //ずっと発動してるのでおろしとく
         if (flag_Homing)
         {
@@ -161,7 +166,7 @@ public class Claw : Magic_Parameter {
 
         yield return new WaitForSeconds(0.3f);//振り下ろし
 
-        //振り下ろした瞬間から入力受付
+        //振り下ろしてから0.3秒後から入力受付
         flag_Input = true;
 
         yield return new WaitForSeconds(0.5f);//撃った後の硬直

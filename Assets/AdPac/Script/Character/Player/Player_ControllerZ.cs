@@ -28,6 +28,9 @@ public class Player_ControllerZ : Character_Manager{
     public float slideSpeed = 0.1f;//滑るスピード
     private bool isSliding = false;//滑ってるかどうか
 
+    
+    public float RotSpeed = 0.1f;//曲がる速さ
+
     void Start()
     {
         playerController = GetComponent<CharacterController>();//rigidbodyを使う場合は外す
@@ -81,7 +84,11 @@ public class Player_ControllerZ : Character_Manager{
         //ジャンプ
         if (playerController.isGrounded)
         {
-            if(flag_move)flag_jump = true;//動けるときだけ地上にいたら。
+            if (flag_move)
+            {
+                if(!isSliding) flag_jump = true;//動けるときだけ地上にいたら。
+            }
+
             move_direction = Vector3.zero;
             animator.SetBool("Jump", false);
             if (Input.GetButtonDown("Jump"))
@@ -99,26 +106,26 @@ public class Player_ControllerZ : Character_Manager{
                 if (Input.GetKey(KeyCode.W))
                 {
                     //Playerの方向 = (最初の方向,向けたい方向,向けたい速度)
-                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), 0.1f);//Playerをターゲットのほうにゆっくり向ける
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), RotSpeed);//Playerをターゲットのほうにゆっくり向ける
                     transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);//Playerのx,zの回転を直す。回転嫌い。全部Eulerにしてしまえばよい
 
                 }
                 if (Input.GetKey(KeyCode.S))
                 {
                     //Playerの方向 = (最初の方向,向けたい方向,向けたい速度)
-                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(MainCamera.transform.TransformDirection(Vector3.back)), 0.1f);//Playerをターゲットのほうにゆっくり向ける
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(MainCamera.transform.TransformDirection(Vector3.back)), RotSpeed);//Playerをターゲットのほうにゆっくり向ける
                     transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);//Playerのx,zの回転を直す。回転嫌い。全部Eulerにしてしまえばよい
                 }
                 if (Input.GetKey(KeyCode.A))
                 {
                     //Playerの方向 = (最初の方向,向けたい方向,向けたい速度)
-                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(MainCamera.transform.TransformDirection(Vector3.left)), 0.1f);//Playerをターゲットのほうにゆっくり向ける
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(MainCamera.transform.TransformDirection(Vector3.left)), RotSpeed);//Playerをターゲットのほうにゆっくり向ける
                     transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);//Playerのx,zの回転を直す。回転嫌い。全部Eulerにしてしまえばよい
                 }
                 if (Input.GetKey(KeyCode.D))
                 {
                     //Playerの方向 = (最初の方向,向けたい方向,向けたい速度)
-                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(MainCamera.transform.TransformDirection(Vector3.right)), 0.1f);//Playerをターゲットのほうにゆっくり向ける
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(MainCamera.transform.TransformDirection(Vector3.right)), RotSpeed);//Playerをターゲットのほうにゆっくり向ける
                     transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);//Playerのx,zの回転を直す。回転嫌い。全部Eulerにしてしまえばよい
                 }
             }
@@ -212,7 +219,7 @@ public class Player_ControllerZ : Character_Manager{
             //キャラクターの位置から下方向にRayを飛ばす（指定レイヤー限定※この場合は地面コリジョンのレイヤー）
             //RayLengthは、Rayを飛ばす距離。私の場合は地面の位置すれすれまで飛ばしてます（地面の高さは固定な前提）
             //レイヤーマスクは⇒で指定 int layerMask =1 << LayerMask.NameToLayer("レイヤー名");
-            if (Physics.Raycast(transform.position, Vector3.down, out slideHit, 50))
+            if (Physics.Raycast(transform.position, Vector3.down, out slideHit, 10))
             {
                 //衝突した際の面の角度とが滑らせたい角度以上かどうかを調べます。
                 if (Vector3.Angle(slideHit.normal, Vector3.up) > playerController.slopeLimit)
@@ -220,6 +227,7 @@ public class Player_ControllerZ : Character_Manager{
                     isSliding = true;
                 }
             }
+            
         }
     }
 }

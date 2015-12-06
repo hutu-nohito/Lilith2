@@ -14,6 +14,8 @@ public class Iceball : Magic_Parameter {
     private GameObject bullet;
     private GameObject Player;
     private Vector3 oldPos;//プレイヤーの動きをとる
+    private float oldSpeed = 0;//元のスピードを保持しとく
+    private float oldRotSpeed = 0;//元の回転速度
 
     private bool isIceball = false;//弾を出しているかどうか
     // Use this for initialization
@@ -35,6 +37,15 @@ public class Iceball : Magic_Parameter {
 
     void Hold()
     {
+        //ﾌﾟﾚｲﾔのスピードをゆっくりに
+        if (!isIceball)
+        {
+            oldSpeed = pcZ.GetSpeed();
+            oldRotSpeed = pcZ.RotSpeed;
+            pcZ.RotSpeed = pcZ.RotSpeed / 10;
+            pcZ.SetSpeed(pcZ.GetSpeed() / 2);
+        }
+        
         //まず雪玉を出します
         if (!isIceball) {
             bullet = GameObject.Instantiate(Bullet);
@@ -43,29 +54,40 @@ public class Iceball : Magic_Parameter {
 
             bullet.GetComponent<Attack_Parameter>().Parent = this.Parent;//もらった親を渡しておく必要がある
 
+            //物理挙動をなくしとく
+            bullet.GetComponent<Rigidbody>().useGravity = false;
+            bullet.GetComponent<SphereCollider>().isTrigger = true;
+
             pcZ.SetMP(pcZ.GetMP() - GetSMP());
 
             isIceball = true;
+
+            //雪玉がついてくるように さすがに親子にしたほうが早い
+            //bullet.transform.position += Player.transform.position - oldPos;
+            bullet.transform.parent = Player.transform;
+
             oldPos = Player.transform.position;
         }
 
         if (bullet == null) {
 
+            //ﾌﾟﾚｲﾔのスピードを戻す
+            pcZ.RotSpeed = oldRotSpeed;
+            pcZ.SetSpeed(oldSpeed);
             return;//雪玉が壊れてたら処理しない
         } 
                    //雪玉を大きく
             if (oldPos != Player.transform.position)
         {
-            if (bullet.transform.localScale.y < 5)//一応制限しとく
+            if (bullet.transform.localScale.y < 5)
+            {//一応制限しとく
                 bullet.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
+                bullet.transform.localPosition += new Vector3(0,0.005f,0);
+            }
 
             //転がってるように見せる　回転
             bullet.transform.Rotate(1, 0, 0);
         }
-
-        //雪玉がついてくるように さすがに親子にしたほうが早い
-        //bullet.transform.position += Player.transform.position - oldPos;
-        bullet.transform.parent = Player.transform;
 
         
 
@@ -75,6 +97,17 @@ public class Iceball : Magic_Parameter {
 
     void Fire()
     {
+        //ﾌﾟﾚｲﾔのスピードを戻す
+        pcZ.RotSpeed = oldRotSpeed;
+        pcZ.SetSpeed(oldSpeed);
+
+        //弾が残ってたら物理挙動を付ける
+        if (bullet != null)
+        {
+            bullet.GetComponent<SphereCollider>().isTrigger = false;
+            bullet.GetComponent<Rigidbody>().useGravity = true;
+        }
+
         StartCoroutine(Shot());
     }
 

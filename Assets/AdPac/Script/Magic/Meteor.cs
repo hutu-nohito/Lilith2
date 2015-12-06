@@ -16,6 +16,9 @@ public class Meteor : Magic_Parameter {
     private float time = 0;
     private AudioSource SE;//音
 
+    //演出
+    private Camera_ControllerZ CCZ;
+
     // Use this for initialization
     void Start()
     {
@@ -23,6 +26,8 @@ public class Meteor : Magic_Parameter {
         pcZ = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_ControllerZ>();
         animator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>();
         SE = GetComponent<AudioSource>();
+
+        CCZ = Camera.main.gameObject.GetComponent<Camera_ControllerZ>();
     }
 
     // Update is called once per frame
@@ -68,6 +73,8 @@ public class Meteor : Magic_Parameter {
         //MPの処理
         pcZ.SetMP(pcZ.GetMP() - GetSMP());
 
+        CCZ.flag_quake = true;//カメラ揺らす
+
         GameObject[] bullet = new GameObject[GetExNum()];
 
         //体力に応じて出せるメテオ数を変える
@@ -99,12 +106,15 @@ public class Meteor : Magic_Parameter {
 
 
         }
-        
 
-        yield return new WaitForSeconds(bullet_Prefab.GetComponent<Attack_Parameter>().GetR_Time());//撃った後の硬直
+        yield return new WaitForSeconds(0.3f);//魔方陣消す
 
         //魔方陣を消す
         isFade = false;
+
+        yield return new WaitForSeconds(bullet_Prefab.GetComponent<Attack_Parameter>().GetR_Time() - 0.3f);//撃った後の硬直
+
+        CCZ.flag_quake = false;//揺れを止める
 
         //硬直を解除
         Parent.GetComponent<Character_Manager>().SetActive();

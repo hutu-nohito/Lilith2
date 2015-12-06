@@ -25,40 +25,47 @@ public class Homing_Bullet : Attack_Parameter {
 	void Update () {
 
         if(Parent.tag == "Player")
-        if (Parent.GetComponent<Player_ControllerZ>().GetF_Watch())
         {
-            
-            Vector3 next = Target.transform.position;
-            Vector3 now = transform.position;
-            // 目的となる角度を取得する
-            var d = next - now;
-            var targetAngle = Mathf.Atan2(d.z, d.x) * Mathf.Rad2Deg;
-            // 角度差を求める
-            var deltaAngle = Mathf.DeltaAngle(Direction, targetAngle);
-            var newAngle = Direction;
-            if (Mathf.Abs(deltaAngle) < _rotSpeed)
+            if(Target != null)
             {
-                // 旋回速度を下回る角度差なので何もしない
-                
-            }
-            else if (deltaAngle > 0)
-            {
-                // 左回り
-                newAngle += _rotSpeed;
-                
-            }
-            else
-            {
-                // 右回り
-                newAngle -= _rotSpeed;
-                
-            }
+                if (Parent.GetComponent<Player_ControllerZ>().GetF_Watch())
+                {
 
-            // 新しい速度を設定する
-            SetVelocity(newAngle, speed);
-            
+                    Vector3 next = Target.transform.position;
+                    Vector3 now = transform.position;
+                    // 目的となる角度を取得する
+                    var d = next - now;
+                    var targetAngle = Mathf.Atan2(d.z, d.x) * Mathf.Rad2Deg;
+                    // 角度差を求める
+                    var deltaAngle = Mathf.DeltaAngle(Direction, targetAngle);
+                    var newAngle = Direction;
+                    if (Mathf.Abs(deltaAngle) < _rotSpeed)
+                    {
+                        // 旋回速度を下回る角度差なので何もしない
+
+                    }
+                    else if (deltaAngle > 0)
+                    {
+                        // 左回り
+                        newAngle += _rotSpeed;
+
+                    }
+                    else
+                    {
+                        // 右回り
+                        newAngle -= _rotSpeed;
+
+                    }
+
+                    // 新しい速度を設定する
+                    SetVelocity(newAngle, speed);
+
+                }
+                else { Target = null; }//注目しなおしたときに対象が変わらないように
+            }
         }
-        else { Target = null; }//注目しなおしたときに対象が変わらないように
+
+        
 
 	}
 
@@ -80,7 +87,7 @@ public class Homing_Bullet : Attack_Parameter {
         }
 
         //高さは別に設定
-        var vy = (Target.transform.position.y - transform.position.y) * speed / (Target.transform.position - transform.position).magnitude;//高さを後に合わせたほうが見栄えがいい
+        var vy = ((Target.transform.position.y + Target.transform.localScale.y) - transform.position.y) * speed / (Target.transform.position - transform.position).magnitude;//高さを後に合わせたほうが見栄えがいい
 
         if (flag_Stop) { vx = 0; vz = 0; flag_Stop = false; }
 

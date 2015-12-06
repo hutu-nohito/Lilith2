@@ -34,11 +34,11 @@ public class Character_Parameters : MonoBehaviour {
 
     public float speed = 5; //キャラクタの移動速度
     public float GetSpeed() { return speed; }
-    public void SetSpeed(int speed) { this.speed = speed; }
+    public void SetSpeed(float speed) { this.speed = speed; }
 
     public float jump = 6;//キャラクタがジャンプする高さ
     public float GetJump() { return jump; }
-    public void SetJump(int jump) { this.jump = jump; }
+    public void SetJump(float jump) { this.jump = jump; }
 
     public string[] weak_element;//弱点属性
     public string[] GetWeak() { return weak_element; }
