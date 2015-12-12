@@ -226,22 +226,29 @@ public class FatBat : MonoBehaviour {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.Player.transform.position - transform.position), 0.05f);
                 transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
-                //プレイヤとの距離で行動変化
-                if ((ecZ.Player.transform.position - transform.position).magnitude < 5)//距離が5以下だったら
+                //ちょっと間をおいてから行動
+                time += Time.deltaTime;
+                if (time > 3)
                 {
-                    state = Fatbat_State.Dance;
-                    priority = 4;
                     
+                    //プレイヤとの距離で行動変化
+                    if ((ecZ.Player.transform.position - transform.position).magnitude < 5)//距離が5以下だったら
+                    {
+                        state = Fatbat_State.Dance;
+                        priority = 4;
+
+                    }
+                    else if ((ecZ.Player.transform.position - transform.position).magnitude < 20)//距離が10以下だったら
+                    {
+                        ecZ.Move(ecZ.Player.transform.position, ecZ.speed);//Playerに近づく
+                    }
+                    else
+                    {
+                        state = Fatbat_State.Syobon;
+                        priority = 4;
+                    }
                 }
-                else if ((ecZ.Player.transform.position - transform.position).magnitude < 20)//距離が10以下だったら
-                {
-                    ecZ.Move(ecZ.Player.transform.position, ecZ.speed);//Playerに近づく
-                }
-                else
-                {
-                    state = Fatbat_State.Syobon;
-                    priority = 4;
-                }
+                
 
             }      
         }
@@ -353,6 +360,7 @@ public class FatBat : MonoBehaviour {
         //状態が変化したら前の状態のいどうは中断
         if (oldstate != state)
         {
+            time = 0;
             MS.Stop();
             ecZ.Stop();
         }
