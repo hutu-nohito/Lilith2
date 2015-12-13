@@ -113,9 +113,9 @@ public class Player_Manager : MonoBehaviour {
                 if (pcZ.GetF_Damage())
                 {
                     pcZ.H_point -= damage;
-                    pcZ.Reverse_Damage();//ダメージを連続で受けないようにする
+                    //pcZ.Reverse_Damage();//ダメージを連続で受けないようにする
                     StartCoroutine(Blink());//点滅
-                    Invoke("Reverse_Damage", 3);
+                    //Invoke("Reverse_Damage", 3);
                 }
                 
 
