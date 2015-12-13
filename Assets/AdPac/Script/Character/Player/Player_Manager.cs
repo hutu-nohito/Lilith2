@@ -86,9 +86,9 @@ public class Player_Manager : MonoBehaviour {
 			if(attack.Parent != Parent){
 
 				int damage = attack.power;
-				
-				//弱点属性でダメージ2倍
-				for (int i = 0; i < pcZ.weak_element.Length; i++) {
+
+                //弱点属性でダメージ2倍
+                for (int i = 0; i < pcZ.weak_element.Length; i++) {
 					
 					if (attack.GetElement() == pcZ.weak_element [i]) {
 						

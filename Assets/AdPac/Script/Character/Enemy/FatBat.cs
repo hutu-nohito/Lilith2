@@ -10,7 +10,7 @@ public class FatBat : MonoBehaviour {
                             　 ↓                       ↓
           ↑                   ←                    がっかり               ←
 
-        */
+    */
 
     //この辺は敵によりけりなのでこっち
     public GameObject Bullet;//攻撃

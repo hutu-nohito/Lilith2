@@ -97,7 +97,7 @@ public class Enemy_Parameter : Character_Parameters {
     }
 
     public Enemy_Move move = Enemy_Move.Ground;
-    public Enemy_Move GetMove() { return move; }
+    public Enemy_Move GetMoveState() { return move; }
 
     /*索敵方法
      * 

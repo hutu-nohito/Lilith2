@@ -1,0 +1,209 @@
+fileFormatVersion: 2
+guid: 3bbace2449c1023449cf06114af28eaa
+timeCreated: 1449983703
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Camera
+    100002: Cube
+    100004: Cube_MeshPart0
+    100006: Cube_MeshPart1
+    100008: //RootNode
+    100010: Lamp
+    100012: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2"
+    100014: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone"
+    100016: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone.001"
+    100018: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone.002"
+    100020: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L"
+    100022: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.001"
+    100024: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.002"
+    100026: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.003"
+    100028: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.004"
+    100030: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.005"
+    100032: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.006"
+    100034: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.007"
+    100036: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R"
+    100038: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.001"
+    100040: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.002"
+    100042: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.003"
+    100044: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.004"
+    100046: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.005"
+    100048: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.006"
+    100050: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.007"
+    400000: Camera
+    400002: Cube
+    400004: Cube_MeshPart0
+    400006: Cube_MeshPart1
+    400008: //RootNode
+    400010: Lamp
+    400012: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2"
+    400014: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone"
+    400016: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone.001"
+    400018: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone.002"
+    400020: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L"
+    400022: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.001"
+    400024: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.002"
+    400026: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.003"
+    400028: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.004"
+    400030: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.005"
+    400032: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.006"
+    400034: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.007"
+    400036: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R"
+    400038: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.001"
+    400040: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.002"
+    400042: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.003"
+    400044: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.004"
+    400046: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.005"
+    400048: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.006"
+    400050: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.007"
+    2300000: Cube_MeshPart0
+    2300002: Cube_MeshPart1
+    3300000: Cube_MeshPart0
+    3300002: Cube_MeshPart1
+    4300000: Cube_MeshPart0
+    4300002: Cube_MeshPart1
+    7400000: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|negative-walk"
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 2
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|negative-walk"
+      takeName: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|negative-walk"
+      firstFrame: 0
+      lastFrame: 45
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Camera
+        weight: 1
+      - path: Cube
+        weight: 1
+      - path: Cube/Cube_MeshPart0
+        weight: 1
+      - path: Cube/Cube_MeshPart1
+        weight: 1
+      - path: Lamp
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone.001"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone.001/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone.002"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.001"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.001/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.002"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.001/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.003"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.001"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.001/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.002"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.001/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.003"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.004"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.004/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.005"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.004/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.005/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.006"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.004/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.005/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.006/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_L.007"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.004"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.004/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.005"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.004/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.005/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.006"
+        weight: 1
+      - path: "\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.004/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.005/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.006/\u30A2\u30FC\u30DE\u30C1\u30E5\u30A2|Bone_R.007"
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .200000003
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

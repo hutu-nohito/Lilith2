@@ -12,6 +12,9 @@ public class Enemy_ControllerZ : Enemy_Parameter
         他ではやらない
         ここではキャラクタを動かさない
         ここはトリガを管理
+
+        浮いてる敵の高さはジャンプ力を使う
+        浮いてる敵は自分より高い位置にある段差は上らない
     */
 
     //使うもの
@@ -145,6 +148,26 @@ public class Enemy_ControllerZ : Enemy_Parameter
         {
             frontWall = false;
         }
+
+        //レイキャストで浮かせる
+        RaycastHit hit_float;
+        Vector3 StartPos_float = transform.position;//とりあえず足元から出す
+
+        //
+        if (move == Enemy_Move.Float)//浮いてるやつの高さ調整
+        {
+            if (Physics.Raycast(StartPos_float, transform.TransformDirection(Vector3.down), out hit_float, jump))//jumpが高さ
+            {
+                //Debug.DrawLine(StartPos_float, hit_float.point, Color.green);
+                transform.position = new Vector3(transform.position.x, hit_float.point.y + jump, transform.position.z);//高さを固定する
+
+            }
+            else//下の足場に下りようとしてる
+            {
+                Move(Vector3.down, speed);
+            }
+        }
+            
 
         direction = transform.TransformDirection(Vector3.forward);//向き
 
