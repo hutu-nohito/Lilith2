@@ -83,7 +83,7 @@ public class TextImput : MonoBehaviour {
 			break;
         case Text_Type.Magic:
 
-            guiText.text = "S " + mc.Magic[mc.magic_num].name;
+            guiText.text = "S " + mc.SelectMagic[mc.magic_num].name;
             break;
         case Text_Type.Enemy:
 			guiText.text = "Boss HP " + ecZ.H_point;
