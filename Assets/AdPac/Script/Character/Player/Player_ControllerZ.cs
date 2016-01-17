@@ -164,7 +164,6 @@ public class Player_ControllerZ : Character_Manager{
         }
 
         //ダッシュ////////////////////////////////
-        
         if (Input.GetKeyDown(KeyCode.W))
         {
             if (!flag_Dash)
@@ -194,7 +193,6 @@ public class Player_ControllerZ : Character_Manager{
 
         if (flag_Dash)
         {
-            Debug.Log("www");
             elapsedTime += Time.deltaTime;
             if (elapsedTime > inputTime)
             {

@@ -30,7 +30,7 @@ public class Event_Manager : MonoBehaviour {
 	
 	}
 
-	IEnumerator Home_T(){//MPは自然回復
+	IEnumerator Home_T(){//
 		
 		if(isCoroutineH){yield break;}
 		isCoroutineH = true;
@@ -42,7 +42,7 @@ public class Event_Manager : MonoBehaviour {
 		isCoroutineH = false;
 		
 	}
-	IEnumerator guild_T(){//MPは自然回復
+	IEnumerator guild_T(){
 		
 		if(isCoroutineG){yield break;}
 		isCoroutineG = true;
