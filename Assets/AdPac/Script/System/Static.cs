@@ -89,7 +89,7 @@ public class Static : MonoBehaviour {
 
     }
 
-    void Save()
+    public void Save()
     {
         //セーブを呼び出した段階でのパラメタを格納
         SaveData[0] = GetDay().ToString();
@@ -101,7 +101,7 @@ public class Static : MonoBehaviour {
         SaveText(folder, @"\savedata.txt", SaveData);
     }
 
-    void Load()
+    public void Load()
     {
         SaveData = LoadText(folder, @"\savedata.txt");
 

@@ -45,9 +45,11 @@ public class Magic_Controller : MonoBehaviour{
 
         Pz = GetComponent<Player_ControllerZ>();
 
-		MagicSet (6,2,9,13);
+        //選択されてる魔法の番号を渡す。
+        //MagicSet (6,2,9,13);
+        MagicSet(5, 2, 3, 4);
 
-        for(int i = 0;i < Magic.Length;i++){
+        for (int i = 0;i < Magic.Length;i++){
 
             Magic[i].GetComponent<Magic_Parameter>().SetParent(this.gameObject);//親はプレイヤー
 

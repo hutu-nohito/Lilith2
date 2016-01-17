@@ -161,7 +161,7 @@ public class SceneManager : MonoBehaviour {
     private bool fadeOut = true;
     public float fadeTime = 2.0f;
     private float elapsedTime = 0.0f;
-    void Fade()
+    public void Fade()
     {
         fade.enabled = true;
         isFade = true;
