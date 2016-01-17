@@ -56,5 +56,9 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
         {
             Destroy(obj.gameObject);
         }
+        else
+        {
+
+        }
     }
 }

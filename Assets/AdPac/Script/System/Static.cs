@@ -39,6 +39,7 @@ public class Static : MonoBehaviour {
     /*
      * ここに隙間の状態と持ってるデータの情報 
      */
+    public int[] MasekiNum;
 
     private static bool flag_exist = false;
     void Awake()
