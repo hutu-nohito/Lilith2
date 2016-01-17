@@ -20,6 +20,8 @@ public class Guild : MonoBehaviour {
         sM = GameObject.FindGameObjectWithTag("Manager").GetComponent<SceneManager>();
         _static = GameObject.FindGameObjectWithTag("Manager").GetComponent<Static>();
 
+        Camera.main.transform.position = CameraPos[0].transform.position;
+
         //ここでクエストから帰ってきた時の処理
 
         if (qM.isQuest)
@@ -47,15 +49,64 @@ public class Guild : MonoBehaviour {
 	void Start () {
 
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+    //カメラ動かすよう
+    public float MoveTime = 2;
+    private float elapsedTime = 0;
+    public GameObject[] CameraPos;
+    private bool isMove = false;
+    private int camNum = 0;//カメラを移動する位置
+    public GameObject QuestBoad;
+    public GameObject EntranceBoad;
+
+    // Update is called once per frame
+    void Update () {
+
+        if (isMove)
+        {
+            elapsedTime += Time.deltaTime;
+            Camera.main.transform.position += (CameraPos[camNum].transform.position - Camera.main.transform.position).normalized * 15 * Time.deltaTime;
+
+            if(elapsedTime > MoveTime)
+            {
+                Camera.main.transform.position = CameraPos[camNum].transform.position;
+                elapsedTime = 0;
+                isMove = false;
+                if(camNum == 1)
+                {
+                    QuestBoad.SetActive(true);
+                }
+                if(camNum == 0)
+                {
+                    EntranceBoad.SetActive(true);
+                }
+            }
+        }
 	}
+
+    //カメラ
+    public void Quest()
+    {
+        EntranceBoad.SetActive(false);
+        isMove = true;
+        camNum = 1;
+    }
+
+    public void Entrance()
+    {
+        QuestBoad.SetActive(false);
+        isMove = true;
+        camNum = 0;
+    }
+
+    public void Home()
+    {
+        sM.Home();
+    }
 
     //クエスト掲示板/////////////////////////////////////////////////////////
 
-	public void Quest0 (){
+    public void Quest0 (){
 
 		Quest_paper [0].SetActive (!Quest_paper[0].activeSelf);
         quest_num = 0;
