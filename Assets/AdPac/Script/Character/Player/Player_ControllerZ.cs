@@ -20,7 +20,7 @@ public class Player_ControllerZ : Character_Manager{
     //初期パラメタ(邪魔なのでインスペクタに表示しない)
     [System.NonSerialized]
     public int max_HP, max_MP, base_Pow, base_Def;
-    [System.NonSerialized]
+    //[System.NonSerialized]
     public float base_Sp, base_Ju;
 
     //坂判定用
@@ -28,7 +28,15 @@ public class Player_ControllerZ : Character_Manager{
     public float slideSpeed = 0.1f;//滑るスピード
     private bool isSliding = false;//滑ってるかどうか
 
-    
+    //ダッシュ
+    private bool flag_Dash = false;//ダッシュ待機
+    private bool isDash = false;//ダッシュする
+    public float inputTime = 0.9f;//入力受付時間
+    //private int inputCount = 0;//入力は一回まで
+    private string inputKey = "W";//入力(どの方向か)
+    private float elapsedTime = 0.0f;
+
+
     public float RotSpeed = 0.1f;//曲がる速さ
 
     void Start()
@@ -115,18 +123,21 @@ public class Player_ControllerZ : Character_Manager{
                     //Playerの方向 = (最初の方向,向けたい方向,向けたい速度)
                     transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(MainCamera.transform.TransformDirection(Vector3.back)), RotSpeed);//Playerをターゲットのほうにゆっくり向ける
                     transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);//Playerのx,zの回転を直す。回転嫌い。全部Eulerにしてしまえばよい
+
                 }
                 if (Input.GetKey(KeyCode.A))
                 {
                     //Playerの方向 = (最初の方向,向けたい方向,向けたい速度)
                     transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(MainCamera.transform.TransformDirection(Vector3.left)), RotSpeed);//Playerをターゲットのほうにゆっくり向ける
                     transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);//Playerのx,zの回転を直す。回転嫌い。全部Eulerにしてしまえばよい
+
                 }
                 if (Input.GetKey(KeyCode.D))
                 {
                     //Playerの方向 = (最初の方向,向けたい方向,向けたい速度)
                     transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(MainCamera.transform.TransformDirection(Vector3.right)), RotSpeed);//Playerをターゲットのほうにゆっくり向ける
                     transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);//Playerのx,zの回転を直す。回転嫌い。全部Eulerにしてしまえばよい
+
                 }
             }
             
@@ -150,6 +161,120 @@ public class Player_ControllerZ : Character_Manager{
 
             animator.SetFloat("Speed", 0);
 
+        }
+
+        //ダッシュ////////////////////////////////
+        
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            if (!flag_Dash)
+            {
+                inputKey = "W";
+            }                
+            flag_Dash = true;
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            if (!flag_Dash)
+                inputKey = "A";
+            flag_Dash = true;
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            if (!flag_Dash)
+                inputKey = "S";
+            flag_Dash = true;
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            if (!flag_Dash)
+                inputKey = "D";
+            flag_Dash = true;
+        }
+
+        if (flag_Dash)
+        {
+            Debug.Log("www");
+            elapsedTime += Time.deltaTime;
+            if (elapsedTime > inputTime)
+            {
+                flag_Dash = false;
+                elapsedTime = 0;
+            }
+
+            switch (inputKey)
+            {
+                case "W":
+                    if (Input.GetKeyUp(KeyCode.W))
+                    {
+                        isDash = true;
+                    }
+                    if (isDash)
+                    {
+                        if (Input.GetKeyDown(KeyCode.W))//
+                        {
+                            speed = 2 * base_Sp;
+                            elapsedTime = 0;
+                            isDash = false;
+                            flag_Dash = false;
+                        }
+                    }
+                    break;
+                case "A":
+                    if (Input.GetKeyUp(KeyCode.A))
+                    {
+                        isDash = true;
+                    }
+                    if (isDash)
+                    {
+                        if (Input.GetKeyDown(KeyCode.A))//
+                        {
+                            speed = 2 * base_Sp;
+                            elapsedTime = 0;
+                            isDash = false;
+                            flag_Dash = false;
+                        }
+                    }
+                    break;
+                case "S":
+                    if (Input.GetKeyUp(KeyCode.S))
+                    {
+                        isDash = true;
+                    }
+                    if (isDash)
+                    {
+                        if (Input.GetKeyDown(KeyCode.S))//
+                        {
+                            speed = 2 * base_Sp;
+                            elapsedTime = 0;
+                            isDash = false;
+                            flag_Dash = false;
+                        }
+                    }
+                    break;
+                case "D":
+                    if (Input.GetKeyUp(KeyCode.D))
+                    {
+                        isDash = true;
+                    }
+                    if (isDash)
+                    {
+                        if (Input.GetKeyDown(KeyCode.D))//
+                        {
+                            speed = 2 * base_Sp;
+                            elapsedTime = 0;
+                            isDash = false;
+                            flag_Dash = false;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        if (inputDirection.magnitude == 0)//ダッシュ解除
+        {
+            speed = base_Sp;
+            flag_Dash = false;
         }
 
         //坂に立ってたら滑らす
