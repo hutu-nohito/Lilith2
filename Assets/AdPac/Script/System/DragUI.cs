@@ -3,9 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
-{
-    
+public class DragUI : MonoBehaviour//, IBeginDragHandler, IDragHandler, IEndDragHandler
+{/*
     public static RectTransform obj;
 
     public static bool isWaku = false;//枠に入ったかどうか
@@ -19,6 +18,7 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     void Start()
     {
     }
+*/
 
     void Update()
     {
@@ -35,7 +35,7 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
         }*/
     }
-
+/*
     public void OnBeginDrag(PointerEventData e)
     {
         isWaku = false;//持ったら入ってない
@@ -61,4 +61,5 @@ public class DragUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
         }
     }
+*/
 }

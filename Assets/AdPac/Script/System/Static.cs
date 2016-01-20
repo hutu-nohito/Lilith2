@@ -39,7 +39,9 @@ public class Static : MonoBehaviour {
     /*
      * ここに隙間の状態と持ってるデータの情報 
      */
-    public int[] MasekiNum;
+    //public int[] MasekiNum;
+    public int currentPallete = 1;//現在装備中のパレット
+    public int[] SelectMagicID = new int[5];//パレットで選択されてる魔法
 
     private static bool flag_exist = false;
     void Awake()

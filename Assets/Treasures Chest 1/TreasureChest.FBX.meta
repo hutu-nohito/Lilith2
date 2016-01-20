@@ -3,8 +3,19 @@ guid: 440b8ece0e57c9a4eb488cfaa509a410
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
+    100000: chest
+    100002: chest_top
+    100004: //RootNode
+    400000: chest
+    400002: chest_top
+    400004: //RootNode
+    2300000: chest
+    2300002: chest_top
+    3300000: chest
+    3300002: chest_top
     4300000: chest
     4300002: chest_top
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 3
@@ -14,10 +25,6 @@ ModelImporter:
     bakeSimulation: 0
     optimizeGameObjects: 0
     motionNodeName: 
-    animationImportErrors: 
-    animationImportWarnings: 
-    animationRetargetingWarnings: 
-    animationDoRetargetingWarnings: 0
     animationCompression: 1
     animationRotationError: .5
     animationPositionError: .5
