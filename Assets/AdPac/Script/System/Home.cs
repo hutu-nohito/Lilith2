@@ -109,7 +109,7 @@ public class Home : MonoBehaviour {
     public void Sukima()
     {
         //スキマのシーンへ
-        //Manager.GetComponent<SceneManager>().Guild();
+        Manager.GetComponent<SceneManager>().Sukima();
     }
 
     public void Right()

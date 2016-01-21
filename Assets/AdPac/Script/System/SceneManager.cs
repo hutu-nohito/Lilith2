@@ -85,6 +85,15 @@ public class SceneManager : MonoBehaviour {
 		
 	}
 
+    public void Sukima()
+    {
+
+        SceneName = "Sukima";
+        coroutine = StartCoroutine(TransScene());
+        //Application.LoadLevel("Home");
+
+    }
+
     public void Magic_Lab()//デバック用ステージ
     {
         SceneName = "Magic_Lab";

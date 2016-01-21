@@ -166,5 +166,7 @@ public class SukimaCanvas : MonoBehaviour {
         {
             Manager.GetComponent<Static>().SelectMagicID[i] = selectMagicID[i];
         }
+
+        Manager.GetComponent<SceneManager>().Home();//ホームへ
     }
 }
