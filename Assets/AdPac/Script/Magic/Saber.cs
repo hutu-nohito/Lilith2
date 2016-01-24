@@ -46,14 +46,14 @@ public class Saber : Magic_Parameter {
     void Update()
     {
         //ホーミングが必要になったら解放
-        if (flag_Homing)
+        /*if (flag_Homing)
         {
             if (vision.nearTarget != null)
             {
                 Player.transform.rotation = Quaternion.Slerp(Player.transform.rotation, Quaternion.LookRotation(vision.nearTarget.transform.position - Player.transform.position), 0.5f);//Playerをターゲットのほうにゆっくり向ける
                 Player.transform.rotation = Quaternion.Euler(0, Player.transform.eulerAngles.y, 0);//Playerのx,zの回転を直す。回転嫌い。全部Eulerにしてしまえばよい
             }
-        }
+        }*/
 
         if (flag_Input)
         {
@@ -114,8 +114,8 @@ public class Saber : Magic_Parameter {
 
         //インプットの回数に応じて違うアニメーションの入った弾を出す
 
-        //前に進ませる
-        EndPos = Parent.transform.position + Parent.transform.TransformDirection(Vector3.forward) * 3;//
+        //前に進ませる(保留)
+        EndPos = Parent.transform.position + Parent.transform.TransformDirection(Vector3.forward) * 0;//
         StartPos = Parent.transform.position;
         deltaPos = (EndPos - StartPos) / time;
         if (inputCount == 0)
@@ -204,12 +204,12 @@ public class Saber : Magic_Parameter {
 
         //効果音と演出
         //効果音と演出
-        if (!SE.isPlaying)
-        {
+        //if (!SE.isPlaying)
+        //{
 
             SE.PlayOneShot(SE.clip);//SE
 
-        }
+        //}
         yield return new WaitForSeconds(0.3f);//振り下ろし
 
         //振り下ろしてから0.3秒後から入力受付

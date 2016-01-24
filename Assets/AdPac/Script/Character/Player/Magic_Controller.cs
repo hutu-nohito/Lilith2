@@ -378,9 +378,9 @@ public class Magic_Controller : MonoBehaviour{
 		if(isCoroutine){yield break;}
 		isCoroutine = true;
 		
-		yield return new WaitForSeconds(5.0f);//回復スピード
+		yield return new WaitForSeconds(1.0f);//回復スピード
 		
-        if(Pz.M_point < Pz.max_MP){Pz.M_point += 3;}//最大MPを超えないようにする
+        if(Pz.M_point < Pz.max_MP){Pz.M_point += 1;}//最大MPを超えないようにする
 		
 		isCoroutine = false;
 

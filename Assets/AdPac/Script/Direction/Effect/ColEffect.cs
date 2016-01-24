@@ -23,14 +23,15 @@ public class ColEffect : MonoBehaviour {
 
     void OnTriggerEnter(Collider col)
     {
+        
         //エフェクト系
         //当たっても消したくないもの
-        if (col.gameObject.name == "Vision" || col.gameObject.name == "Search" || col.gameObject.name == "Territory")
+        if (col.gameObject.name == "Vision" || col.gameObject.name == "Search" || col.gameObject.name == "Territory" || col.gameObject.name == "Player_H")
         {
             return;
         }
         //当たっても消えないもの
-        if (col.tag == "Reflect")
+        if (col.tag == "Reflect" || col.tag == "Player")
         {
             return;
         }

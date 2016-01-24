@@ -3,6 +3,10 @@ using System.Collections;
 
 public class Wall2 : Magic_Parameter
 {
+    /*
+        耐久力は保留
+    */
+
     public GameObject bullet_Prefab;//弾のプレハブ
 
     private Magic_Controller MC;
@@ -10,9 +14,12 @@ public class Wall2 : Magic_Parameter
 
     private Animator animator;//アニメ
     private AudioSource SE;//音
+    
 
     //演出
     private Camera_ControllerZ CCZ;
+    private AudioSource breakSE;//壊れる音
+    private GameObject breakEff;//壊れるエフェクト
 
     // Use this for initialization
     void Start()
@@ -47,6 +54,7 @@ public class Wall2 : Magic_Parameter
         Parent.GetComponent<Character_Manager>().SetKeylock();
         GameObject bullet;
         animator.SetTrigger("Shoot");
+        SE.enabled = true;//SE戻す
 
         yield return new WaitForSeconds(0.5f);//出すまで
 
@@ -100,8 +108,12 @@ public class Wall2 : Magic_Parameter
 
         bullet.transform.rotation = Quaternion.LookRotation(Parent.transform.TransformDirection(Vector3.forward).normalized);//回転させて弾頭を進行方向に向ける
 
+        //必要なものを拾っとく
         GameObject effect;
         effect = bullet.transform.FindChild("Spurt").gameObject;
+        breakEff = bullet.transform.FindChild("Break").gameObject;
+        breakEff.SetActive(false);//いったん消しとく
+        breakSE = bullet.GetComponent<AudioSource>();
 
         bullet.GetComponent<Rigidbody>().velocity = (Vector3.up * bullet.GetComponent<Attack_Parameter>().speed);
 
@@ -109,12 +121,13 @@ public class Wall2 : Magic_Parameter
 
         bullet.GetComponent<Rigidbody>().velocity = Vector3.zero;
         bullet.GetComponent<Rigidbody>().isKinematic = true;//固定
-        Destroy(effect, 1);
+        Destroy(effect, 1.3f);
         bullet.GetComponent<Collider>().enabled = false;
         bullet.transform.FindChild("Wall_Model").gameObject.GetComponent<Collider>().enabled = true;
         Invoke("SEStop", 1.3f);
         //bullet.GetComponent<MeshCollider>().isTrigger = false;
 
+        Invoke("Break", bullet.GetComponent<Attack_Parameter>().GetA_Time() - 0.6f);//消えるちょい前に演出
         Destroy(bullet, bullet.GetComponent<Attack_Parameter>().GetA_Time());
 
         yield return new WaitForSeconds(bullet.GetComponent<Attack_Parameter>().GetR_Time());//撃った後の硬直
@@ -130,4 +143,12 @@ public class Wall2 : Magic_Parameter
         CCZ.flag_quake = false;//揺れを止める
     }
 
+    //壊れる演出
+    void Break()
+    {
+        breakEff.SetActive(true);//演出ON
+        //breakSE.enabled = true;//SEON
+        breakSE.PlayOneShot(breakSE.clip);//SE
+
+    }
 }
