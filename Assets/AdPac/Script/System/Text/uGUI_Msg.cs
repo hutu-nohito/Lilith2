@@ -4,6 +4,10 @@ using UnityEngine.UI;//uGUI用
 
 public class uGUI_Msg : MonoBehaviour {
 
+    /*
+        テキストに入ってるものを表示
+    */
+
     new private Text guiText;
     public GameObject UI_Window;//表示するWindow
     public GameObject UI_Text;//表示するテキストの入れ物
@@ -97,6 +101,7 @@ public class uGUI_Msg : MonoBehaviour {
                     UI_Window.SetActive(false);
                     lengthMsg = 0;		//0文字目にリセット
                     lengthSecenario = 0;//そのシナリオの1文目から
+                    this.enabled = false;//消しとく
 
                 }
             }

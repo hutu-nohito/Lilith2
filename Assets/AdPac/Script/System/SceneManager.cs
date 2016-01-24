@@ -11,11 +11,13 @@ public class SceneManager : MonoBehaviour {
     private string SceneName = "Home";
     private Coroutine coroutine;
     private bool isCoroutine;
+    private Event_Manager EM;
 
 	// Use this for initialization
 	void Start () {
 	
 		_static = GetComponent<Static>();
+        EM = GetComponent<Event_Manager>();
 
 	}
 	
@@ -159,6 +161,9 @@ public class SceneManager : MonoBehaviour {
 
         Asy.allowSceneActivation = true;
 
+        yield return new WaitForSeconds(0.5f);//シーンが完全に変わりきってからイベントチェック
+
+        EM.SendMessage("Check_Event");
 
         isCoroutine = false;
     }
