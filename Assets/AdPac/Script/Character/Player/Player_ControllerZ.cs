@@ -31,6 +31,7 @@ public class Player_ControllerZ : Character_Manager{
     //ダッシュ
     private bool flag_Dash = false;//ダッシュ待機
     private bool isDash = false;//ダッシュする
+    public bool Dash = false;//ダッシュ中
     public float inputTime = 0.9f;//入力受付時間
     //private int inputCount = 0;//入力は一回まで
     private string inputKey = "W";//入力(どの方向か)
@@ -191,83 +192,87 @@ public class Player_ControllerZ : Character_Manager{
             flag_Dash = true;
         }
 
-        if (flag_Dash)
+        if (Dash)
         {
-            elapsedTime += Time.deltaTime;
-            if (elapsedTime > inputTime)
+            if (flag_Dash)
             {
-                flag_Dash = false;
-                elapsedTime = 0;
-            }
+                elapsedTime += Time.deltaTime;
+                if (elapsedTime > inputTime)
+                {
+                    flag_Dash = false;
+                    elapsedTime = 0;
+                }
 
-            switch (inputKey)
-            {
-                case "W":
-                    if (Input.GetKeyUp(KeyCode.W))
-                    {
-                        isDash = true;
-                    }
-                    if (isDash)
-                    {
-                        if (Input.GetKeyDown(KeyCode.W))//
+                switch (inputKey)
+                {
+                    case "W":
+                        if (Input.GetKeyUp(KeyCode.W))//押しっぱなしで発動しないよう
                         {
-                            speed = 2 * base_Sp;
-                            elapsedTime = 0;
-                            isDash = false;
-                            flag_Dash = false;
+                            isDash = true;
                         }
-                    }
-                    break;
-                case "A":
-                    if (Input.GetKeyUp(KeyCode.A))
-                    {
-                        isDash = true;
-                    }
-                    if (isDash)
-                    {
-                        if (Input.GetKeyDown(KeyCode.A))//
+                        if (isDash)
                         {
-                            speed = 2 * base_Sp;
-                            elapsedTime = 0;
-                            isDash = false;
-                            flag_Dash = false;
+                            if (Input.GetKeyDown(KeyCode.W))//
+                            {
+                                speed = 2 * base_Sp;
+                                elapsedTime = 0;
+                                isDash = false;
+                                flag_Dash = false;
+                            }
                         }
-                    }
-                    break;
-                case "S":
-                    if (Input.GetKeyUp(KeyCode.S))
-                    {
-                        isDash = true;
-                    }
-                    if (isDash)
-                    {
-                        if (Input.GetKeyDown(KeyCode.S))//
+                        break;
+                    case "A":
+                        if (Input.GetKeyUp(KeyCode.A))
                         {
-                            speed = 2 * base_Sp;
-                            elapsedTime = 0;
-                            isDash = false;
-                            flag_Dash = false;
+                            isDash = true;
                         }
-                    }
-                    break;
-                case "D":
-                    if (Input.GetKeyUp(KeyCode.D))
-                    {
-                        isDash = true;
-                    }
-                    if (isDash)
-                    {
-                        if (Input.GetKeyDown(KeyCode.D))//
+                        if (isDash)
                         {
-                            speed = 2 * base_Sp;
-                            elapsedTime = 0;
-                            isDash = false;
-                            flag_Dash = false;
+                            if (Input.GetKeyDown(KeyCode.A))//
+                            {
+                                speed = 2 * base_Sp;
+                                elapsedTime = 0;
+                                isDash = false;
+                                flag_Dash = false;
+                            }
                         }
-                    }
-                    break;
+                        break;
+                    case "S":
+                        if (Input.GetKeyUp(KeyCode.S))
+                        {
+                            isDash = true;
+                        }
+                        if (isDash)
+                        {
+                            if (Input.GetKeyDown(KeyCode.S))//
+                            {
+                                speed = 2 * base_Sp;
+                                elapsedTime = 0;
+                                isDash = false;
+                                flag_Dash = false;
+                            }
+                        }
+                        break;
+                    case "D":
+                        if (Input.GetKeyUp(KeyCode.D))
+                        {
+                            isDash = true;
+                        }
+                        if (isDash)
+                        {
+                            if (Input.GetKeyDown(KeyCode.D))//
+                            {
+                                speed = 2 * base_Sp;
+                                elapsedTime = 0;
+                                isDash = false;
+                                flag_Dash = false;
+                            }
+                        }
+                        break;
+                }
             }
         }
+        
 
         if (inputDirection.magnitude == 0)//ダッシュ解除
         {

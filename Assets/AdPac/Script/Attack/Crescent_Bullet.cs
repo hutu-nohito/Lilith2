@@ -100,4 +100,21 @@ public class Crescent_Bullet : Attack_Parameter {
 
         this.GetComponent<Rigidbody>().velocity = new Vector3(vx, vy, vz);
     }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if(col.tag == "Player")
+        {
+            //これで100を超えないはず
+            if(Target.GetComponent<Player_ControllerZ>().GetMP() + 10 < 100)
+            {
+                Target.GetComponent<Player_ControllerZ>().SetMP(Target.GetComponent<Player_ControllerZ>().GetMP() + 10);
+            }
+            else
+            {
+                Target.GetComponent<Player_ControllerZ>().SetMP(100);
+            }
+            
+        }
+    }
 }

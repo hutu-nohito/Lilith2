@@ -7,12 +7,14 @@ public class Icicle : Magic_Parameter {
 
     private Magic_Controller MC;
     private Player_ControllerZ pcZ;
-
+    private AudioSource SE;//音
+    
     // Use this for initialization
     void Start()
     {
         MC = GameObject.FindGameObjectWithTag("Player").GetComponent<Magic_Controller>();
         pcZ = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_ControllerZ>();
+        SE = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -34,6 +36,13 @@ public class Icicle : Magic_Parameter {
 
         GameObject[] bullet = new GameObject[GetExNum()];
 
+        //効果音と演出
+        if (!SE.isPlaying)
+        {
+
+            SE.PlayOneShot(SE.clip);//SE
+
+        }
         for (int i = 0; i < GetExNum(); i++)
         {
 
@@ -63,14 +72,8 @@ public class Icicle : Magic_Parameter {
                 yield return new WaitForSeconds(0.2f);//落とすまでの間
             }
         }
-                //効果音と演出
-                /*if(!audioSource.isPlaying){
 
-                    audioSource.Play();//SE
-
-                }*/
-
-                yield return new WaitForSeconds(bullet_Prefab.GetComponent<Attack_Parameter>().GetR_Time());//撃った後の硬直
+        yield return new WaitForSeconds(bullet_Prefab.GetComponent<Attack_Parameter>().GetR_Time());//撃った後の硬直
 
         //硬直を解除
         Parent.GetComponent<Character_Manager>().SetActive();

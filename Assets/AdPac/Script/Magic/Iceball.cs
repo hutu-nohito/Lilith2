@@ -41,9 +41,12 @@ public class Iceball : Magic_Parameter {
         if (!isIceball)
         {
             oldSpeed = pcZ.GetSpeed();
+            //pcZ.SetSpeed(oldSpeed / 2);
+            pcZ.Dash = false;
+            pcZ.speed = oldSpeed / 2;
             oldRotSpeed = pcZ.RotSpeed;
             pcZ.RotSpeed = pcZ.RotSpeed / 10;
-            pcZ.SetSpeed(pcZ.GetSpeed() / 2);
+            
         }
         
         //まず雪玉を出します
@@ -74,22 +77,26 @@ public class Iceball : Magic_Parameter {
             //ﾌﾟﾚｲﾔのスピードを戻す
             pcZ.RotSpeed = oldRotSpeed;
             pcZ.SetSpeed(oldSpeed);
+            pcZ.Dash = true;
             return;//雪玉が壊れてたら処理しない
-        } 
-                   //雪玉を大きく
-            if (oldPos != Player.transform.position)
+        }
+
+        //雪玉を大きく
+        if (oldPos != Player.transform.position)
         {
-            if (bullet.transform.localScale.y < 5)
+            if (bullet.transform.localScale.y <= 5)
             {//一応制限しとく
-                bullet.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
-                bullet.transform.localPosition += new Vector3(0,0.005f,0);
+                bullet.transform.localScale += new Vector3(0.005f, 0.005f, 0.005f);
+                bullet.transform.localPosition += new Vector3(0, 0.001f, 0);
             }
 
             //転がってるように見せる　回転
             bullet.transform.Rotate(1, 0, 0);
         }
 
-        
+        //大きさで強さを変化
+        bullet.GetComponent<Attack_Parameter>().power = (int)bullet.transform.localScale.y * 2;
+        Debug.Log(bullet.GetComponent<Attack_Parameter>().power);
 
         oldPos = Player.transform.position;
 
@@ -100,6 +107,7 @@ public class Iceball : Magic_Parameter {
         //ﾌﾟﾚｲﾔのスピードを戻す
         pcZ.RotSpeed = oldRotSpeed;
         pcZ.SetSpeed(oldSpeed);
+        pcZ.Dash = true;
 
         //弾が残ってたら物理挙動を付ける
         if (bullet != null)

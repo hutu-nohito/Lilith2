@@ -119,12 +119,15 @@ public class Claw : Magic_Parameter {
         //インプットの回数に応じて違うアニメーションの入った弾を出す
 
         //前に進ませる
-        EndPos = Parent.transform.position + Parent.transform.TransformDirection(Vector3.forward) * 3;//
-        StartPos = Parent.transform.position;
-        deltaPos = (EndPos - StartPos) / time;
-        animator.SetTrigger("Walk");
-        flag_attack = true;
-
+        if(inputCount == 1)
+        {
+            EndPos = Parent.transform.position + Parent.transform.TransformDirection(Vector3.forward) * 3;//
+            StartPos = Parent.transform.position;
+            deltaPos = (EndPos - StartPos) / time;
+            animator.SetTrigger("Walk");
+            flag_attack = true;
+        }
+        
         yield return new WaitForSeconds(0.2f);//振り向くまで待つ
 
         for (int i = 0; i < 1; i++)

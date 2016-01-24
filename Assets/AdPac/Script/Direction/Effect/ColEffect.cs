@@ -8,6 +8,7 @@ public class ColEffect : MonoBehaviour {
     public GameObject[] Effects;//出すエフェクト
     public bool setaudio = false;//おとならすならこれ
     private AudioSource audiosource;
+    public float EffTime = 2;//エフェクトが消えるまでの時間
 
 	// Use this for initialization
 	void Start () {
@@ -40,7 +41,7 @@ public class ColEffect : MonoBehaviour {
         {
             Effects[i].transform.parent = null;//子供にしとくとたいてい消える
             Effects[i].SetActive(true);
-            Destroy(Effects[i],2);//2秒ぐらいで消しとく
+            Destroy(Effects[i], EffTime);//2秒ぐらいで消しとく
         }
 
         //SE系
