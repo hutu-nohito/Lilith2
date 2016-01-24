@@ -52,8 +52,12 @@ public class Event_Manager : MonoBehaviour {
     //シーンが変わったらイベントチェック
     void Check_Event()
     {
-        StartCoroutine(Home_T());
-        StartCoroutine(guild_T());
+        if(Application.loadedLevelName == "Home")
+            StartCoroutine(Home_T());
+
+        if (Application.loadedLevelName == "guild")
+            StartCoroutine(guild_T());
+
         if (Application.loadedLevelName == "Title")
         {
             Information.SetActive(false);
@@ -66,7 +70,7 @@ public class Event_Manager : MonoBehaviour {
     }
 
 	IEnumerator Home_T(){//ホームでのイベント
-        Debug.Log("wwww");
+
         if (isCoroutineH){yield break;}
 		isCoroutineH = true;
 
@@ -86,17 +90,20 @@ public class Event_Manager : MonoBehaviour {
 		
 	}
 	IEnumerator guild_T(){//ギルドでのイベント
-		
+        
 		if(isCoroutineG){yield break;}
 		isCoroutineG = true;
 
         if (!EventFlag[1])
         {
+            uGM.enabled = true;//つける
+            uGM.dispMessage(EventText[1]);//表示する
+            EventFlag[1] = true;
+
             if (save.GetDay() == 1)
             {
-
-                Canvas.GetComponent<uGUI_Msg>().dispMessage(EventText[0]);
-                EventFlag[1] = true;
+                Debug.Log("wwwwww");
+                
 
             }
         }
