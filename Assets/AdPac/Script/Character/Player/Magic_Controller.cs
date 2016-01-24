@@ -16,10 +16,17 @@ public class Magic_Controller : MonoBehaviour{
     //変数(ex:time)////////////////////////////////
 
     public int magic_num = 0;//選択している弾の種類
+    private int old_magic_num = 0;//1つ前の選択してる魔法の種類
     public int[] selectmagic = new int[5];//選ばれた魔法の番号
 
     private bool isHold;//ホールド中　魔法が切り替わらないようにする
     private List<GameObject> Bullet0 = new List<GameObject>();//0個目に登録されてる弾の現在存在してる数
+    //バレット切り替えた時用(それぞれの魔法の弾を格納)
+    private List<GameObject> oldBullet0 = new List<GameObject>();
+    private List<GameObject> oldBullet1 = new List<GameObject>();
+    private List<GameObject> oldBullet2 = new List<GameObject>();
+    private List<GameObject> oldBullet3 = new List<GameObject>();
+    private List<GameObject> oldBullet4 = new List<GameObject>();
     //増やすのは各自でやってもらう
     public void AddExistBullet(GameObject bullet)//バレットを増やす
     {
@@ -47,7 +54,7 @@ public class Magic_Controller : MonoBehaviour{
 
         //選択されてる魔法の番号を渡す。
         //MagicSet (6,2,9,13);
-        MagicSet(5, 2, 3, 4);
+        MagicSet(1, 2, 3, 4);
 
         for (int i = 0;i < Magic.Length;i++){
 
@@ -105,14 +112,104 @@ public class Magic_Controller : MonoBehaviour{
 
 		coroutine = StartCoroutine (MPRecover ());
 
+        if(magic_num != old_magic_num)
+        {
+
+            switch (magic_num)
+            {
+                case 0:
+                    Bullet0 = oldBullet0;
+                    break;
+                case 1:
+                    Bullet0 = oldBullet1;
+                    break;
+                case 2:
+                    Bullet0 = oldBullet2;
+                    break;
+                case 3:
+                    Bullet0 = oldBullet3;
+                    break;
+                case 4:
+                    Bullet0 = oldBullet4;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
+        switch (magic_num)
+        {
+            case 0:
+                oldBullet0 = Bullet0;
+                break;
+            case 1:
+                oldBullet1 = Bullet0;
+                break;
+            case 2:
+                oldBullet2 = Bullet0;
+                break;
+            case 3:
+                oldBullet3 = Bullet0;
+                break;
+            case 4:
+                oldBullet4 = Bullet0;
+                break;
+            default:
+                break;
+        }
+
         //弾がなくなったかどうかはこっちで判断
         for (int i = 0;i < Bullet0.Count;i++)
         {
             if (Bullet0[i] == null)
             {
                 Bullet0.RemoveAt(i);
+
             }
         }
+        for (int i = 0; i < oldBullet0.Count; i++)
+        {
+            if (oldBullet0[i] == null)
+            {
+                oldBullet0.RemoveAt(i);
+
+            }
+        }
+        for (int i = 0; i < oldBullet1.Count; i++)
+        {
+            if (oldBullet1[i] == null)
+            {
+                oldBullet1.RemoveAt(i);
+
+            }
+        }
+        for (int i = 0; i < oldBullet2.Count; i++)
+        {
+            if (oldBullet2[i] == null)
+            {
+                oldBullet2.RemoveAt(i);
+
+            }
+        }
+        for (int i = 0; i < oldBullet3.Count; i++)
+        {
+            if (oldBullet3[i] == null)
+            {
+                oldBullet3.RemoveAt(i);
+
+            }
+        }
+        for (int i = 0; i < oldBullet4.Count; i++)
+        {
+            if (oldBullet4[i] == null)
+            {
+                oldBullet4.RemoveAt(i);
+
+            }
+        }
+
+        old_magic_num = magic_num;
 
     }
 
@@ -120,49 +217,46 @@ public class Magic_Controller : MonoBehaviour{
     {
 
         //マウスホイール式
-        /*
         if (!isHold){
         }
         if (Input.GetAxis("Mouse ScrollWheel") == 1.0f)
         {
 
-            if (bullet_num == Bullet.Length - 1)
+            if (magic_num == 0)
             {
-
-                bullet_num = 0;
+                
+                magic_num = selectmagic.Length - 1;
 
             }
             else
             {
-
-                bullet_num += (int)Input.GetAxis("Mouse ScrollWheel");
+                
+                magic_num -= (int)Input.GetAxis("Mouse ScrollWheel");
 
             }
 
-            bullet_parameter = null;//念のためパラメタリセット
+            //bullet_parameter = null;//念のためパラメタリセット
 
         }
 
         if (Input.GetAxis("Mouse ScrollWheel") == -1.0f)
         {
-
-            if (bullet_num == 0)
+            if (magic_num == SelectMagic.Length - 1)
             {
 
-                bullet_num = Bullet.Length - 1;
+                magic_num = 0;
 
             }
             else
             {
-
-                bullet_num += (int)Input.GetAxis("Mouse ScrollWheel");
+                
+                magic_num -= (int)Input.GetAxis("Mouse ScrollWheel");
 
             }
 
-            bullet_parameter = null;//念のためパラメタリセット
+            //bullet_parameter = null;//念のためパラメタリセット
 
         }
-        */
 
         //ボタン式
         if (!isHold)
