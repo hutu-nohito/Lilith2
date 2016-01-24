@@ -31,7 +31,7 @@ public class Player_ControllerZ : Character_Manager{
     //ダッシュ
     private bool flag_Dash = false;//ダッシュ待機
     private bool isDash = false;//ダッシュする
-    public bool Dash = false;//ダッシュ中
+    public bool Dash = true;//ダッシュ中
     public float inputTime = 0.9f;//入力受付時間
     //private int inputCount = 0;//入力は一回まで
     private string inputKey = "W";//入力(どの方向か)
