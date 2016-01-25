@@ -37,6 +37,12 @@ public class Z_Camera : MonoBehaviour {
 		Player = GameObject.FindGameObjectWithTag("Player");
         pcZ = Player.GetComponent<Player_ControllerZ>();
 
+        nearMarker = GameObject.Find("nearMarker");
+        targetMarker = GameObject.Find("targetMarker");
+
+        nearMarker.SetActive(false);
+        targetMarker.SetActive(false);
+
         QuakeMagnitude /= 1000;//これでわかりやすく
 		
 	}

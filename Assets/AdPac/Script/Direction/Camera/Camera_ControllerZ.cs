@@ -38,6 +38,18 @@ public class Camera_ControllerZ : MonoBehaviour {
 
         pcZ = lookTarget.GetComponent<Player_ControllerZ>();
         Zcamara = GetComponent<Z_Camera>();
+
+        //現在の向きから割り出さないとだめ
+        //horizontalAngle = lookTarget.transform.eulerAngles.y;
+        verticalAngle = 0.0f;
+        elapsedTime = 0;
+        EndPos = lookTarget.transform.eulerAngles.y;
+        StartPos = horizontalAngle;
+        time = 0.5f;
+        deltaPos = (EndPos - StartPos) / time;
+        deltaPos = Mathf.Repeat(deltaPos, 360.0f / time);//360進数に直す
+
+        is_Q_Move = true;
     }
 
     void LateUpdate()
@@ -155,7 +167,24 @@ public class Camera_ControllerZ : MonoBehaviour {
             is_Q_Move = true;
 
         }
+        if (!pcZ.GetF_Watch())//注目してないときに右クリックでカメラを正面に向ける
+        {
+            if (Input.GetMouseButtonDown(1))
+            {
+                //現在の向きから割り出さないとだめ
+                //horizontalAngle = lookTarget.transform.eulerAngles.y;
+                verticalAngle = 0.0f;
+                elapsedTime = 0;
+                EndPos = lookTarget.transform.eulerAngles.y;
+                StartPos = horizontalAngle;
+                time = 0.5f;
+                deltaPos = (EndPos - StartPos) / time;
+                deltaPos = Mathf.Repeat(deltaPos, 360.0f / time);//360進数に直す
 
+                is_Q_Move = true;
+            }
+        }
+            
         if (is_Q_Move)
         {
             if(deltaPos < 180 / time)//近いほうに回す
