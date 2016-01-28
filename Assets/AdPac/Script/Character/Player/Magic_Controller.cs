@@ -54,7 +54,7 @@ public class Magic_Controller : MonoBehaviour{
 
         //選択されてる魔法の番号を渡す。
         //MagicSet (6,2,9,13);
-        MagicSet(9, 14, 12, 13);
+        MagicSet(9, 14, 12, 13,10);
 
         for (int i = 0;i < Magic.Length;i++){
 
@@ -64,7 +64,7 @@ public class Magic_Controller : MonoBehaviour{
         
     }
 
-    void MagicSet(int a,int b,int c,int d)
+    void MagicSet(int a,int b,int c,int d,int e)
     {
         /*
          * 
@@ -77,15 +77,15 @@ public class Magic_Controller : MonoBehaviour{
         //選ばれた魔法を格納
         SelectMagic[0] = Magic[a];
         SelectMagic[1] = Magic[b];
-        SelectMagic[2] = Magic[0];
-        SelectMagic[3] = Magic[c];
-        SelectMagic[4] = Magic[d];
+        SelectMagic[2] = Magic[c];
+        SelectMagic[3] = Magic[d];
+        SelectMagic[4] = Magic[e];
 
         selectmagic[0] = a;
         selectmagic[1] = b;
-        selectmagic[2] = 0;
-        selectmagic[3] = c;
-        selectmagic[4] = d;
+        selectmagic[2] = c;
+        selectmagic[3] = d;
+        selectmagic[4] = e;
 
     }
 

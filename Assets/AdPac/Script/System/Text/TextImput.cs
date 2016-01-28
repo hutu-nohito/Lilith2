@@ -73,7 +73,19 @@ public class TextImput : MonoBehaviour {
 	void Update () {
 
 		switch (type) {
-		case Text_Type.HP:
+            case Text_Type.Day:
+                _static = GameObject.FindGameObjectWithTag("Manager").GetComponent<Static>();
+
+                if (_static.day - (int)_static.day == 0.5f)
+                {
+                    guiText.text = (int)_static.day + "日目　夜";
+                }
+                else
+                {
+                    guiText.text = (int)_static.day + "日目　昼";
+                }
+                break;
+            case Text_Type.HP:
 
 			guiText.text = "CP " + pcZ.H_point;
 			break;
