@@ -106,6 +106,38 @@ public class SceneManager : MonoBehaviour {
 
     //アクションステージ//////////////////////////////////
 
+    public void Gaidou()
+    {
+        SceneName = "Gaidou";
+        coroutine = StartCoroutine(TransScene());
+        //Application.LoadLevel("Magic_Lab");
+
+    }
+
+    public void Forest()
+    {
+        SceneName = "Forest";
+        coroutine = StartCoroutine(TransScene());
+        //Application.LoadLevel("Magic_Lab");
+
+    }
+
+    public void Pond()
+    {
+        SceneName = "Pond";
+        coroutine = StartCoroutine(TransScene());
+        //Application.LoadLevel("Magic_Lab");
+
+    }
+
+    public void Kougen()
+    {
+        SceneName = "Kougen";
+        coroutine = StartCoroutine(TransScene());
+        //Application.LoadLevel("Magic_Lab");
+
+    }
+
     public void Green()
     {
         SceneName = "Green1";

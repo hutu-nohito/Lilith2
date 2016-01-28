@@ -13,6 +13,9 @@ public class Title : MonoBehaviour {
 
         Manager = GameObject.FindGameObjectWithTag("Manager");
 
+        //たぶんここでロード
+        //Manager.GetComponent<Static>().Load();
+
         if (Manager.GetComponent<Static>().count_Start == 0)
         {
             Button[0].SetActive(true);
@@ -21,6 +24,8 @@ public class Title : MonoBehaviour {
         {
             Button[1].SetActive(true);
         }
+
+
 	}
 	
 	// Update is called once per frame

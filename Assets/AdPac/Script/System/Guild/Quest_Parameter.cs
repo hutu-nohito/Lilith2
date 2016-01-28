@@ -29,6 +29,10 @@ public class Quest_Parameter : MonoBehaviour {
 
     public enum Stage//クエストを行うステージ
     {
+        Gaidou,
+        Forest,
+        Pond,
+        Kougen,
         Green,//草原、森
         Mine,//鉱山
         Town,//街
@@ -46,6 +50,8 @@ public class Quest_Parameter : MonoBehaviour {
     public string[] quest_Target;//そのクエストの終了条件を満たす対象
     public string GetTarget(int num) { return quest_Target[num]; }
     public void SetTarget(string[] Target) { for (int i = 0; i < Target.Length; i++) { this.quest_Target[i] = Target[i]; } }
+
+    public int clear_num = 5;//クリア討伐数
 
     public string[] rewards;//クエ報酬（複数可）
     public string GetReward(int num) { return rewards[num]; }//番号を送ってくれればその報酬を返す

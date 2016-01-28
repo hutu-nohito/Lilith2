@@ -4,6 +4,7 @@ using System.Collections;
 public class QuestManager : Quest_Parameter {
 
 	//クエストクリア・クエスト失敗
+    //今んとこ敵を軟体倒す系のクエしかできない
 	
 	//クエストのパラメタ//////////////////////////////////////////////////////////
 	public int clear_count = 3;
@@ -29,9 +30,9 @@ public class QuestManager : Quest_Parameter {
     private Camera F_camera;
 
     //文字操作用
-    private GameObject Ready;
-    private GameObject Go;
-    private GameObject Clear;
+    public GameObject Ready;
+    public GameObject Go;
+    public GameObject Clear;
 
     //Player
     public GameObject Player;
@@ -56,10 +57,13 @@ public class QuestManager : Quest_Parameter {
     }
     IEnumerator C_QuestStart()
     {
-        yield return new WaitForSeconds(0.1f);//シーン切り替わり待ち
+        yield return new WaitForSeconds(2.1f);//シーン切り替わり待ち
 
         Player = GameObject.FindGameObjectWithTag("Player");//切り替わってからでないと読めない
         F_camera = Player.transform.FindChild("FrontCamera").GetComponent<Camera>();
+        _static = GetComponent<Static>();
+        sM = GetComponent<SceneManager>();
+        clear_count = clear_num;
 
         //敵やらなんやら配置構成 全部アクティブにしておく///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -78,9 +82,9 @@ public class QuestManager : Quest_Parameter {
 
 
         //UI関連処理////////////////////////////////////////////////////////////////////////////////////////////////////////
-        Ready = GameObject.Find("Text_Ready");
+        /*Ready = GameObject.Find("Text_Ready");
         Go = GameObject.Find("Text_Go");
-        Clear = GameObject.Find("Text_Clear");
+        Clear = GameObject.Find("Text_Clear");*/
 
         //GameObjectはアクティブでないと探せないので探したら消す
         Ready.SetActive(false);
@@ -134,6 +138,11 @@ public class QuestManager : Quest_Parameter {
 
         }
         
+    }
+
+    public void SaisyuCount()//採取用のカウント
+    {
+        now_count++;
     }
 
 	//クエスト終了/////////////////////////////////////////////////////////////////

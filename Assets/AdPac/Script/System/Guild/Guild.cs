@@ -28,7 +28,7 @@ public class Guild : MonoBehaviour {
         {
             _static.day += qM.quest_time;//失敗・成功にかかわらず終わったクエストのクエストタイムを加算
 
-            //昼になったらクエスト期間を減らす
+            /*//昼になったらクエスト期間を減らす
             if (_static.day - (int)_static.day == 0)//dayが偶数の時昼
             {
                 for (int i = 0; i < 6; i++)//全部のクエストぺーパーのクエスト期間を1減少させる
@@ -41,7 +41,7 @@ public class Guild : MonoBehaviour {
                     }
                 }
 
-            }
+            }*/
 
         }
     }
@@ -62,7 +62,7 @@ public class Guild : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        if (isMove)
+        if (isMove)//カメラ用
         {
             elapsedTime += Time.deltaTime;
             Camera.main.transform.position += (CameraPos[camNum].transform.position - Camera.main.transform.position).normalized * 15 * Time.deltaTime;
@@ -108,31 +108,63 @@ public class Guild : MonoBehaviour {
 
     public void Quest0 (){
 
-		Quest_paper [0].SetActive (!Quest_paper[0].activeSelf);
-        quest_num = 0;
+        if (_static.day - (int)_static.day == 0)//昼だったら
+        {
+            Quest_paper[0].SetActive(!Quest_paper[0].activeSelf);
+            quest_num = 0;
+        }
+        else//夜だったら
+        {
+            Quest_paper[4].SetActive(!Quest_paper[4].activeSelf);
+            quest_num = 4;
+        }
+		
 
 	}
 	
 	public void Quest1 (){
-		
-		Quest_paper [1].SetActive (!Quest_paper[1].activeSelf);
-        quest_num = 1;
-		
+
+        if (_static.day - (int)_static.day == 0)//昼だったら
+        {
+            Quest_paper[1].SetActive(!Quest_paper[1].activeSelf);
+            quest_num = 1;
+        }
+        else//夜だったら
+        {
+            Quest_paper[5].SetActive(!Quest_paper[5].activeSelf);
+            quest_num = 5;
+        }
 	}
     public void Quest2()
     {
 
-        Quest_paper[2].SetActive(!Quest_paper[2].activeSelf);
-        quest_num = 2;
-
+        if (_static.day - (int)_static.day == 0)//昼だったら
+        {
+            Quest_paper[2].SetActive(!Quest_paper[2].activeSelf);
+            quest_num = 2;
+        }
+        else//夜だったら
+        {
+            Quest_paper[6].SetActive(!Quest_paper[6].activeSelf);
+            quest_num = 6;
+        }
+       
     }
 
     public void Quest3()
     {
+        if (_static.day - (int)_static.day == 0)//昼だったら
+        {
+            Quest_paper[3].SetActive(!Quest_paper[3].activeSelf);
+            quest_num = 3;
 
-        Quest_paper[3].SetActive(!Quest_paper[3].activeSelf);
-        quest_num = 3;
-
+        }
+        else//夜だったら
+        {
+            Quest_paper[7].SetActive(!Quest_paper[7].activeSelf);
+            quest_num = 7;
+        }
+       
     }
 
     public void Quest4()
@@ -160,6 +192,7 @@ public class Guild : MonoBehaviour {
         qM.stage = quest_parameter.stage;
         qM.SetQuestStageID(quest_parameter.GetQestStageID());
         qM.quest_Target = quest_parameter.quest_Target;//これで配列の中身が全部移る
+        qM.clear_num = quest_parameter.clear_num;
         qM.rewards = quest_parameter.rewards;
         qM.quest_level = quest_parameter.quest_level;
         qM.quest_term = quest_parameter.quest_term;
@@ -170,6 +203,18 @@ public class Guild : MonoBehaviour {
 
         switch (qM.stage)
         {
+            case Quest_Parameter.Stage.Gaidou:
+                sM.Gaidou();
+                break;
+            case Quest_Parameter.Stage.Forest:
+                sM.Forest();
+                break;
+            case Quest_Parameter.Stage.Pond:
+                sM.Pond();
+                break;
+            case Quest_Parameter.Stage.Kougen:
+                sM.Kougen();
+                break;
             case Quest_Parameter.Stage.Green:
                 sM.Green();
                 break;
