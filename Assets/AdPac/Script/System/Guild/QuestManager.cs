@@ -184,5 +184,32 @@ public class QuestManager : Quest_Parameter {
 		
 	}
 
-	//失敗したときの処理。使ったものは戻す
+    //失敗したときの処理。使ったものは戻す
+
+    public void Questfailure()
+    {
+
+        coroutine = StartCoroutine(C_Questfailere());
+
+    }
+
+    IEnumerator C_Questfailere()
+    {
+        //クリア後だからたぶんほっといても大丈夫
+        Player.GetComponent<Player_ControllerZ>().SetKeylock();
+        //Camera.main.enabled = false;
+        //F_camera.enabled = true;
+
+        //クリア時のHP、MPを引き継がせる
+        _static.SetHP(Player.GetComponent<Player_ControllerZ>().GetHP());
+        _static.SetMP(Player.GetComponent<Player_ControllerZ>().GetMP());
+       
+        //一応戻しとく
+        Player.GetComponent<Player_ControllerZ>().SetActive();
+
+        //クエストが終わったら特別なことがない限りギルドへ
+        sM.Guild();
+        yield return new WaitForSeconds(0);//ないとコルーチンにできない
+
+    }
 }
