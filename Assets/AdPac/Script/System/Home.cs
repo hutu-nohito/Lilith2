@@ -97,10 +97,11 @@ public class Home : MonoBehaviour {
     }
     public void Save()
     {
-        
+        //ゲームをやめる
+        Application.Quit();
         //Save
-        Manager.GetComponent<Static>().Save();
-        Manager.GetComponent<SceneManager>().Fade();
+        /*Manager.GetComponent<Static>().Save();
+        Manager.GetComponent<SceneManager>().Fade();*/
         //Button[1].SetActive(true);
     }
     public void Bed()
