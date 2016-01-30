@@ -142,8 +142,11 @@ public class QuestManager : Quest_Parameter {
 
     public void SaisyuCount()//採取用のカウント
     {
+        if (quest_Target[0] == "0" || quest_Target[0] == "4")//採取クエの時だけカウント
+        {
+            now_count++;
+        }
         
-        now_count++;
     }
 
 	//クエスト終了/////////////////////////////////////////////////////////////////
