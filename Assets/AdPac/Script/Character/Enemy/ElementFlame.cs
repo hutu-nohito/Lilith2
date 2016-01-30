@@ -29,7 +29,7 @@ public class ElementFlame : MonoBehaviour {
     private MoveSmooth MS;//移動は全部これ
     private Camera_ControllerZ CCZ;
 
-    private Animator animator;//アニメーションはふよふよと攻撃モーションのみ
+    private Animator animator;//アニメーションはふよふよとやられモーションのみ
     private AudioSource[] SE;//音
 
     //汎用
@@ -37,6 +37,9 @@ public class ElementFlame : MonoBehaviour {
     private Coroutine coroutine;//一度に動かすコルーチンは1つ ここでとっとけば止めるのが楽
     private bool isCoroutine = false;//コルーチンを止めるときにはfalseに戻すこと
 
+    //向き取得用
+    private Vector3 oldpos;//1フレーム前
+    private Vector3 movedirection;
 
     private int priority = 0;//状態の優先度
     /*
@@ -67,16 +70,21 @@ public class ElementFlame : MonoBehaviour {
 
         ecZ = GetComponent<Enemy_ControllerZ>();
         MS = GetComponent<MoveSmooth>();
-        //animator = GetComponentInChildren<Animator>();
+        animator = GetComponentInChildren<Animator>();
         //SE = GetComponent<AudioSource>();
 
         CCZ = Camera.main.gameObject.GetComponent<Camera_ControllerZ>();
 
         priority = 5;//最初はサーチに
+
+        oldpos = transform.position;
     }
 	
 	// Update is called once per frame
 	void Update () {
+
+        //動いた距離を取得
+        movedirection = oldpos - transform.position;
 
         if (state == Element_State.Attack)
         {
@@ -85,6 +93,7 @@ public class ElementFlame : MonoBehaviour {
             //前を向ける
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.Player.transform.position - transform.position), 0.05f);
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+            MS.Stop();//止める
 
             coroutine = StartCoroutine(Attack());
 
@@ -94,58 +103,54 @@ public class ElementFlame : MonoBehaviour {
         {
             if (priority >= 2)
             {
-                state = Element_State.Damage;
-                priority = 2;
-            }
+                if(state != Element_State.Damage)
+                {
+                    state = Element_State.Damage;
+                    priority = 2;
+                    //前を向ける
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.Player.transform.position - transform.position), 0.05f);
+                    transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+                    //アニメーションセット
+                    animator.SetTrigger("Damage");//ダメージ
+                    MS.Stop();//止める
+                }
 
+            }
+            
         }
         if (state == Element_State.Damage)
         {
-
+            
             if (priority >= 6)
             {
 
                 priority = 2;
 
                 //アニメーションセット
-                //animator.SetTrigger("Kyorokyoro");//ここできょろきょろ                  
+                //animator.SetTrigger("Damage");//ここできょろきょろ                  
 
                 //前を向ける
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.Player.transform.position - transform.position), 0.05f);
                 transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-
+                
             }
             else if (priority >= 2)
             {
 
                 priority = 2;
-                //アニメーションセット
-                //animator.SetTrigger("Walk");//歩き
+                
 
                 //前を向ける
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.Player.transform.position - transform.position), 0.05f);
                 transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
                 //ダメージ受けたらだいたい死ぬが、生き残ったらとりあえず攻撃を激しくする
+                coroutine = StartCoroutine(Attack());//反撃
+                ecZ.Stop();//こけた時まれに下方向に力が働くので一応止めとく
 
-                /*
-                ecZ.Move(ecZ.Player.transform.position, ecZ.speed);//Playerに近づく
-
-                //プレイヤとの距離で行動変化
-                if ((ecZ.Player.transform.position - transform.position).magnitude < 5)//距離が5以下だったら
-                {
-                    state = Fatbat_State.Attack;
-                    priority = 1;
-                }
-                if ((ecZ.Player.transform.position - transform.position).magnitude > 20)//距離が10以上だったら
-                {
-                    state = Fatbat_State.Syobon;
-                    priority = 4;
-                }
-                */
             }
         }
-
+        
         if (ecZ.isReturn)
         {
             if (priority >= 3)
@@ -172,7 +177,7 @@ public class ElementFlame : MonoBehaviour {
                 transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
                 //テリトリとの距離で行動変化
-                if ((ecZ.Territory.localPosition - transform.localPosition).magnitude < 5)//真ん中ら辺まで戻ったら
+                if ((ecZ.Territory.localPosition - transform.localPosition).magnitude < 10)//真ん中ら辺まで戻ったら
                 {
                     state = Element_State.Search;
                     priority = 5;
@@ -181,7 +186,7 @@ public class ElementFlame : MonoBehaviour {
             }
 
         }
-
+        
         if (ecZ.isFind)
         {
             if (priority >= 4)
@@ -199,7 +204,9 @@ public class ElementFlame : MonoBehaviour {
                 //animator.SetTrigger("Walk");//歩き
 
                 //前を向ける
-                transform.rotation = Quaternion.Slerp(transform.localRotation, Quaternion.LookRotation(ecZ.move_controller.End - transform.localPosition), 0.05f);
+                //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.move_controller.End - transform.localPosition), 0.05f);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(-movedirection), 0.05f);
+
                 transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
                 MS.Move(ecZ.move_controller.End, ecZ.speed);
@@ -216,6 +223,7 @@ public class ElementFlame : MonoBehaviour {
             ecZ.Stop();
         }
         oldstate = state;
+        oldpos = transform.position;
 
     }
 

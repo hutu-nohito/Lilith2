@@ -97,7 +97,7 @@ public class FatBat : MonoBehaviour {
             //前を向ける
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.Player.transform.position - transform.position), 0.05f);
             transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-
+            
             coroutine = StartCoroutine(Attack());
 
         }
@@ -130,6 +130,7 @@ public class FatBat : MonoBehaviour {
                 //前を向ける
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.Player.transform.position - transform.position), 0.05f);
                 transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+                
 
             }
             else if(priority >= 2)
@@ -146,6 +147,7 @@ public class FatBat : MonoBehaviour {
                 //前を向ける
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.Player.transform.position - transform.position), 0.05f);
                 transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+                
 
                 ecZ.Move(ecZ.Player.transform.position, ecZ.speed);//Playerに近づく
 

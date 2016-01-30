@@ -93,33 +93,38 @@ public class Camera_ControllerZ : MonoBehaviour {
             //注目時にカメラをプレイヤの後ろに
             if (pcZ.GetF_Watch())
             {
-                Vector2 length = new Vector2(Zcamara.Target.transform.position.x - lookPosition.x, Zcamara.Target.transform.position.z - lookPosition.z);
-
-                if(length.magnitude > 5)
+                if(lookTarget != null)
                 {
-                    /*if (Mathf.DeltaAngle(horizontalAngle, lookTarget.transform.eulerAngles.y) < -0.1f)
+                    Vector2 length = new Vector2(Zcamara.Target.transform.position.x - lookPosition.x, Zcamara.Target.transform.position.z - lookPosition.z);
+
+
+
+                    if (length.magnitude > 5)
                     {
-                        horizontalAngle += (lookTarget.transform.eulerAngles.y - horizontalAngle) * Time.deltaTime;
-                    }*/
+                        /*if (Mathf.DeltaAngle(horizontalAngle, lookTarget.transform.eulerAngles.y) < -0.1f)
+                        {
+                            horizontalAngle += (lookTarget.transform.eulerAngles.y - horizontalAngle) * Time.deltaTime;
+                        }*/
 
-                    
-                    elapsedTime = 0;
-                    EndPos = lookTarget.transform.eulerAngles.y;
-                    StartPos = horizontalAngle;
-                    time = 0.3f;
-                    deltaPos = (EndPos - StartPos) / time;
-                    deltaPos = Mathf.Repeat(deltaPos, 360.0f / time);//360進数に直す
 
-                    is_Q_Move = true;
+                        elapsedTime = 0;
+                        EndPos = lookTarget.transform.eulerAngles.y;
+                        StartPos = horizontalAngle;
+                        time = 0.3f;
+                        deltaPos = (EndPos - StartPos) / time;
+                        deltaPos = Mathf.Repeat(deltaPos, 360.0f / time);//360進数に直す
 
-                    /*if (horizontalAngle != lookTarget.transform.eulerAngles.y)
-                    horizontalAngle += (horizontalAngle - lookTarget.transform.eulerAngles.y) * Time.deltaTime;*/
-                    transform.LookAt(lookPosition);
-                    //transform.rotation = Quaternion.LookRotation(Zcamara.Target.transform.position);
-                }
-                else//距離が近かったらカメラを回さない
-                {
-                    transform.LookAt(lookPosition);
+                        is_Q_Move = true;
+
+                        /*if (horizontalAngle != lookTarget.transform.eulerAngles.y)
+                        horizontalAngle += (horizontalAngle - lookTarget.transform.eulerAngles.y) * Time.deltaTime;*/
+                        transform.LookAt(lookPosition);
+                        //transform.rotation = Quaternion.LookRotation(Zcamara.Target.transform.position);
+                    }
+                    else//距離が近かったらカメラを回さない
+                    {
+                        transform.LookAt(lookPosition);
+                    }
                 }
 
             }
