@@ -142,6 +142,7 @@ public class QuestManager : Quest_Parameter {
 
     public void SaisyuCount()//採取用のカウント
     {
+        
         now_count++;
     }
 

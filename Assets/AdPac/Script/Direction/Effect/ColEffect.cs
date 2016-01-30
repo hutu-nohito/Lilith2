@@ -6,6 +6,7 @@ public class ColEffect : MonoBehaviour {
     //ぶつかったときに出るエフェクト　ダメージエフェクトとかに
 
     public GameObject[] Effects;//出すエフェクト
+    public GameObject SE;//SEも消したくない
     public bool setaudio = false;//おとならすならこれ
     private AudioSource audiosource;
     public float EffTime = 2;//エフェクトが消えるまでの時間
@@ -14,7 +15,7 @@ public class ColEffect : MonoBehaviour {
 	void Start () {
 
         //SEを鳴らす場合
-        if (setaudio) audiosource = GetComponent<AudioSource>();
+        if (setaudio) audiosource = SE.GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
