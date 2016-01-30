@@ -216,23 +216,29 @@ public class FatBat : MonoBehaviour {
         {
             if (priority >= 4)
             {
-                priority = 4;
-                //アニメーションセット
-                if (animState != 2)
-                {
-                    animator.SetTrigger("Ikaku");//威嚇
-                    animState = 2;
-                }
-
-                //前を向ける
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.Player.transform.position - transform.position), 0.05f);
-                transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-
                 //ちょっと間をおいてから行動
                 time += Time.deltaTime;
-                if (time > 3)
+
+                if (time < 3)
                 {
-                    
+
+                    priority = 4;
+                    //アニメーションセット
+                    if (animState != 2)
+                    {
+                        animator.SetTrigger("Ikaku");//威嚇
+                        animState = 2;
+                    }
+
+                    //前を向ける
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.Player.transform.position - transform.position), 0.05f);
+                    transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+
+                }
+                else
+                { 
+
+
                     //プレイヤとの距離で行動変化
                     if ((ecZ.Player.transform.position - transform.position).magnitude < 5)//距離が5以下だったら
                     {
@@ -240,9 +246,15 @@ public class FatBat : MonoBehaviour {
                         priority = 4;
 
                     }
-                    else if ((ecZ.Player.transform.position - transform.position).magnitude < 20)//距離が10以下だったら
+                    else if ((ecZ.Player.transform.position - transform.position).magnitude < 20)//距離が20以下だったら
                     {
                         ecZ.Move(ecZ.Player.transform.position, ecZ.speed);//Playerに近づく
+                        if (animState != 1)
+                        {
+                            animator.SetTrigger("Walk");//威嚇
+                            animState = 1;
+                        }
+                        
                     }
                     else
                     {
@@ -378,7 +390,7 @@ public class FatBat : MonoBehaviour {
         isCoroutine = true;
         ecZ.Reverse_Magic();
 
-        yield return new WaitForSeconds(1);//ちょっと間をおいてから攻撃
+        yield return new WaitForSeconds(0.1f);//ちょっと間をおいてから攻撃
 
         GameObject bullet;
 
@@ -389,7 +401,7 @@ public class FatBat : MonoBehaviour {
             animState = 5;
         }
 
-        ecZ.Move(ecZ.Player.transform.position - (ecZ.Player.transform.position - transform.position).normalized * 3, ecZ.speed * 5);//Playerの手前で止まる
+        ecZ.Move(ecZ.Player.transform.position - (ecZ.Player.transform.position - transform.position).normalized * 2, ecZ.speed * 5);//Playerの手前で止まる
 
         yield return new WaitForSeconds(0.2f);//近づききってから攻撃
 
@@ -435,7 +447,7 @@ public class FatBat : MonoBehaviour {
         yield return new WaitForSeconds(1);//奪うスピード
 
         if (ecZ.Player.GetComponent<Player_ControllerZ>().GetMP() > 0)//マイナスにならないようにしとく
-        ecZ.Player.GetComponent<Player_ControllerZ>().SetMP(ecZ.Player.GetComponent<Player_ControllerZ>().GetMP() - 1);
+        ecZ.Player.GetComponent<Player_ControllerZ>().SetMP(ecZ.Player.GetComponent<Player_ControllerZ>().GetMP() - 3);
 
         isCoroutine = false;
 
