@@ -27,6 +27,7 @@ public class Guild : MonoBehaviour {
         if (qM.isQuest)
         {
             _static.day += qM.quest_time;//失敗・成功にかかわらず終わったクエストのクエストタイムを加算
+            qM.isQuest = false;//おろしとかないと家とギルドの往復で日にちが過ぎてく。
 
             /*//昼になったらクエスト期間を減らす
             if (_static.day - (int)_static.day == 0)//dayが偶数の時昼

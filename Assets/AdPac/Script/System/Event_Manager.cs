@@ -96,14 +96,13 @@ public class Event_Manager : MonoBehaviour {
 
         if (!EventFlag[1])
         {
-            uGM.enabled = true;//つける
-            uGM.dispMessage(EventText[1]);//表示する
-            EventFlag[1] = true;
+            
 
             if (save.GetDay() == 1)
             {
-                Debug.Log("wwwwww");
-                
+                uGM.enabled = true;//つける
+                uGM.dispMessage(EventText[1]);//表示する
+                EventFlag[1] = true;
 
             }
         }

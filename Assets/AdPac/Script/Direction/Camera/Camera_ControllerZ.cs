@@ -215,6 +215,7 @@ public class Camera_ControllerZ : MonoBehaviour {
         //////////////////////////////////////////////////////////////////////
 
         //一人称始点
+        /*
         if (Input.GetKeyDown(KeyCode.T))
         {
 
@@ -234,7 +235,7 @@ public class Camera_ControllerZ : MonoBehaviour {
 
             }
 
-        }
+        }*/
 
         //視点の距離を変更
         if (Input.GetKeyDown(KeyCode.E))
