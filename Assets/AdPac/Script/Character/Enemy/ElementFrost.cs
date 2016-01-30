@@ -147,14 +147,17 @@ public class ElementFrost : MonoBehaviour {
         {
             if (priority >= 3)
             {
-                state = Element_State.Damage;
-                priority = 3;
-                //前を向ける
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.Player.transform.position - transform.position), 0.05f);
-                transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-                //アニメーションセット
-                animator.SetTrigger("Damage");//ダメージ
-                MS.Stop();//止める
+                if (state != Element_State.Damage)
+                {
+                    state = Element_State.Damage;
+                    priority = 3;
+                    //前を向ける
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(ecZ.Player.transform.position - transform.position), 0.05f);
+                    transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+                    //アニメーションセット
+                    animator.SetTrigger("Damage");//ダメージ
+                    MS.Stop();//止める
+                }
             }
 
         }

@@ -174,7 +174,7 @@ public class QuestManager : Quest_Parameter {
         //一応戻しとく
         Player.GetComponent<Player_ControllerZ>().SetActive();
         //Camera.main.enabled = true;//カメラは保持してないのでないと取り込めない
-        F_camera.enabled = false;
+        //F_camera.enabled = false;
 
         //クエストが終わったら特別なことがない限りギルドへ
         sM.Guild();
