@@ -25,6 +25,7 @@ public class QuestManager : Quest_Parameter {
 
     //コルーチン用
     private Coroutine coroutine;
+    private bool isCoroutine = false;
 
     //カメラ操作用
     private Camera F_camera;
@@ -155,6 +156,9 @@ public class QuestManager : Quest_Parameter {
 
     IEnumerator QuestClear(){
 
+        if (isCoroutine) { yield break; }
+        isCoroutine = true;
+
         //クリア後だからたぶんほっといても大丈夫
         Player.GetComponent<Player_ControllerZ>().SetKeylock();
         Camera.main.enabled = false;
@@ -174,6 +178,8 @@ public class QuestManager : Quest_Parameter {
         Player.GetComponent<Player_ControllerZ>().SetActive();
         //Camera.main.enabled = true;//カメラは保持してないのでないと取り込めない
         //F_camera.enabled = false;
+
+        isCoroutine = false;
 
         //クエストが終わったら特別なことがない限りギルドへ
         sM.Guild();
@@ -198,6 +204,12 @@ public class QuestManager : Quest_Parameter {
 
     IEnumerator C_Questfailere()
     {
+
+        if (isCoroutine) { yield break; }
+        isCoroutine = true;
+
+        now_count = 0;//使い終わったら戻す
+
         //クリア後だからたぶんほっといても大丈夫
         Player.GetComponent<Player_ControllerZ>().SetKeylock();
         //Camera.main.enabled = false;
@@ -210,6 +222,7 @@ public class QuestManager : Quest_Parameter {
 
         //一応戻しとく
         Player.GetComponent<Player_ControllerZ>().SetActive();
+        isCoroutine = false;
 
         //クエストが終わったら特別なことがない限りギルドへ
         sM.Guild();

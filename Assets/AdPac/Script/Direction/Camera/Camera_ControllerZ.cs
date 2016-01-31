@@ -238,6 +238,7 @@ public class Camera_ControllerZ : MonoBehaviour {
         }*/
 
         //視点の距離を変更
+        /*
         if (Input.GetKeyDown(KeyCode.E))
         {
             if(distance == 5)
@@ -258,6 +259,7 @@ public class Camera_ControllerZ : MonoBehaviour {
             }
             flag_TopView = false;
         }
+        */
 
             //スムーズに動かしたいならこれ
         if (isMove)
