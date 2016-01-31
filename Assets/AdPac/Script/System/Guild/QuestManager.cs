@@ -162,7 +162,6 @@ public class QuestManager : Quest_Parameter {
 
 		//クリア時のHP、MPを引き継がせる
 		_static.SetHP(Player.GetComponent<Player_ControllerZ> ().GetHP ());
-		_static.SetMP(Player.GetComponent<Player_ControllerZ> ().GetMP ());
 
         yield return new WaitForSeconds(0.5f);//カメラ切り替えの間
 

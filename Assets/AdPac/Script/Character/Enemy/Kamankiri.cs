@@ -325,7 +325,7 @@ public class Kamankiri : MonoBehaviour {
         //アニメーションセット
         if (animState != 5)
         {
-            animator.SetTrigger("Attack");//攻撃
+            animator.SetTrigger("Attack0");//攻撃
             animState = 5;
         }
 
@@ -367,7 +367,7 @@ public class Kamankiri : MonoBehaviour {
         //アニメーションセット
         if (animState != 5)
         {
-            animator.SetTrigger("Attack");//攻撃
+            animator.SetTrigger("Attack1");//攻撃
             animState = 5;
         }
 
@@ -379,7 +379,7 @@ public class Kamankiri : MonoBehaviour {
             //弾を飛ばす処理
             bullet[i].transform.position = Muzzle[i].position + (ecZ.direction);
             bullet[i].transform.rotation = Quaternion.LookRotation(ecZ.direction);//回転させて弾頭を進行方向に向ける
-            bullet[i].GetComponent<Rigidbody>().velocity = ((ecZ.Player.transform.position - transform.position).normalized + new Vector3(0,0.2f,0)) * bullet[i].GetComponent<Attack_Parameter>().speed;//キャラの向いてる方向
+            bullet[i].GetComponent<Rigidbody>().velocity = ((ecZ.Player.transform.position - transform.position).normalized + new Vector3(0,0.3f,0)) * bullet[i].GetComponent<Attack_Parameter>().speed;//キャラの向いてる方向
 
 
 
@@ -389,7 +389,7 @@ public class Kamankiri : MonoBehaviour {
 
         }
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.5f);
 
         ecZ.Reverse_Magic();
         state = Fatbat_State.Search;
