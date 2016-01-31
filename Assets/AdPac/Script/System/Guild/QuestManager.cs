@@ -203,9 +203,11 @@ public class QuestManager : Quest_Parameter {
         //Camera.main.enabled = false;
         //F_camera.enabled = true;
 
-        //クリア時のHPを引き継がせる
-        _static.SetHP(Player.GetComponent<Player_ControllerZ>().GetHP());
-       
+        //死んでるかもだからHPを回復させて1日たたせる
+        //_static.SetHP(Player.GetComponent<Player_ControllerZ>().GetHP());
+        _static.day += 0.5f;//強制的に寝たことにする
+        _static.SetHP(100);
+
         //一応戻しとく
         Player.GetComponent<Player_ControllerZ>().SetActive();
 

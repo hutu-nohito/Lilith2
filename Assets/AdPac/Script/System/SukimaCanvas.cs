@@ -89,9 +89,13 @@ public class SukimaCanvas : MonoBehaviour {
         {
             currentPallete++;
         }
+        else
+        {
+            currentPallete = 1;
+        }
 
         //いったん全部消してから付け直す
-        for(int i = 0;i < 5; i++)
+        for (int i = 0;i < 5; i++)
         {
             SelectPallete[i].SetActive(false);
         }
@@ -106,6 +110,10 @@ public class SukimaCanvas : MonoBehaviour {
         if (currentPallete > 1)
         {
             currentPallete--;
+        }
+        else
+        {
+            currentPallete = 4;
         }
 
         //いったん全部消してから付け直す
