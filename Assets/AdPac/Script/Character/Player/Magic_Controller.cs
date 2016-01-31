@@ -12,6 +12,7 @@ public class Magic_Controller : MonoBehaviour{
     */
 
     private Player_ControllerZ Pz;
+    private Static _static;
 
     //変数(ex:time)////////////////////////////////
 
@@ -51,10 +52,16 @@ public class Magic_Controller : MonoBehaviour{
     {
 
         Pz = GetComponent<Player_ControllerZ>();
+        _static = GameObject.FindGameObjectWithTag("Manager").GetComponent<Static>();
 
         //選択されてる魔法の番号を渡す。
         //MagicSet (6,2,9,13);
-        MagicSet(9, 14, 12, 13,10);
+        MagicSet(
+            _static.SelectMagicID[0],
+            _static.SelectMagicID[1],
+            _static.SelectMagicID[2], 
+            _static.SelectMagicID[3],
+            _static.SelectMagicID[4]);
 
         for (int i = 0;i < Magic.Length;i++){
 

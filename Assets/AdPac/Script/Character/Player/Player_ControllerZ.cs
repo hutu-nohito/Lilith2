@@ -68,8 +68,9 @@ public class Player_ControllerZ : Character_Manager{
         //HPがなくなった時の処理
         if (H_point <= 0)
         {
-
-            Application.LoadLevel(Application.loadedLevel);
+            save.H_Point = 100;//HPは満タンに
+            GameObject.FindGameObjectWithTag("Manager").GetComponent<QuestManager>().Questfailure();
+            //Application.LoadLevel(Application.loadedLevel);
 
         }
 
