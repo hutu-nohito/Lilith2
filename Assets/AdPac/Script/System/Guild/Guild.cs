@@ -14,6 +14,10 @@ public class Guild : MonoBehaviour {
     private SceneManager sM;
     private Static _static;
 
+    //チュートリアル用
+    private bool flag_onetime = false;
+    public GameObject Tyuto;
+
     void Awake()
     {
         qM = GameObject.FindGameObjectWithTag("Manager").GetComponent<QuestManager>();
@@ -63,6 +67,15 @@ public class Guild : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
+        //チュートリアル用
+        if (flag_onetime)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Tyuto.SetActive(false);
+            }
+        }
+
         if (isMove)//カメラ用
         {
             elapsedTime += Time.deltaTime;
@@ -88,14 +101,30 @@ public class Guild : MonoBehaviour {
     //カメラ
     public void Quest()
     {
+        if (_static.day == 1)
+        {
+            if (!flag_onetime)
+            {
+                flag_onetime = true;
+                Invoke("OneTime", 2);
+            }
+        }
+        
         EntranceBoad.SetActive(false);
         isMove = true;
         camNum = 1;
     }
 
+    void OneTime()
+    {
+        Tyuto.SetActive(true);
+    }
+
     public void Entrance()
     {
+
         QuestBoad.SetActive(false);
+
         isMove = true;
         camNum = 0;
     }
