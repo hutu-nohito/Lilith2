@@ -278,7 +278,6 @@ public class ElementFlame : MonoBehaviour {
                 bullet.transform.rotation = Quaternion.LookRotation(ecZ.direction);//回転させて弾頭を進行方向に向ける
                 
                 bullet.GetComponent<Rigidbody>().velocity = ((ecZ.Player.transform.position - transform.position).normalized + transform.TransformDirection(new Vector3(0,1,-0.3f))) * bullet.GetComponent<Attack_Parameter>().speed;//キャラの向いてる方向
-                Debug.Log(bullet.GetComponent<Rigidbody>().velocity);
 
                 //効果音と演出
                 /*if (!SE[1].isPlaying)

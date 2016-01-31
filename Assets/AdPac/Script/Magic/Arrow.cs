@@ -30,7 +30,7 @@ public class Arrow : Magic_Parameter {
     void Hold()
     {
         time += Time.deltaTime;
-
+        Parent.GetComponent<Character_Manager>().SetMovelock();
         animator.SetTrigger("Shoot");
     }
 
