@@ -204,9 +204,8 @@ public class QuestManager : Quest_Parameter {
         //Camera.main.enabled = false;
         //F_camera.enabled = true;
 
-        //クリア時のHP、MPを引き継がせる
+        //クリア時のHPを引き継がせる
         _static.SetHP(Player.GetComponent<Player_ControllerZ>().GetHP());
-        _static.SetMP(Player.GetComponent<Player_ControllerZ>().GetMP());
        
         //一応戻しとく
         Player.GetComponent<Player_ControllerZ>().SetActive();

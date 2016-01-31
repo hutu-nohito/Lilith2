@@ -379,11 +379,11 @@ public class Kamankiri : MonoBehaviour {
             //弾を飛ばす処理
             bullet[i].transform.position = Muzzle[i].position + (ecZ.direction);
             bullet[i].transform.rotation = Quaternion.LookRotation(ecZ.direction);//回転させて弾頭を進行方向に向ける
-            bullet[i].GetComponent<Rigidbody>().velocity = ((ecZ.Player.transform.position - transform.position).normalized + transform.TransformDirection(new Vector3(0, 1, -0.3f))) * bullet[i].GetComponent<Attack_Parameter>().speed;//キャラの向いてる方向
+            bullet[i].GetComponent<Rigidbody>().velocity = ((ecZ.Player.transform.position - transform.position).normalized + new Vector3(0,0.2f,0)) * bullet[i].GetComponent<Attack_Parameter>().speed;//キャラの向いてる方向
 
 
 
-            Destroy(bullet[i], bullet[i].GetComponent<Attack_Parameter>().GetR_Time());
+            Destroy(bullet[i], bullet[i].GetComponent<Attack_Parameter>().GetA_Time());
 
             yield return new WaitForSeconds(0.5f);//ちょっと間をおいてから攻撃
 

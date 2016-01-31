@@ -81,14 +81,15 @@ public class Static : MonoBehaviour {
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
+        //debug
+        /*if (Input.GetKeyDown(KeyCode.K))
         {
             Save();
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
             Load();
-        }
+        }*/
 
     }
 

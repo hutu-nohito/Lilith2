@@ -39,8 +39,8 @@ public class Title : MonoBehaviour {
         //セーブデータを初期化
         Manager.GetComponent<Static>().day = 1;
         Manager.GetComponent<Static>().count_Start = 0;
-        Manager.GetComponent<Static>().H_Point = 10;
-        Manager.GetComponent<Static>().M_Point = 10;
+        Manager.GetComponent<Static>().H_Point = 100;
+        Manager.GetComponent<Static>().M_Point = 100;
         Manager.GetComponent<Static>().lank_P = 0;
         Manager.GetComponent<Static>().bonus_P = 0;
 
