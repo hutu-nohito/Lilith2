@@ -12,6 +12,8 @@ public class Wall2 : Magic_Parameter
     private Magic_Controller MC;
     private Player_ControllerZ pcZ;
 
+    private Z_Camera zcamera;//足元用 注目対象はここで取得
+
     private Animator animator;//アニメ
     private AudioSource SE;//音
     
@@ -31,6 +33,8 @@ public class Wall2 : Magic_Parameter
         SE = GetComponent<AudioSource>();
 
         CCZ = Camera.main.gameObject.GetComponent<Camera_ControllerZ>();
+
+        zcamera = Camera.main.gameObject.GetComponentInChildren<Z_Camera>();
     }
 
     // Update is called once per frame
@@ -80,32 +84,38 @@ public class Wall2 : Magic_Parameter
         RaycastHit hit;
         GameObject hitObject;
 
-        Vector3 LineStart = new Vector3(bullet.transform.position.x, bullet.transform.position.y + 4 /*- zcamera.Target.transform.localScale.y / 2*/, bullet.transform.position.z);
+        Vector3 LineStart = new Vector3(zcamera.Target.transform.position.x, zcamera.Target.transform.position.y /*- zcamera.Target.transform.localScale.y / 2*/, zcamera.Target.transform.position.z);
         Vector3 LineDirection = Vector3.down;//下でおｋ
 
-        if (Physics.Raycast(LineStart, LineDirection, out hit, 200))
+        //弾を飛ばす処理
+        if (pcZ.GetF_Watch())//注目してたら相手の足元
         {
-            hitObject = hit.collider.gameObject;//レイヤーがIgnoreLayerのObjectは弾かれる。
-
-            //Debug.DrawLine(LineStart, hit.point, Color.blue);
-            //Debug.Log(hitObject);
-
-            //地面だったら
-            if (hitObject.gameObject.name == "Terrain")
+            if (Physics.Raycast(LineStart, LineDirection, out hit, 200))
             {
-                bullet.transform.position = transform.position - new Vector3(0, transform.position.y - hit.point.y, 0) - new Vector3(0, 4, 0);
+                hitObject = hit.collider.gameObject;//レイヤーがIgnoreLayerのObjectは弾かれる。
 
-            }
-            else
-            {
-                bullet.transform.position = transform.position - new Vector3(0, transform.position.y - hit.point.y - hitObject.transform.localScale.y, 0) - new Vector3(0, 4, 0);
+                //Debug.DrawLine(LineStart, hit.point, Color.blue);
+                //Debug.Log(hitObject);
+
+                //地面だったら
+                if (hitObject.gameObject.name == "Terrain")
+                {
+                    //bullet.transform.position = transform.position - new Vector3(0, transform.position.y - hit.point.y, 0) - new Vector3(0, 4, 0);
+                    bullet.transform.position = hit.point - new Vector3(0, 4, 0);
+
+                }
+                else
+                {
+                    //（仮）
+                    bullet.transform.position = transform.position - new Vector3(0, transform.position.y - hit.point.y - hitObject.transform.localScale.y, 0) - new Vector3(0, 4, 0);
+                }
             }
         }
         else
         {
             bullet.transform.position = transform.position - new Vector3(0, 4, 0);
         }
-
+        
         bullet.transform.rotation = Quaternion.LookRotation(Parent.transform.TransformDirection(Vector3.forward).normalized);//回転させて弾頭を進行方向に向ける
 
         //必要なものを拾っとく

@@ -17,7 +17,7 @@ public class Vision : MonoBehaviour {
     private GameObject Player;
 
     public GameObject nearTarget = null;//一番近い敵
-    public float ReleaseLength = 20;//注目が途切れる距離
+    public float ReleaseLength = 30;//注目が途切れる距離
 
     // Use this for initialization
     void Start () {

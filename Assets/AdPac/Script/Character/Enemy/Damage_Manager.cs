@@ -21,6 +21,14 @@ public class Damage_Manager : MonoBehaviour {
     //演出
     public GameObject[] Effects;//出すエフェクト
 
+    //ノックバック用
+    private bool flag_knockback = false;
+    public Vector3 EndPos;
+    private Vector3 deltaPos;
+    private float time = 2.0f;//ここを吹っ飛ぶ距離に応じて変えたい
+    private float elapsedTime;
+    private bool flag_stop = false;
+
     void Start () {
 
 		ecZ = Parent.GetComponent<Enemy_ControllerZ>();
@@ -39,7 +47,43 @@ public class Damage_Manager : MonoBehaviour {
 
         }
 
-	}
+        //ちょっとだけふわふわさせる(y軸だけでいい)
+        if (flag_knockback)
+        {
+            Parent.GetComponent<Rigidbody>().AddForce(new Vector3(0,2,0), ForceMode.Force);//上向きの力
+            //Parent.transform.position += deltaPos * Time.deltaTime;
+            elapsedTime += Time.deltaTime;
+
+            if (elapsedTime > time)
+            {
+
+                elapsedTime = 0;
+                flag_knockback = false;
+                flag_stop = true;
+
+            }
+        }
+
+        if (flag_stop)
+        {
+            elapsedTime += Time.deltaTime;
+            Parent.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            Parent.GetComponent<Rigidbody>().useGravity = false;
+
+            if (elapsedTime > time)
+            {
+
+                elapsedTime = 0;
+                flag_stop = false;
+                Parent.GetComponent<SimpleMove>().Control.x = 0;//回さない
+                Parent.GetComponent<Rigidbody>().useGravity = true;
+
+            }
+            
+        }
+
+    }
+
     IEnumerator Poison()
     {
 
@@ -142,11 +186,26 @@ public class Damage_Manager : MonoBehaviour {
                 {
                     if (attack.GetKnockBack().magnitude > 0)
                     {
-                        Parent.GetComponent<Rigidbody>().AddForce(-col.transform.TransformDirection(attack.GetKnockBack()), ForceMode.Impulse);//Yが上下逆
+                        Parent.GetComponent<SimpleMove>().Control.x = 90;//回す
+                        Parent.GetComponent<Rigidbody>().AddForce(Parent.transform.TransformDirection(attack.GetKnockBack()), ForceMode.Impulse);//Yが上下逆
+                        flag_knockback = true;
                         ecZ.SetKeylock();//行動不能だったと思う
                         Invoke("SetActive", 1);
                     }
                 }
+
+                //こっからノックバック
+                /*if (attack.GetKnockBack().magnitude > 0)
+                {
+
+                    //EndPos = Parent.transform.position + col.transform.TransformDirection(attack.GetKnockBack());
+                    EndPos = Parent.transform.position + Parent.transform.TransformDirection(attack.GetKnockBack());
+                    deltaPos = (EndPos - Parent.transform.position) / time;
+                    flag_knockback = true;
+                    ecZ.SetKeylock();//行動不能だったと思う
+                    Invoke("SetActive", time);
+
+                }*/
 
                 //こっから演出
                 for (int i = 0; i < Effects.Length; i++)
@@ -201,7 +260,7 @@ public class Damage_Manager : MonoBehaviour {
 
     void SetActive()
     {
-        ecZ.SetActive();//無敵時間解除
+        ecZ.SetActive();
     }
 
     IEnumerator ErasseEffect(GameObject Effect)

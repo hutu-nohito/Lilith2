@@ -10,13 +10,18 @@ public class Bomb : Magic_Parameter {
     private Animator animator;//アニメ
     private AudioSource SE;//音
 
+    private Z_Camera zcamera;//注目対象はここで取得
+
     // Use this for initialization
     void Start()
     {
+
         MC = GameObject.FindGameObjectWithTag("Player").GetComponent<Magic_Controller>();
         pcZ = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_ControllerZ>();
         animator = GameObject.FindGameObjectWithTag("Player").GetComponentInChildren<Animator>();
         SE = GetComponent<AudioSource>();
+        zcamera = Camera.main.gameObject.GetComponentInChildren<Z_Camera>();
+
     }
 
     // Update is called once per frame
@@ -54,7 +59,33 @@ public class Bomb : Magic_Parameter {
         }
         else
         {
-            bullet.GetComponent<Rigidbody>().velocity = (Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, 50)) - transform.position).normalized * bullet.GetComponent<Attack_Parameter>().speed;//画面の真ん中
+            if (pcZ.GetF_Watch())
+            {
+                if((zcamera.Target.transform.position.y - Parent.transform.position.y) >
+                   ((zcamera.Target.transform.position.x - Parent.transform.position.x) +
+                   (zcamera.Target.transform.position.z - Parent.transform.position.z)) / 2)
+                {
+
+                    //奥狙う
+                    bullet.GetComponent<Rigidbody>().velocity = ( (Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, 50)) - transform.position).normalized + Parent.transform.TransformDirection(new Vector3(0, 2, 1)).normalized ) * bullet.GetComponent<Attack_Parameter>().speed;//画面の真ん中
+
+                }
+                else
+                {
+
+                    //下狙う
+                    bullet.GetComponent<Rigidbody>().velocity = ((Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, 50)) - transform.position).normalized + Parent.transform.TransformDirection(new Vector3(0, 1, 2)).normalized ) * bullet.GetComponent<Attack_Parameter>().speed;//画面の真ん中
+
+                }
+
+            }
+            else
+            {
+
+                bullet.GetComponent<Rigidbody>().velocity = (Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, 50)) - transform.position).normalized * bullet.GetComponent<Attack_Parameter>().speed;//画面の真ん中
+
+            }
+            
         }
         //注目中だったら イラン
         /*if (pcZ.GetF_Watch())

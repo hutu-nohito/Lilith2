@@ -55,13 +55,15 @@ public class Magic_Controller : MonoBehaviour{
         _static = GameObject.FindGameObjectWithTag("Manager").GetComponent<Static>();
 
         //選択されてる魔法の番号を渡す。
-        //MagicSet (6,2,9,13);
+        MagicSet (8,2,1,6,8);
+        /*
         MagicSet(
             _static.SelectMagicID[0],
             _static.SelectMagicID[1],
             _static.SelectMagicID[2], 
             _static.SelectMagicID[3],
             _static.SelectMagicID[4]);
+        */
 
         for (int i = 0;i < Magic.Length;i++){
 

@@ -179,6 +179,6 @@ public class Player_Manager : MonoBehaviour {
 
     void SetActive()
     {
-        pcZ.SetActive();//無敵時間解除
+        pcZ.SetActive();
     }
 }

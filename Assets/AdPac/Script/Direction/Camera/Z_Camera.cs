@@ -175,7 +175,7 @@ public class Z_Camera : MonoBehaviour {
         }//注目中はターゲットは変えない
 
         length = near;
-        if (length >= 20)
+        if (length >= 30)
         {
             this.Target = null;
             pcZ.Release_Watch();//注目解除
