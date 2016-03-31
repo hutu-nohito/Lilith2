@@ -38,7 +38,7 @@ public class Muscle : MonoBehaviour {
         ecZ.Move(transform.position + new Vector3(0,0,20),2.5f);
         */
 
-        ecZ.Move(transform.position + new Vector3(0, 0, 50), 10);
+        ecZ.Move(transform.position + new Vector3(0, 0, -50), 10);
 
         yield return new WaitForSeconds(5.0f);//反転までの時間
 
@@ -50,7 +50,7 @@ public class Muscle : MonoBehaviour {
         */
         transform.Rotate(0,180,0);
 
-        ecZ.Move(transform.position + new Vector3(0, 0, -50), 10);
+        ecZ.Move(transform.position + new Vector3(0, 0, 50), 10);
 
         yield return new WaitForSeconds(5.0f);//反転までの時間
 
